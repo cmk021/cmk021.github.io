@@ -1,0 +1,152 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>game demo 1126</title>
+
+	<!-- <script src="//cdn.jsdelivr.net/npm/phaser@3.11.0/dist/phaser.js"></script>
+	--><script src="phaser.js"></script>
+
+	<script src ="blocksjs/blockly_compressed.js" > </script> 
+	<script src ="blocksjs/blocks_compressed.js" > </script> 
+	<script src ="blocksjs/javascript_compressed.js"></script>
+
+	<script src ="blocksjs/zh-hant.js" > </script>
+	<script src ="newblocks2.js" > </script>
+	<!-- <script src ="gen_workspace.js" > </script>  -->
+	<style type="text/css">
+		a { color:#FFF }
+
+		#game-container {
+			position: absolute;
+		  	left: 650px;
+		 	top: 20px;
+	    }
+
+      	#game-container > canvas {
+	        border-radius: 6px;
+	        border: 2px;
+	        border-color: brown;
+	    }
+	</style>
+
+	<script src="index3.js"></script>	
+
+</head>
+
+
+<body bgcolor="#333333">.
+
+  <span>
+    <button onclick="showCode()">Show JavaScript</button>
+    <button onclick="runCode()">Run JavaScript</button>
+    <button onclick="gen_workspace('toolbox02')">Gen workspace</button>
+    <a href="index.html?toolbox01">01</a>
+    <a href="index.html?toolbox02">02</a>
+  </span>
+
+   <div id="blocklyDiv" style="height: 550px; width: 600px;">
+   </div>
+
+    <div id="game-container"></div>
+    		
+
+	<xml id="toolbox01" style="display: none">
+		<category name="行動" colour="#ff0000">
+		  <block type="controls_if"></block>
+		  <block type="action_move_back"></block>
+		  <block type="action_move_forward"></block>
+		  <block type="controls_repeat_ext"></block>
+		  <block type="math_number">0</block>
+		</category>
+		<!--
+		  
+		  <block type="logic_compare"></block>
+		  
+		  <block type="math_arithmetic"></block>
+		  <block type="text"></block>
+		  <block type="text_print"></block>
+		-->
+	</xml>
+
+	<xml id="toolbox02" style="display: none">
+		<category name="行動" colour="#00CC00">
+		  <block type="controls_if"></block>
+		  <block type="action_move_back"></block>
+		  <block type="action_move_forward"></block>
+		  <block type="controls_repeat_ext"></block>
+		  <block type="math_number">0</block>
+		  <block type="logic_compare"></block>
+		</category>
+		<category name="迴圈" colour="#CC0000">
+		  <block type="math_arithmetic"></block>
+		  <block type="text"></block>
+		  <block type="text_print"></block>
+		</category>
+	</xml>
+
+	<script src ="gen_workspace.js" > </script>
+
+	<script>
+
+	    function showCode() {
+	      // Generate JavaScript code and display it.
+	      Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
+	      var code = Blockly.JavaScript.workspaceToCode(workspace);
+	      alert(code);
+	      console.log('123123');
+	    }
+
+	    var milisec;
+
+	    function runCode() {
+	    	milisec = 500;		//行動等待時間
+	      // Generate JavaScript code and run it.
+	      window.LoopTrap = 1000;
+	      Blockly.JavaScript.INFINITE_LOOP_TRAP =
+	          'if (--window.LoopTrap == 0) throw "Infinite loop.";\n';
+	      var code = Blockly.JavaScript.workspaceToCode(workspace);
+	      Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
+	      try {
+	        eval(code);
+	      } catch (e) {
+	        alert(e);
+	      }
+	    }
+
+	</script>
+
+	<script>
+		//先取得網址字串，假設此頁網址為「index.aspx?id=U001&name=GQSM」
+		var url = location.href;
+
+		//再來用去尋找網址列中是否有資料傳遞(QueryString)
+		if(url.indexOf('?')!=-1)
+		{
+		    //之後去分割字串把分割後的字串放進陣列中
+		    var ary1 = url.split('?');
+		    //此時ary1裡的內容為：
+		    //ary1[0] = 'index.aspx'，ary1[1] = 'id=U001&name=GQSM'
+		    
+		    //下一步把後方傳遞的每組資料各自分割
+		    ////var ary2 = ary1[1].split('&');
+		    //此時ary2裡的內容為：
+		    //ary2[0] = 'id=U001'，ary2[1] = 'name=GQSM'
+		    
+		    //最後如果我們要找id的資料就直接取ary[0]下手，name的話就是ary[1]
+		    ////var ary3 = ary2[0].split('=');
+		    //此時ary3裡的內容為：
+		    //ary3[0] = 'id'，ary3[1] = 'U001'
+		    
+		    //取得id值
+		    ////var id = ary3[1];
+		}
+
+		gen_workspace(ary1[1]);		
+	</script>
+
+	
+
+</body>
+</html>
