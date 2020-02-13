@@ -1,0 +1,29 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>test</title>
+</head>
+    
+<body>
+    
+    <h1 id="h">hello</h1>
+
+    <script>
+        ~async function(){
+            const delay = t => {    // 先撰寫一個等待的 function
+                return new Promise(resolve => {
+                    setTimeout(resolve, t);
+                });
+            };
+            
+            h.style.linHeight = 0;
+            for(let i=30; i<130; i++){
+                h.style.fontSize = i + 'px';
+                await delay(50);    // 迴圈每次執行時，都會在這裡等待 10ms
+            }
+        }();
+    </script>                    
+</body>
+</html>
