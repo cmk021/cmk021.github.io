@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>game demo 0523</title>
+
+	<!-- <script src="//cdn.jsdelivr.net/npm/phaser@3.11.0/dist/phaser.js"></script>
+	-->
+    <script src="phaser.js"></script>
+
+	<script src ="blocksjs/blockly_compressed.js" > </script> 
+	<script src ="blocksjs/blocks_compressed.js" > </script> 
+	<script src ="blocksjs/javascript_compressed.js"></script>
+
+	<script src ="blocksjs/zh-hant.js" > </script>
+	<script src ="jquery-3.4.1.js"></script>
+	<!-- <script src ="gen_workspace.js" > </script>  -->
+	<style type="text/css">
+        #s00 { color:#FFF }
+        #capacity { color: aqua }
+        
+		#game-container {         /*遊戲畫面的位置*/
+			position: absolute;
+		  	left: 740px;
+		 	top: 35px;
+	    }
+
+      	#game-container > canvas {
+	        border-radius: 6px;
+	        border: 2px;
+	        border-color: brown;
+	    }
+        
+        .table01{
+            position: fixed;
+            top: 5px;
+            left: 190px; 
+        }
+        
+        #s00{
+            position: fixed;
+            top: 5px;
+            left: 560px; 
+        }
+        
+        td div{
+          border-color: #44f844;
+          border-width: 2px;
+          border-style: solid;
+          border-radius:50%;
+          background-color: #fff;
+          font-family: 'Comic Sans MS', sans-serif;
+          font-size: 18px;
+          width:30px;
+          height:30px;
+          text-align: center;
+          line-height: 30px; 
+        }
+
+        div a{
+          color: #111;
+          /*line-height: 20px;*/
+          text-decoration:none;
+        }
+        div a:hover{
+          color: #fff;
+        }
+        td div:hover{
+          text-decoration:underline;
+          font-weight:bolder;
+          background-color: #4b4;
+        }
+        
+	</style>
+    
+    <script src ="newblocks3.js" > </script>                   <!--//定義新方塊-->
+	<script src ="index4.js"></script>	
+
+</head>
+
+
+<body bgcolor="#333333">
+
+  <span style="line-height: 40px">
+      <button onclick="showCode()">Show JavaScript</button>
+      <button onclick="runCode()">Run</button>
+      <!--<button onclick="Editable(false)">Editable</button>-->
+      <!--<button onclick="gen_workspace('toolbox02')">chenge workspace</button>-->
+      <div class="table01">
+          <table>
+            <tr>
+              <td>
+                <a href="index.html?toolbox11"><div>1</div></a>
+              </td>
+              <td>
+                <a href="index.html?toolbox12"><div>2</div></a>
+              </td>
+              <td>
+                <a href="index.html?toolbox13"><div>3</div></a>
+              </td>
+              <td>
+                <a href="index.html?toolbox14"><div>4</div></a>
+              </td>
+              <td>
+                <a href="index.html?toolbox15"><div>5</div></a>
+              </td>
+              <td>
+                <a href="index.html?toolbox16"><div>6</div></a>
+              </td>
+              <!--<td>
+                <a href="index.html?toolbox17"><div>7</div></a>
+              </td>
+              <td>
+                <a href="index.html?toolbox18"><div>8</div></a>
+              </td>
+              <td>
+                <a href="index.html?toolbox19"><div>9</div></a>
+              </td>
+              <td>
+                <a href="index.html?toolbox20"><div>10</div></a>
+              </td>-->
+            </tr>
+          </table>
+      </div>
+      
+      <span id="s00">　剩下<span id="capacity">0</span>個方塊</span>
+    <!--<a href="#" onclick="changeStage('06')">06</a>
+    <a href="#" onclick="changeStage('07')">07</a>
+    <a href="#" onclick="changeStage('08')">08</a>
+    <a href="index.html?toolbox01">01</a>
+    <a href="index.html?toolbox02">02</a>-->
+  </span>
+
+   <div id="blocklyDiv" style="height: 550px; width: 700px;">
+   </div>
+
+    <div id="game-container"></div>
+    		
+
+	<xml id="toolbox11" style="display: none">
+        <category name="行動" colour="#aaa000">
+            
+            <block type="action_move_forward"></block>
+            
+        </category>
+
+		<!--
+		  <block type="logic_compare"></block>		  
+		  <block type="math_arithmetic"></block>
+		  <block type="text"></block>
+		  <block type="text_print"></block>
+		-->
+	</xml>
+
+	<xml id="toolbox12" style="display: none">
+        <category name="行動" colour="#aaa000">
+            
+            <block type="action_move_forward"></block>
+            <block type="action_turn_left"></block>
+            <block type="action_turn_right"></block>
+        </category>
+	</xml>
+        
+    <xml id="toolbox13" style="display: none">
+        <category name="行動" colour="#aaa000">
+            
+            <block type="action_move_forward"></block>
+            <block type="action_turn_left"></block>
+            <block type="action_turn_right"></block>
+        </category>
+	</xml>
+    
+    <xml id="toolbox14" style="display: none">
+        <category name="行動" colour="#aaa000">
+            
+            <block type="action_move_forward"></block>
+            <block type="action_turn_left"></block>
+            <block type="action_turn_right"></block>
+        </category>
+	</xml>
+    
+    <xml id="toolbox15" style="display: none">
+        <category name="行動" colour="#aaa000">
+            
+            <block type="action_move_forward"></block>
+            <block type="action_turn_left"></block>
+            <block type="action_turn_right"></block>
+        </category>
+	</xml>
+    
+    <xml id="toolbox16" style="display: none">
+        <category name="行動" colour="#aaa000">
+            
+            <block type="action_move_forward"></block>
+            <block type="action_turn_left"></block>
+            <block type="action_turn_right"></block>
+        </category>
+	</xml>
+    
+    <xml id="toolbox17" style="display: none">	
+        <category name="工具箱" colour="#BB0000">
+		  <block type="controls_for">
+              <field name="VAR" id="5~=;H,Dgec{?SNftKUhy">i</field>
+              <value name="FROM">
+                <shadow type="math_number">
+                  <field name="NUM">1</field>
+                </shadow>
+              </value>
+              <value name="TO">
+                <shadow type="math_number">
+                  <field name="NUM">5</field>
+                </shadow>
+              </value>
+              <value name="BY">
+                <shadow type="math_number">
+                  <field name="NUM">1</field>
+                </shadow>
+              </value>
+          </block>
+            <block type="math_number">0</block>
+            <block type="action_eat"></block>	
+            <block type="action_eat1"></block>
+            <block type="math_modulo">
+                <value name="DIVIDEND">
+                  <shadow type="math_number">
+                    <field name="NUM">3</field>
+                  </shadow>
+                </value>
+                <value name="DIVISOR">
+                  <shadow type="math_number">
+                    <field name="NUM">3</field>
+                  </shadow>
+                </value>
+            </block>
+            
+        </category>
+        <category name="變數" colour="#a55b80" custom="VARIABLE"/>
+	</xml>
+    
+    <xml id="toolbox18" style="display: none">	
+        <category name="工具箱" colour="#BB0000">
+		  <block type="controls_for">
+              <field name="VAR" id="5~=;H,Dgec{?SNftKUhy">i</field>
+              <value name="FROM">
+                <shadow type="math_number">
+                  <field name="NUM">1</field>
+                </shadow>
+              </value>
+              <value name="TO">
+                <shadow type="math_number">
+                  <field name="NUM">5</field>
+                </shadow>
+              </value>
+              <value name="BY">
+                <shadow type="math_number">
+                  <field name="NUM">1</field>
+                </shadow>
+              </value>
+          </block>
+            <block type="math_number">0</block>
+            <block type="action_eat"></block>	
+            <block type="action_eat1"></block>
+            <block type="math_modulo">
+                <value name="DIVIDEND">
+                  <shadow type="math_number">
+                    <field name="NUM">3</field>
+                  </shadow>
+                </value>
+                <value name="DIVISOR">
+                  <shadow type="math_number">
+                    <field name="NUM">3</field>
+                  </shadow>
+                </value>
+            </block>
+            
+        </category>
+        <category name="邏輯" colour="#00D0D0">
+            <block type="controls_if">
+                <mutation else="1"/>
+            </block>
+            <block type="logic_compare">
+                <field name="OP">EQ</field>
+            </block>
+        </category>
+        <category name="變數" colour="#a55b80" custom="VARIABLE"/>		
+	</xml>
+    
+    <xml id="toolbox19" style="display: none">	
+        
+	</xml>
+    
+    
+                    <!--<mutation items="5">  </mutation> 這個結束標籤超級重要！-->
+    <!--
+    <xml xmlns="https://developers.google.com/blockly/xml" id="startBlocks" style="display: none">
+      <variables>
+        <variable id="^C^gq/^g|{2C44Lgec:q">Text_List</variable>
+      </variables>
+      <block type="variables_set" id="{)CnytMuNO.1K6B59?VW" x="12" y="38">
+        <field name="VAR" id="^C^gq/^g|{2C44Lgec:q">Text_List</field>
+        <value name="VALUE">
+          <block type="lists_create_with" id="5M()r^9)`!s|cU)2hW/V">
+            <mutation items="5"></mutation>
+            <value name="ADD0">
+              <block type="text" id="|mi2Z:Bq/u|J:ekUpb_,">
+                <field name="TEXT">HOW</field>
+              </block>
+            </value>
+            <value name="ADD1">
+              <block type="text" id="4pTmkxS5oJQGG?)Q!|W:">
+                <field name="TEXT">ECHO</field>
+              </block>
+            </value>
+            <value name="ADD2">
+              <block type="text" id="o32@g!mb1-+?55TT-AJf">
+                <field name="TEXT">LAWYER</field>
+              </block>
+            </value>
+            <value name="ADD3">
+              <block type="text" id="l]Ts)O_j#V_2ErOE,Wx:">
+                <field name="TEXT">LEVEL</field>
+              </block>
+            </value>
+            <value name="ADD4">
+              <block type="text" id="F)hSwD.HZM+P!}U:Xt6}">
+                <field name="TEXT">OLD</field>
+              </block>
+            </value>
+          </block>
+        </value>
+      </block>
+    </xml>                              -->
+    
+	<script src ="gen_workspace.js" > </script>        
+
+    <script>
+
+	    function showCode() {
+	      // Generate JavaScript code and display it.
+	      //Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
+            Blockly.JavaScript.STATEMENT_PREFIX = 'highlightBlock(%1);\n';  //
+            Blockly.JavaScript.addReservedWords('highlightBlock');          //
+	      var code = Blockly.JavaScript.workspaceToCode(workspace);
+            
+            code ="~async function(){ \n    const delay = t => { \n        return new Promise(resolve => { \n                setTimeout(resolve, t);      });      };\n await delay(300); \n" + code + " highlightBlock(null); \n }(); "
+            
+	      alert(code);
+	      console.log('123123');
+	    }
+
+	    var milisec;
+
+	    function runCode() {
+	    	milisec = 300;		//行動等待時間
+	      // Generate JavaScript code and run it.
+	      window.LoopTrap = 1000;
+	      Blockly.JavaScript.INFINITE_LOOP_TRAP =
+	          'if (--window.LoopTrap == 0) throw "Infinite loop.";\n';
+          Blockly.JavaScript.addReservedWords('code');
+            
+            Blockly.JavaScript.STATEMENT_PREFIX = 'highlightBlock(%1);\n';  //
+            Blockly.JavaScript.addReservedWords('highlightBlock');          //
+	      var code = Blockly.JavaScript.workspaceToCode(workspace);
+            
+            code ="codeOver=1; \n ~async function(){ \n    const delay = t => { \n        return new Promise(resolve => { \n                setTimeout(resolve, t);      });      };\n await delay(300); \n" + code + " highlightBlock(null); \n  codeOver=2; \n }(); "        
+            
+	      Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
+	      try {
+	        eval(code);
+	      } catch (e) {
+	        alert(e);
+	      }
+	    }
+
+        
+        function Editable(e) {                    //限制編輯、搬移、刪除block
+            var blocks = workspace.getAllBlocks();
+            for(var i = 0, block; block = blocks[i]; i++) {         //???奇怪的用法…
+                block.setEditable(e);
+                block.setDeletable(e);
+                //block.
+                block.setMovable(e);
+                //原始程式：block.setEditable(!block.isEditable());
+                console.log(e);
+            }
+        }
+        
+        
+	</script>
+
+	<script>
+		//先取得網址字串，假設此頁網址為「index.aspx?id=U001&name=GQSM」
+		let url = location.href;
+        let ary1 = [];
+
+		//再來用去尋找網址列中是否有資料傳遞(QueryString)
+		if(url.indexOf('?')!=-1)
+		{
+		    //之後去分割字串把分割後的字串放進陣列中
+		    ary1 = url.split('?');
+		    
+            //if((ary1[1]=="toolbox13")||(ary1[1]=="toolbox14")||(ary1[1]=="toolbox15")||(ary1[1]=="toolbox16")){
+            //    ary1[1] = "toolbox12";           }
+		}
+		gen_workspace(ary1[1]);		 //參考第97行
+        
+        // 工作區中的初始blocks
+        //Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'), workspace);      //工作區中的初始blocks
+        //Editable(false);
+        //setTimeout(Editable,300,false);
+        
+	</script>
+    
+
+    
+    <script>
+	    var highlightPause = false;
+        //var latestCode = '';
+
+        function highlightBlock(id) {
+            workspace.highlightBlock(id);
+            highlightPause = true;
+        }
+        
+        
+        function onchange(event) {
+            document.getElementById('capacity').textContent = workspace.remainingCapacity();                      //剩餘容量(方塊數量)
+        }
+
+        workspace.addChangeListener(onchange);
+        onchange();                             //????
+        
+        
+    </script>
+
+</body>
+</html>
