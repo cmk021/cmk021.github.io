@@ -1,0 +1,83 @@
+
+<!doctype html>
+
+
+<meta name="robots" content="noindex">
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title></title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<style id="jsbin-css">
+body{
+  line-height:30px;
+}
+</style>
+</head>
+
+<body>
+  第一欄：
+  <input id="a1">
+  <br/> 第二欄：
+  <input id="a2">
+  <br/> 第三欄：
+  <input id="a3">
+  <br/>
+  <button id="b">儲存</button>  <br>
+  <button id="rr">讀取</button>
+    
+  <h3 id="r01"></h3>
+    
+  <script id="jsbin-javascript">
+      $(function() {
+        var $a1 = $('#a1'),
+        $a2 = $('#a2'),
+        $a3 = $('#a3'),
+        $b = $('#b'),
+        $rr = $('#rr'),
+         // $r01 = $('#r01'),
+        a = {};
+
+          $b.on('click', function() {
+            a = {
+                data: $a1.val()+','+ $a2.val()+','+$a3.val(),
+                sheetUrl: '',
+                sheetTag: '工作表1',
+                mode: 1         //寫入模式
+            };
+            console.log(a);
+            $.get('https://script.google.com/macros/s/AKfycbwQX5Xknx6scXF33XpaH81dFvDencOWiq-KmaP7czgHWLJMRkxs/exec', a,function(data){
+                    console.log(data); 
+                    //$("h3").html(data);
+                    $('#r01').html(data);
+                  //$show.append(arr[i]+'<br/>');
+                }
+            );
+          });
+          
+          
+          $rr.on('click', function() {
+            a = {
+                data: 0, // $a1.val()+','+ $a2.val()+','+$a3.val(),
+                sheetUrl: '',
+                sheetTag: '工作表1',
+                mode: 2         //讀取模式
+            };
+            console.log(a);
+            $.get('https://script.google.com/macros/s/AKfycbwQX5Xknx6scXF33XpaH81dFvDencOWiq-KmaP7czgHWLJMRkxs/exec', a,function(data){
+                    console.log(data); 
+                    //$("h3").html(data);
+                    $('#r01').html(data);
+                  //$show.append(arr[i]+'<br/>');
+                }
+            );
+          });
+          
+      });
+  </script>
+    
+</body>
+
+</html>
