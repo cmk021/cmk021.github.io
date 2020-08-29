@@ -1,6 +1,0 @@
-<xml xmlns="https://developers.google.com/blockly/xml" id="toolbox" style="display: none">
-  <category name="行動">
-    <block type="action_move_forward"></block>
-    <block type="action_move_back"></block>
-  </category>
-</xml>
