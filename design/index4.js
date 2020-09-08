@@ -496,7 +496,7 @@ function update(time, delta) {
 //    }
 }
 // update 結束
-var selectedTile=0;           //設計地圖時，選用的圖塊編號。看上面
+var selectedTile=92;           //設計地圖時，選用的圖塊編號。看上面
 var pointerTileX=0;
 var pointerTileY=0;
 var YY=1;
