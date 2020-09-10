@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>自己設計關卡</title>
+    
+    <style>
+        
+        a{text-decoration: none;}
+/*
+        .normal, .normal2{
+            color: white;
+            height: 130px;
+            width: 250px;
+            margin: 0px 25px 0px 25px;
+            float: left;
+            border: 3px #363 solid;
+            border-radius: 6px;
+            font-size: 38px;
+            text-align: center;
+            font-family: 'Comic Sans MS', sans-serif, '微軟正黑體';
+            line-height: 64px;
+        }        
+        .normal:hover, .normal2:hover{
+            border:white solid;
+            cursor: pointer;
+            background: #353;
+        }
+        .normal2{
+            margin: 0px;
+            height: 64px;
+            width: 200px;
+            position: fixed;
+            bottom: 50px;
+            right: 20px;
+            
+        }
+*/
+        #table01{
+            position: fixed;
+            top: 400px;
+            left: 200px;
+            /*height: 40px;*/
+        }
+        td div{
+          border-width: 2px;
+          border-style: solid;
+          border-radius:50%;
+          font-family: 'Comic Sans MS', sans-serif;
+          font-size: 30px;
+          width:50px;
+          height:50px;
+          text-align: center;
+          line-height: 50px; 
+          margin: 6px;
+        }
+        .pass0{     /*td div{*/         /*未檢驗通過樣式*/
+          border-color: #44f844;
+          background-color: #fff;
+        }
+        .pass1{     /*td div{*/         /*已檢驗通過樣式*/
+          border-color: #44f844;
+          background-color: #3b3; 
+        }
+        .pass_now{     /*td div{*/         /*正在過關樣式*/
+            width:30px;
+            height:30px;
+            font-size: 20px;
+            line-height: 30px; 
+        }
+        td span div:hover{
+            color: #fff;
+            text-decoration:underline;
+            font-weight:bolder;
+            background-color: #e90;    /*#3a3;*/
+            cursor:pointer;
+        }  
+        
+        #userinfo{
+            background: #3a3;
+            color: white;
+            height: 81px;
+            width: 60px;
+            position: absolute;
+            top: 6px;
+            left: 1210px;
+/*            right: 6px;*/
+            z-index: 90;
+            border-radius: 3px;
+            font-size: 15px;
+            text-align: center;
+            font-family: 'Comic Sans MS', sans-serif, '微軟正黑體';
+            padding: 2px;
+            /*border: 1px #fff solid;*/
+        }
+        #userimg{
+            height: 60px;
+            width: 60px;
+            background-image: '/pic/1345010101.png';
+        }
+        #userid{
+            font-size: 12px;
+        }
+        
+        #overlay {                     /* 覆蓋在最上層的 div */
+            background-color: #000; /*or semitransparent image 半透明圖像*/
+            color: #fff;
+            opacity: 0.9;
+/*            display: none;*/
+            height: 656px;
+            width: 1280px;
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            z-index: 100;
+            font-size: 80px;
+            text-align: center;
+            font-family: 'Comic Sans MS', sans-serif, '微軟正黑體';
+            line-height: 110px;
+        }
+        
+        #intro, #intro2{
+            height: 150px;
+            width: 680px;
+            position: fixed;
+            top: 160px;
+            left: 170px;
+/*            z-index: 100;*/
+            font-size: 30px;
+/*            text-align: center;*/
+            font-family: 'Comic Sans MS', sans-serif, '微軟正黑體';
+            line-height: 50px;
+            color: white;
+        }
+        #intro2{  display: none;  height: 50px;   width: 890px;  top: 500px;  }
+        button{
+            font-size: 30px;
+            line-height: 33px; 
+            width: 85px; 
+            font-family: 'Comic Sans MS', sans-serif, '微軟正黑體'; "
+        }
+        
+        #divTitle{
+            color: white;
+            font-size: 44px;
+            text-align: center;
+            font-family: 'Comic Sans MS', sans-serif, '微軟正黑體';
+            line-height: 46px;
+            position: fixed;
+            top: 60px;
+            left: 520px;
+        }
+    </style>
+    
+    <script src ="jquery-3.4.1.js"></script>
+    
+</head>
+    
+<body bgcolor="#222">
+    <div id="overlay"><br>資料讀取中………</div>
+    <br/>
+    <div id="divTitle">自己設計關卡</div><br/>
+    <div id="intro">您可在此設計和修改最多10個關卡。<br/>需通過檢驗(真的能過關)，才算設計完成。
+        <br/>設計完成後，就可以讓玩家們上來挑戰囉！
+        <table>
+            <tr> <td><div class="pass0"></div></td>  <td>表示未通過檢驗　　　</td>
+                 <td><div class="pass1"></div></td>  <td>表示已通過檢驗</td>  </tr></table>
+    </div>
+    <div id="intro2">恭喜您設計完成！幫您的關卡取個名稱吧：<input name="sName" type="text" value="最多五個字" size="6" maxlength="5" style="font-size:30px; " /> 
+        <button>上 傳</button>
+<!--        <input name="sName" type="text" disabled="disabled" value="最多五個字" size="5" maxlength="5" readonly="readonly" />-->
+    </div>
+    
+    <div id="table01">
+          <table>
+            <tr>
+              <td><span>
+                <div onclick="linkto('index.html?toolbox11');" id="t01">1</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?toolbox12');" id="t02">2</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?toolbox13');" id="t03">3</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?toolbox14');" id="t04">4</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?toolbox15');" id="t05">5</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?toolbox16');" id="t06">6</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?toolbox17');" id="t07">7</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?toolbox18');" id="t08">8</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?toolbox19');" id="t09">9</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?toolbox20');" id="t10">10</div>
+              </span></td>
+            </tr>
+          </table>
+      </div>                
+      
+    <div id="userinfo">
+        <img src="" id="userimg">
+<!--        <div id="username"></div>-->
+        <div id="userid"></div>
+    </div> 
+    
+</body>
+    
+    <script>
+
+        var data_1 = [];            //存放關卡資訊
+        
+        window.onload=readSheet();                    //網頁載入後，即執行讀取試算表資料
+        function readSheet(){
+            a = {
+                data: 1,           //從第1列開始讀， 讀 2列10欄
+                sheetUrl: '',
+                sheetTag: "自製1",
+                mode: 1         //讀取模式
+            };
+            //document.getElementById('overlay').style.display="";
+            $('#overlay').show();
+            //console.log(a);
+            $.get('https://script.google.com/macros/s/AKfycby_1_F9fcOzOB3qFFuFTlNRVfbT5-VKd4d5_wGKB8GFbD843W9F/exec', a,function(data){
+                    data_1 = data.split(',');
+                    console.log(data_1);                    //檢驗狀況，共20筆
+                    
+                    for( i=0 ; i<10 ; i++ ){
+                        let idi = "#t0" + (i+1) ;       //組合id名稱
+                        if(i==9){    idi="#t10"; }
+                        console.log(idi);
+                        
+                        if( data_1[i]==0 ){          //未檢驗通過
+                            $(idi).addClass('pass0');
+                        }
+                        else if( data_1[i]==1 ){          //已檢驗通過
+                            $(idi).addClass('pass1');
+                        }
+                        else if( data_1[i]==-1 ){          //未開啟
+                            $(idi).hide();
+                        }                        
+                    }
+                    
+                    $('#overlay').html('<br>讀取完成<br>請按一下滑鼠');       //alert(0);
+                    $('#overlay').click(  function(){                   //這麼做是為了避免自動播放音樂會產生錯誤
+                        $('#overlay').hide(); 
+                    } ); 
+                   
+                }
+            );
+        }
+    </script>    
+    
+    
+<script>
+		//先取得網址字串，假設此頁網址為「index.aspx?id=U001&name=GQSM」
+		let url000 = location.href;                             //會是全域變數嗎？
+        let ary1 = [];                                          //會是全域變數嗎？??
+
+		//再來用去尋找網址列中是否有資料傳遞(QueryString)
+		if(url000.indexOf('?')!=-1)
+		{
+		    //之後去分割字串把分割後的字串放進陣列中
+		    ary1 = url000.split('?');
+		}
+        
+        
+        let userName = ary1[1];
+        let userID = ary1[2];
+        let imglink = "/Character/" + ary1[1] + ".png";
+        
+        //document.getElementById('username').textContent = userName;
+        document.getElementById('userid').textContent = userID;
+        document.getElementById("userimg").src = imglink;
+        //$("#username").text = userName;
+        //$("#userid").text = userID;
+        //$("#userimg").attr("background","/pic/1345010101.png");
+    
+    
+        function linkto(addr){
+            let newlink =addr + "?" + ary1[1] + "?" + ary1[2];
+            console.log(newlink);
+            window.location.href = newlink;
+        } 
+</script>
+    
+    
+</html>
