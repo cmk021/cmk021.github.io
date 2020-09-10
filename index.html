@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>基於blockly的遊戲</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css" />
+    <style>
+        body{ background-image: url(''); background-size:cover ;}
+        a{text-decoration: none;}
+        .normal, .normal2{
+            color: white;
+            height: 130px;
+            width: 250px;
+            margin: 0px 25px 0px 25px;
+            /*float: left;*/
+            border: 3px #363 solid;
+            border-radius: 6px;
+            font-size: 38px;
+            text-align: center;
+            font-family: 'Comic Sans MS', sans-serif, '微軟正黑體';
+            line-height: 64px;
+        }        
+        .normal:hover, .normal2:hover{
+            border:white solid;
+            cursor: pointer;
+            background: #353;
+        }
+        .normal2{
+            margin: 0px;
+            height: 64px;
+            width: 200px;
+            position: fixed;
+            bottom: 50px;
+            right: 20px;
+        }
+        
+        span{color: aqua;}
+        #divTitle{
+            color: white;
+            font-size: 46px;
+            text-align: center;
+            font-family: 'Comic Sans MS', sans-serif, '微軟正黑體';
+            line-height: 50px;
+            position: fixed;
+            top: 60px;
+            left: 350px;
+        }
+        
+        #divTable{
+            position: fixed;
+            top: 180px;
+            left: 170px;           
+        }
+        
+        #anim{
+            font-family: 'Comic Sans MS', sans-serif, '微軟正黑體'; 
+            position: fixed; 
+            top: 400px; 
+            left: 670px;
+            color: blanchedalmond;
+            font-size: 32px;
+/*            --animate-repeat: 5;*/
+        }
+    </style>
+</head>
+    
+<body bgcolor="#333">
+    <br/>
+    <div id="divTitle">基於blockly的程式設計遊戲</div><br/><br/><br/>
+    
+    <div id="divTable">
+    <table border="0" align="center" cellpadding="0" cellspacing="0">
+        <tr>
+            <td height="150" align="center" valign="middle">
+                <a href="login.html"><div class="normal" style="line-height: 120px;">帳號登入</div></a>
+            </td>
+            <td height="150" align="center" valign="middle">
+                <a href="register.html"><div class="normal" style="line-height: 120px;">註冊新帳號</div></a>
+            </td>
+            <td height="150" align="center" valign="middle">
+                <a href="/train/trainMenu.html?USER?USER"><div class="normal">以訪客身份<br>開始</div></a>
+            </td>
+        </tr>
+    </table> </div>
+    
+    <div id="anim" class="animate__animated animate__headShake animate__infinite" >建議最佳螢幕解析度: 1280x720
+    <br>瀏覽器建議使用Google Chrome    </div>
+    <a href="#source.html"><div class="normal2">素材來源</div></a>
+<!--
+    <a href="login.html">帳號登入</a>
+    <br><br>
+    <a href="register.html">註冊新帳號</a>
+    <br><br>
+    <a href="menu.html?USER?USER">以訪客身份開始</a>
+    <br><br>
+-->
+    
+    
+</body>
+</html>
