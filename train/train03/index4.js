@@ -770,13 +770,14 @@ function get_object(num) {              //取得物品(物品代號)
         //寫入過關資料
         a = {
             data: '2'+','+ (stageNum+10) +','+ '1' +','+ timeCount,       //寫入到工作表的第2列    //1代表過關
-            sheetUrl: '',  
-            sheetTag: ary4[2],
+            idNum: ary4[3].substr(2,1) ,           //從第3碼開始取1個字！
+            sheetUrl: '',
+            sheetTag: ary4[3].substr(1,1) ,                  //！ 從第2碼開始取1個字
             mode: 3         //寫入模式
         };
         console.log(a);
         
-        $.get('https://script.google.com/macros/s/AKfycbwQX5Xknx6scXF33XpaH81dFvDencOWiq-KmaP7czgHWLJMRkxs/exec', a,function(data){
+        $.get('https://script.google.com/macros/s/AKfycbzFB_nW8mOycJPRL_N25wG3EcX_5ZrlX0X9HxbROLOB5qbDEUGc/exec', a,function(data){
             console.log(data);          //write ok!
             if(stageNum<10){
                 let newLink = ary4[0] + "?toolbox" + (stageNum+11) + "?" + ary4[2] + "?" + ary4[3] ;
