@@ -166,27 +166,27 @@
     
     arym = urlm.split('?');
 
-    function linkto(addr){
+    function linkto(addr){                                    //以頭像和ID連往所選的關卡
         let newlink =addr + "?" + arym[1] + "?" + arym[2];
         window.location.href = newlink;
     }
     //train01/index.html?toolbox11
     //window.location.href;
         
-    bgmusic = new Audio('/sound/bocuma-Skyliner-10PeacefulAtom_use.mp3');
+    bgmusic = new Audio('../sound/bocuma-Skyliner-10PeacefulAtom_use.mp3');
     
     
     window.onload=readSheet;                    //網頁載入後，即執行讀取試算表資料
     function readSheet(){
             a = {
-                data: 1,           //從第1欄開始讀    ??這個好像不需要了！
+                data: arym[2].substr(2,1) ,           //從第3碼開始取1個字！
                 sheetUrl: '',
-                sheetTag: arym[1],                  //注意！在這裡 arym[1] 才是放 username
+                sheetTag: arym[2].substr(1,1) ,                  //！ 從第2碼開始取1個字
                 mode: 4         //讀取模式
             };
             $('#overlay').show();
-            //console.log(a);
-            $.get('https://script.google.com/macros/s/AKfycbwQX5Xknx6scXF33XpaH81dFvDencOWiq-KmaP7czgHWLJMRkxs/exec', a, function(data){
+            console.log(a);
+            $.get('https://script.google.com/macros/s/AKfycbzFB_nW8mOycJPRL_N25wG3EcX_5ZrlX0X9HxbROLOB5qbDEUGc/exec', a, function(data){
                     data_1 = data.split(',');
                     console.log(data_1); 
                     
@@ -207,7 +207,7 @@
     let imglink = "/Character/" + arym[1] + ".png";
         
     //document.getElementById('username').textContent = userName;
-    document.getElementById('userid').textContent = userID;
+    document.getElementById('userid').textContent = userID.substr(-3);
     document.getElementById("userimg").src = imglink;
     
     function showdata(){
