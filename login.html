@@ -20,9 +20,10 @@
     
         #idbox {
             padding-top: 10px;
-            text-align: center;
-            width: 580px;
-            height: 360px;
+            padding-left: 9px;
+            text-align: left;
+            width: 575px;
+            height: 450px;
             position: fixed;
             top: 85px;
             left: 10px;
@@ -31,39 +32,41 @@
         }
 
         #yourname{
-            font-size: 35px;
-            line-height: 45px;
+            font-size: 22px;
+            line-height: 34px;
             color: white;
             font-family: 'sans-serif', '微軟正黑體';
-            position: relative;
+            position: fixed;
+            left: 22px;
+            top: 490px;
         }
         
         #userid{
             text-align: center;
-            width: 170px;
-            height: 46px;
+            width: 430px;
+            height: 32px;
             color: black;
-            font-size: 35px;
-            line-height: 45px;
-            font-family: 'Arial';
+            font-size: 18px;
+            line-height: 28px;
+            font-family: '微軟正黑體';
             background: white;
-            border: 3px #ac0 solid;
+            border: 3px #07c solid;
             border-radius: 4px;
             position: absolute;
-            left: 290px;
+            left: 125px;
             top: 0px;
         }
         
         .selec{
             width: 100px;
-            height: 130px;
+            height: 100px;
 /*            background: black;*/
             border: 2px solid #333;
             border-radius: 4px;
 /*            padding: 2px;*/
             margin: 5px;
             float: left;
-            margin-top: 20px;
+            margin-top: 40px;
         }
         img{
             width: 96px;
@@ -100,7 +103,7 @@
             color:darkred;
         }     */
         
-        #overlay {                     /* 覆蓋在最上層的 div */
+        #overlay, #overlay2 {                     /* 覆蓋在最上層的 div */
             background-color: #000; /*or semitransparent image 半透明圖像*/
             color: #fff;
             opacity: 0.9;
@@ -116,15 +119,21 @@
             font-family: 'Comic Sans MS', sans-serif, '微軟正黑體';
             line-height: 105px;
         }
+        #overlay {  display: none;  }
         
-        #regist{
+        #regist {
             line-height: 45px;
             width:120px;
             font-family: '微軟正黑體';
             position: fixed;
-            left: 540px;
-            top: 500px;
+            left: 690px;
+            top: 490px;
+            display: block;
+            font-size: 35px;
+            font-weight: bold;
+            text-align: center;
         }
+        
         a img{ border: 2px solid #fff;  border-radius: 6px;}
         a img:hover{  border: 2px solid #0ff;  background-color: white;}
     </style>
@@ -171,70 +180,46 @@
     
     window.onload=readSheet;                    //網頁載入後，即執行讀取試算表資料
     function readSheet(){
-            a = {
-                data: 1,           //從第1欄開始讀    ??這個好像不需要了！
-                sheetUrl: '',
-                sheetTag: 'ACC',
-                mode: 5   //讀取模式
-            };
-            $('#overlay').show();
-            //console.log(a);
-            $.get('https://script.google.com/macros/s/AKfycbwQX5Xknx6scXF33XpaH81dFvDencOWiq-KmaP7czgHWLJMRkxs/exec', a, function(data){
-                    accUsed = data.split(',');
-                    console.log(accUsed); 
-                    
-                    //$('#r01').html(data);
-                    $('#overlay').html('<br>讀取完成<br>請按一下滑鼠<br>您必需選擇您已經註冊的角色，<br>並正確輸入你的名字，才能登入。');       //alert(0);
-                    $('#overlay').click(  function(){                   //這麼做是為了避免自動播放音樂會產生錯誤
-                        $('#overlay').hide(); 
-                        bgmusic.play();     bgmusic.volume=0.3;
-                        
-//                        for(i=0;i<10;i++){
-//                            if(accUsed[i]!=0){
-//                                let iid = "#u"+i ;
-//                                $(document).ready(function(){
-//                                    $(iid).addClass('used');
-//                                });
-//                            }
-//                        }
-                        
-                    } );
-                }
-            ); 
+        $('#overlay2').click(  function(){                   //這麼做是為了避免自動播放音樂會產生錯誤
+            $('#overlay2').hide(); 
+            bgmusic.play();     
+            bgmusic.volume=0.3;
+        } );
+
     }
     
     function log_in(){                           //按下 登入
-        let getdata;
-        let userID = document.getElementById('userid').textContent ;
+        //let getdata;                            //此行多餘…
+        let userID = document.getElementById('userid').value ;
         
         confirm1.play();
         
-        if (userID.length <3){
-            alert("抱歉！名字至少要 3個字！\n請更改你的名字。");
+        if (userID.length <6){
+            alert("抱歉！帳號至少要 6個字！\n請更改你的Email");
         }else if(userNum==10){                  //表示尚未選取角色
-            alert("您還沒選擇角色。\Ｎ請選擇您已經註冊的角色，並正確輸入你的名字，才能登入。");
+            alert("您還沒選擇角色。");
         }else{
-                                        //先檢查該角色是否先被人佔用 若無，就請他先到註冊網頁註冊???！
-            let data5 = (userNum + 1) + "," + userID;       console.log(data5);
+                                        //先檢查該帳號是否先被人佔用。 若無，就請他先到註冊網頁註冊???！
+            let data5 = userID;         //(userNum + 1) + "," + userID;       console.log(data5);
             a = {
                 data: data5,           //從第 userNum + 1 欄讀取
                 sheetUrl: '',
                 sheetTag: 'ACC',
-                mode: 7   //登入模式
+                mode: 10   //登入模式
             };
             $('#overlay').html('<br>登入帳號中<br>請稍候……');
             $('#overlay').show();
-            $.get('https://script.google.com/macros/s/AKfycbwQX5Xknx6scXF33XpaH81dFvDencOWiq-KmaP7czgHWLJMRkxs/exec', a, function(data){
-                    getdata = data;
+            $.get('https://script.google.com/macros/s/AKfycbxwHMUuQTA4uWU54Tj3S7Ia3ZySAL_T48cuGhsWT1vwwt0tvthX/exec', a, function(reData){
+                    //getdata = data;
                     
-                    if(getdata != 'success'){
+                    if(reData == 'notFound'){
                         $('#overlay').html('抱歉！<br>您所輸入的資料有誤！<br>網頁將重新整理…<br>請重新登入，或註冊一個新帳號');       //alert(0);
-                        setTimeout( function(){ location.reload(); } , 4000 );
+                        setTimeout( function(){ location.reload(); } , 3500 );
                         
                     }else{
-                        $('#overlay').html('<br>登入成功！將自動進入遊戲選單<br>祝您遊戲愉快！');
+                        $('#overlay').html('<br>登入成功！<br>將自動進入遊戲選單<br>祝您遊戲愉快！');
                         setTimeout( function(){
-                            location.href = "train/trainMenu.html" + "?" + userName + "?" + userID;
+                            location.href = "train/trainMenu.html" + "?" + userName + "?" + reData;
                         } , 3000 );
                     }
                 }
@@ -248,21 +233,22 @@
     
 <body bgcolor="#333">
     &nbsp;<a href="index.html"><img title="回首頁" style="width: 60px; height:60px" src="pic/home2.png" /></a> 
-    <div id="overlay"><br>讀取資料中……<br>您必需選擇您已經註冊的角色，<br>並正確輸入你的名字，才能登入。</div>
+    <div id="overlay2"><br>請輸入已註冊通過的Email<br>並選用一個頭像<br><br>請按一下滑鼠</div>
+    <div id="overlay"> </div>
     
-    <button onclick="log_in();" id="regist">登 入</button>
+<!--    <button onclick="log_in();" id="regist">登 入</button>-->
     
     <div id="rolebox"><br>
-    <div class="selec" onclick="setName(0,'YANG');"><img src="Character/YANG.png"/><span id="u0">楊樂多</span></div>
-    <div class="selec" onclick="setName(1,'BOOK');"><img src="Character/BOOK.png"/><span id="u1">妙而書</span></div>
-    <div class="selec" onclick="setName(2,'ZERO');"><img src="Character/ZERO.png"/><span id="u2">柯玲芬</span></div>
-    <div class="selec" onclick="setName(3,'NPC');"><img src="Character/NPC.png"/><span id="u3">恩披西</span></div>
-    <div class="selec" onclick="setName(4,'CINNA');"><img src="Character/CINNA.png"/><span id="u4">希茵娜</span></div> 
-    <div class="selec" onclick="setName(5,'DEE');"><img src="Character/DEE.png"/><span id="u5">低惠貴</span></div>
-    <div class="selec" onclick="setName(6,'WASH');"><img src="Character/WASH.png"/><span id="u6">席婉姬</span></div>
-    <div class="selec" onclick="setName(7,'LUWAN');"><img src="Character/LUWAN.png"/><span id="u7">鄭祿完</span></div>
-    <div class="selec" onclick="setName(8,'ADIDA');"><img src="Character/ADIDA.png"/><span id="u8">愛滴答</span></div>
-    <div class="selec" onclick="setName(9,'DISNY');"><img src="Character/DISNY.png"/><span id="u9">敵視你</span></div> 
+    <div class="selec" onclick="setName(0,'YANG');"><img src="Character/YANG.png"/><span id="u0"></span></div>
+    <div class="selec" onclick="setName(1,'BOOK');"><img src="Character/BOOK.png"/><span id="u1"></span></div>
+    <div class="selec" onclick="setName(2,'ZERO');"><img src="Character/ZERO.png"/><span id="u2"></span></div>
+    <div class="selec" onclick="setName(3,'NPC');"><img src="Character/NPC.png"/><span id="u3"></span></div>
+    <div class="selec" onclick="setName(4,'CINNA');"><img src="Character/CINNA.png"/><span id="u4"></span></div> 
+    <div class="selec" onclick="setName(5,'DEE');"><img src="Character/DEE.png"/><span id="u5"></span></div>
+    <div class="selec" onclick="setName(6,'WASH');"><img src="Character/WASH.png"/><span id="u6"></span></div>
+    <div class="selec" onclick="setName(7,'LUWAN');"><img src="Character/LUWAN.png"/><span id="u7"></span></div>
+    <div class="selec" onclick="setName(8,'ADIDA');"><img src="Character/ADIDA.png"/><span id="u8"></span></div>
+    <div class="selec" onclick="setName(9,'DISNY');"><img src="Character/DISNY.png"/><span id="u9"></span></div> 
     </div>
     
     <div id="idbox">
@@ -303,29 +289,103 @@
     <button onclick="showText('Y');">Y</button>
     <button onclick="showText('Z');">Z</button> 
     <button onclick="showText('.');">.</button> 
-    <button onclick="showText('_');">_</button> 
-    <button style="width:103px" onclick="showText('back');">←</button> 
-    <br><br><br>
+    <button onclick="showText('@');">@</button> 
+    <button style="width:103px" onclick="showText('back');">←</button> <br/>
+    <button onclick="showText('a');">a</button> 
+    <button onclick="showText('b');">b</button>
+    <button onclick="showText('c');">c</button>    
+    <button onclick="showText('d');">d</button>
+    <button onclick="showText('e');">e</button> 
+    <button onclick="showText('f');">f</button>
+    <button onclick="showText('g');">g</button> 
+    <button onclick="showText('h');">h</button> 
+    <button onclick="showText('i');">i</button> 
+    <button onclick="showText('j');">j</button> <br/>
+    <button onclick="showText('k');">k</button>
+    <button onclick="showText('l');">l</button>    
+    <button onclick="showText('m');">m</button>
+    <button onclick="showText('n');">n</button> 
+    <button onclick="showText('o');">o</button>
+    <button onclick="showText('p');">p</button> 
+    <button onclick="showText('q');">q</button> 
+    <button onclick="showText('r');">r</button>
+    <button onclick="showText('s');">s</button> 
+    <button onclick="showText('t');">t</button>  <br/>
+    <button onclick="showText('u');">u</button>
+    <button onclick="showText('v');">v</button>
+    <button onclick="showText('w');">w</button>    
+    <button onclick="showText('x');">x</button>
+    <button onclick="showText('y');">y</button> 
+    <button onclick="showText('z');">z</button>
         
-    <div id="yourname">你的名字： 　　　　　<div id="userid"></div></div>
+    </div> <!-- idbox-->
+        
+<!--    <div id="yourname">你的名字： 　　　　　<div id="userid"></div></div>-->
     
-    </div>          <!-- idbox-->
+        <form onsubmit="return false">   
+            <div id="yourname">你的Email： <input type="email" size="55" maxlength="50" id="userid" value="也可用鍵盤輸入" /></div>
+             
+<!--            <button onclick="regis();" id="regist">註 冊</button>-->
+            <input type="submit" onclick="log_in();" id="regist" value="登 入" disabled />
+        </form> 
 </body>
     
 <script>
+    
     function showText(char){
         click1.play();
-        let text0 = document.getElementById('userid').textContent;
+        let text0 = document.getElementById('userid').value;            //???
         
         if (char=="back"){
-            document.getElementById('userid').textContent = text0.substr(0, text0.length-1 );
+            document.getElementById('userid').value = text0.substr(0, text0.length-1 );
+            if(text0.length<30){
+                document.getElementById('userid').style.fontSize = "18px";
+            }
         }
-        else if(text0.length<5){
-            document.getElementById('userid').textContent = text0 + char;
+        else if(text0.length<50){
+            document.getElementById('userid').value = text0 + char;
+            if(text0.length>=30){
+                document.getElementById('userid').style.fontSize = "12px";
+            }
         }else{
-            alert("最多只能輸入5個字");
+            alert("最多只能輸入50個字");
         }
+        
+        if(inputs.checkValidity()) {                            //checkValidity() 空白會判定為 true
+            if(inputs.value!=""){
+                document.getElementById('regist').disabled =false;
+                inputs.style.borderColor="green";
+            }
+
+        } else{
+            document.getElementById('regist').disabled =true;
+            inputs.style.borderColor="red";
+        } 
     }
+    
+    var inputs = document.getElementById('userid');
+    inputs.addEventListener('input', function(){
+        console.log(inputs.checkValidity());
+        if(inputs.checkValidity()) {                            //檢查輸入的資料是否合乎規則
+            if(inputs.value!=""){
+                document.getElementById('regist').disabled =false;
+                inputs.style.borderColor="green";
+            }
+//            $('#userid').addClass('valid');
+//            $('#userid').removeClass('invalid');
+//            console.log("999");
+//            inputs.classList.add('valid');
+//            inputs.classList.remove('invalid');
+        } else{
+            document.getElementById('regist').disabled =true;
+            inputs.style.borderColor="red";
+//            $('#userid').addClass('invalid');
+//            $('#userid').removeClass('valid');
+//            console.log("000");
+//            inputs.classList.add('invalid');
+//            inputs.classList.remove('valid');
+        } 
+    } );
 </script>    
     
     
