@@ -270,8 +270,9 @@ function create() {
 
     let bbb = {
         data: stageNum,           //從第 x欄開始讀
+        readRow: Number(ary4[3].substr(1,2))* 10+7,
         sheetUrl: '',
-        sheetTag: "自製1",
+        sheetTag: 0,        //
         mode: 2.5         //讀取提示模式
     };
     $.get('https://script.google.com/macros/s/AKfycby_1_F9fcOzOB3qFFuFTlNRVfbT5-VKd4d5_wGKB8GFbD843W9F/exec', bbb,     function(tipData){                       //console.log(tipData);
@@ -281,8 +282,9 @@ function create() {
     
         let aaa = {
             data: stageNum,           //從第 x欄開始讀
+            readRow: Number(ary4[3].substr(1,2))* 10+3,
             sheetUrl: '',
-            sheetTag: "自製1",
+            sheetTag: 0,        //
             mode: 2         //讀取模式
         };
             //$('#overlay').show();
@@ -818,9 +820,10 @@ function get_object(num) {              //取得物品(物品代號)
         //寫入通過檢驗資料
         a = {
             //data: '2'+','+ (stageNum+30) +','+ '1' +','+ timeCount,       //寫入到工作表的第2欄    //1代表過關
-            data: (1 *10-9) +','+ stageNum +','+ timeCount,    //寫入檢驗過關資料  //第1號，寫在第1列。2號寫在11列...
+            data: stageNum +','+ timeCount,    //寫入檢驗過關資料  //第1號，寫在第1列。2號寫在11列...
+            writeRow: Number(ary4[3].substr(1,2))* 10+1,
             sheetUrl: '',  
-            sheetTag: '自製1',  //ary4[2],
+            sheetTag: 0,  //ary4[2],
             mode: 3         //寫入模式
         };
         console.log(a);

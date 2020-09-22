@@ -367,6 +367,43 @@
 	</style>
     
     <script>
+		//先取得網址字串，假設此頁網址為「index.aspx?id=U001&name=GQSM」
+		let url000 = location.href;                             //會是全域變數嗎？
+        let ary1 = [];                                          //會是全域變數嗎？??
+
+		//再來用去尋找網址列中是否有資料傳遞(QueryString)
+		if(url000.indexOf('?')!=-1)
+		{
+		    //之後去分割字串把分割後的字串放進陣列中
+		    ary1 = url000.split('?');
+		}
+        else{                       //假如網址沒有問號
+            ary1[0] = "";
+            ary1[1] = "toolbox00";
+        }
+    
+		//gen_workspace(ary1[1]);		 //產生工作區????   移到讀取自創關卡資料之後
+        
+        let userName = ary1[2];
+        let userID = ary1[3];
+        let imglink = "/Character/" + ary1[2] + ".png";
+        
+        //document.getElementById('username').textContent = userName;
+//以下兩行搬到 950 行以後
+//        document.getElementById('userid').textContent = userID.substr(-3);
+//        document.getElementById("userimg").src = imglink;
+        //$("#username").text = userName;
+        //$("#userid").text = userID;
+        //$("#userimg").attr("background","/pic/1345010101.png");
+    
+    
+        // 工作區中的初始blocks
+        //Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'), workspace);      //工作區中的初始blocks
+        //Editable(false);
+        //setTimeout(Editable,300,false);    
+    </script>
+    
+    <script>
         
         let bgmusic=[];                     //背景音樂
         let bgmIndex = 0;                   //背景音樂曲目索引
@@ -384,14 +421,21 @@
         window.onload=readSheet;                    //網頁載入後，即執行讀取試算表資料
         function readSheet(){
             a = {
-                data: 1,           //從第1列開始讀， 讀 2列10欄???
+                data: userID.substr(1,2),           //???
+                uID: userID,
                 sheetUrl: '',
-                sheetTag: "自製1",
+                sheetTag: 0,//userID.substr(1,1),
                 mode: 1         //讀取模式
             };
             $('#overlay').show();
             //console.log(a);
             $.get('https://script.google.com/macros/s/AKfycby_1_F9fcOzOB3qFFuFTlNRVfbT5-VKd4d5_wGKB8GFbD843W9F/exec', a,function(data){
+                
+                if(data =='idError'){   
+                    alert("帳號資料有誤！\n請重新登入");
+                    window.location.href = "/login.html";  
+                }
+                
                     data_1 = data.split(',');
                     console.log(data_1);                    //檢驗狀況，共20筆
                     
@@ -886,42 +930,6 @@
 </body>
     
 <script>
-		//先取得網址字串，假設此頁網址為「index.aspx?id=U001&name=GQSM」
-		let url000 = location.href;                             //會是全域變數嗎？
-        let ary1 = [];                                          //會是全域變數嗎？??
-
-		//再來用去尋找網址列中是否有資料傳遞(QueryString)
-		if(url000.indexOf('?')!=-1)
-		{
-		    //之後去分割字串把分割後的字串放進陣列中
-		    ary1 = url000.split('?');
-		}
-        else{                       //假如網址沒有問號
-            ary1[0] = "";
-            ary1[1] = "toolbox00";
-        }
-    
-		//gen_workspace(ary1[1]);		 //產生工作區????   移到讀取自創關卡資料之後
-        
-        let userName = ary1[2];
-        let userID = ary1[3];
-        let imglink = "/Character/" + ary1[2] + ".png";
-        
-        //document.getElementById('username').textContent = userName;
-        document.getElementById('userid').textContent = userID;
-        document.getElementById("userimg").src = imglink;
-        //$("#username").text = userName;
-        //$("#userid").text = userID;
-        //$("#userimg").attr("background","/pic/1345010101.png");
-    
-    
-        // 工作區中的初始blocks
-        //Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'), workspace);      //工作區中的初始blocks
-        //Editable(false);
-        //setTimeout(Editable,300,false);    
-</script>
-    
-<script>
 	    var highlightPause = false;
         //var latestCode = '';
 
@@ -940,6 +948,10 @@
         
 </script>
     
+    <script>
+        document.getElementById('userid').textContent = userID.substr(-3);
+        document.getElementById("userimg").src = imglink;
+    </script>
     
 <script>
     let tipsMsg =["",
@@ -1098,17 +1110,18 @@
                 
         let a = {
                 data: stageNum,                 //寫在第x欄
+                writeRow: Number(ary1[3].substr(1,2))* 10,          //根據ID計算要寫入在哪一列
                 gndData: gndary,
                 objData: objary,
                 roleData: roleary,
                 toolData: toolary,
                 tips: tipsMsg[stageNum],            //?
                 sheetUrl: '',
-                sheetTag: '自製1',
+                sheetTag: 0,
                 mode: 4         //寫入模式
             };
-            
-            //console.log(a);
+            console.log(a);
+        
             $.get('https://script.google.com/macros/s/AKfycby_1_F9fcOzOB3qFFuFTlNRVfbT5-VKd4d5_wGKB8GFbD843W9F/exec', a,function(data00){
                     //data_1 = data;
                     console.log(data00);                    //write ok!?                   

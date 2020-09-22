@@ -216,6 +216,40 @@
     </div> 
     
 </body>
+
+    <script>
+		//先取得網址字串，假設此頁網址為「index.aspx?id=U001&name=GQSM」
+		let url000 = location.href;                             //會是全域變數嗎？
+        let ary1 = [];                                          //會是全域變數嗎？??
+
+		//再來用去尋找網址列中是否有資料傳遞(QueryString)
+		if(url000.indexOf('?')!=-1)
+		{
+		    //之後去分割字串把分割後的字串放進陣列中
+		    ary1 = url000.split('?');
+		}
+        
+        
+        let userName = ary1[1];
+        let userID = ary1[2];
+        let imglink = "/Character/" + ary1[1] + ".png";
+        
+        //document.getElementById('username').textContent = userName;
+        document.getElementById('userid').textContent = userID.substr(-3);
+        document.getElementById("userimg").src = imglink;
+        //$("#username").text = userName;
+        //$("#userid").text = userID;
+        //$("#userimg").attr("background","/pic/1345010101.png");
+    
+    
+        function linkto(addr){
+            let newlink =addr + "?" + ary1[1] + "?" + ary1[2];
+            console.log(newlink);
+            window.location.href = newlink;
+        } 
+        
+    </script>
+    
     
     <script>
 
@@ -224,15 +258,22 @@
         window.onload=readSheet();                    //網頁載入後，即執行讀取試算表資料
         function readSheet(){
             a = {
-                data: 1,           //從第1列開始讀， 讀 2列10欄
+                data: userID.substr(1,2),           //???
+                uID: userID,
                 sheetUrl: '',
-                sheetTag: "自製1",
+                sheetTag: 0,//userID.substr(1,1),
                 mode: 1         //讀取模式
             };
             //document.getElementById('overlay').style.display="";
             $('#overlay').show();
             //console.log(a);
             $.get('https://script.google.com/macros/s/AKfycby_1_F9fcOzOB3qFFuFTlNRVfbT5-VKd4d5_wGKB8GFbD843W9F/exec', a,function(data){
+                
+                if(data =='idError'){   
+                    alert("帳號資料有誤！\n請重新登入");
+                    window.location.href = "/login.html";  
+                }
+                
                     data_1 = data.split(',');
                     console.log(data_1);                    //檢驗狀況，共20筆
                     
@@ -261,39 +302,6 @@
             );
         }
     </script>    
-    
-    
-<script>
-		//先取得網址字串，假設此頁網址為「index.aspx?id=U001&name=GQSM」
-		let url000 = location.href;                             //會是全域變數嗎？
-        let ary1 = [];                                          //會是全域變數嗎？??
-
-		//再來用去尋找網址列中是否有資料傳遞(QueryString)
-		if(url000.indexOf('?')!=-1)
-		{
-		    //之後去分割字串把分割後的字串放進陣列中
-		    ary1 = url000.split('?');
-		}
-        
-        
-        let userName = ary1[1];
-        let userID = ary1[2];
-        let imglink = "/Character/" + ary1[1] + ".png";
-        
-        //document.getElementById('username').textContent = userName;
-        document.getElementById('userid').textContent = userID;
-        document.getElementById("userimg").src = imglink;
-        //$("#username").text = userName;
-        //$("#userid").text = userID;
-        //$("#userimg").attr("background","/pic/1345010101.png");
-    
-    
-        function linkto(addr){
-            let newlink =addr + "?" + ary1[1] + "?" + ary1[2];
-            console.log(newlink);
-            window.location.href = newlink;
-        } 
-</script>
     
     
 </html>
