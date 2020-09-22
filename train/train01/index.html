@@ -41,14 +41,22 @@
         window.onload=readSheet;                    //網頁載入後，即執行讀取試算表資料
         function readSheet(){
             a = {
-                data: 1,           //從第1列開始讀
+                data: 1 ,
+                idNum: ary1[3].substr(2,1) ,           //從第3碼開始取1個字！
+                uID: ary1[3],                           //比對id用
                 sheetUrl: '',
-                sheetTag: ary1[2],
+                sheetTag: ary1[3].substr(1,1) ,                  //！ 從第2碼開始取1個字
                 mode: 2         //讀取模式
             };
             $('#overlay').show();
-            //console.log(a);
-            $.get('https://script.google.com/macros/s/AKfycbwQX5Xknx6scXF33XpaH81dFvDencOWiq-KmaP7czgHWLJMRkxs/exec', a,function(data){
+            console.log(a);
+            $.get('https://script.google.com/macros/s/AKfycbzFB_nW8mOycJPRL_N25wG3EcX_5ZrlX0X9HxbROLOB5qbDEUGc/exec', a,function(data){
+                
+                if(data =='idError'){   
+                    alert("帳號資料有誤！\n請重新登入");
+                    window.location.href = "/login.html";  
+                }
+                
                     data_1 = data.split(',');
                     console.log(data_1); 
                     
@@ -411,7 +419,7 @@
         let imglink = "/Character/" + ary1[2] + ".png";
         
         //document.getElementById('username').textContent = userName;
-        document.getElementById('userid').textContent = userID;
+        document.getElementById('userid').textContent = userID.substr(-3);
         document.getElementById("userimg").src = imglink;
         //$("#username").text = userName;
         //$("#userid").text = userID;
