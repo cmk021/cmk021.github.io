@@ -104,7 +104,7 @@
           text-decoration:none;
         }*/
         
-        #overlay ,#overlay2 ,#overlay3 ,#overlayT ,#overlayEnd{                     /* 覆蓋在最上層的 div */
+        #overlay, #overlay2, #overlay3, #overlayT, #overlayU, #overlayEnd {         /* 覆蓋在最上層的 div */
             background-color: #000; /*or semitransparent image 半透明圖像*/
             color: #fff;
             opacity: 0.9;
@@ -229,7 +229,7 @@
             padding: 7px;
             font-family: 'Comic Sans MS', sans-serif, '微軟正黑體'; 
         }
-        #savetips, #savetooles, #giveup{
+        #savetips, #savetooles, #giveup, #selecall{
             font-size: 35px;
             line-height: 42px;
             font-weight: bold;
@@ -531,6 +531,7 @@
     <div id="overlay2"></div>
     <div id="overlay3"><br><br>執行中……</div>
     <div id="overlayT"></div>
+    <div id="overlayU"></div>
     <div id="overlayEnd" title="按一下滑鼠"><br>確實過關才能通過檢驗, <br>請重新檢查一下吧！</div>
     
     <div class="animate__animated animate__flipInX" id="dialogbox"><div id="diatext" style="padding: 19px 35px;"></div></div>
@@ -558,7 +559,7 @@
         <table id="table02" width="676" border="0" align="left" cellpadding="2px" cellspacing="0">
           <tr>
             <td width="260" height="220" align="left" valign="middle" bgcolor="#E4E4E4">
-              <div>　<input type="checkbox" class="chek" value="1"> <img src="/pic/block1.png"></div>
+              <div>　<input onclick="return false" title="此工具必選" type="checkbox" class="chek" value="1"> <img src="/pic/block1.png"></div>
               <div>　<input type="checkbox" class="chek" value="2"> <img src="/pic/block2.png"></div>
               <div>　<input type="checkbox" class="chek" value="3"> <img src="/pic/block3.png"></div>
               <div>　<input type="checkbox" class="chek" value="4"> <img src="/pic/block4.png"></div>
@@ -640,8 +641,12 @@
               <option value="40">40</option>
          </select>
       </label>
-        <br><br><br><br><br><br><br><br><br><br><br>
+        <br><br><br><br><br><br><br>
+        <p style="color: white"><input type="checkbox" name="all" onclick="check_all(this)" />全選/全不選</p>
+<!--        <button id="selecall" onclick="selectAll();">全 選</button>-->
+        <br>
         <button id="savetooles" onclick="saveTools();">儲 存</button>
+        
     </div>   
     
     <div style="position: fixed; top: 621px; left: 501px; text-align: right; width: 205px; color: #fff; font-size: 20px;">
@@ -1035,6 +1040,14 @@
         $('#run_over').show();      //蓋住執行按鈕
     }   
     
+    function check_all(obj){
+        var idd2 = document.getElementsByClassName('chek');              //取得全部的核取方塊元素
+        
+        for(var i = 1; i < idd2.length; i++  ){
+            idd2[i].checked = obj.checked;;
+        }
+    }
+    
     var toolsAry = new Array();             //存放已被選用的 block工具
     var toolsXML;                           //存放已被選用的 block工具 的XML
     
@@ -1105,8 +1118,8 @@
         //console.log(roleary);
         console.log(toolary);
         
-        $('#overlayT').html("<br>資料上傳中，請稍候…");    
-        $('#overlayT').show();
+        $('#overlayU').html("<br>資料上傳中，請稍候…");    
+        $('#overlayU').show();
                 
         let a = {
                 data: stageNum,                 //寫在第x欄
@@ -1125,8 +1138,8 @@
             $.get('https://script.google.com/macros/s/AKfycby_1_F9fcOzOB3qFFuFTlNRVfbT5-VKd4d5_wGKB8GFbD843W9F/exec', a,function(data00){
                     //data_1 = data;
                     console.log(data00);                    //write ok!?                   
-                    $('#overlayT').html('<br>上傳完成<br>請按一下滑鼠');     
-                    $('#overlayT').click(   function(){ $('#overlayT').hide(); }    );
+                    $('#overlayU').html('<br>上傳完成<br>請按一下滑鼠');     
+                    $('#overlayU').click(   function(){ $('#overlayU').hide(); }    );
                     $('#run_over').hide();
                 }
             );
