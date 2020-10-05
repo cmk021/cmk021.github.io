@@ -111,7 +111,7 @@ function preload() {
     
   //this.load.spritesheet("hero", "dude.png", { frameWidth: 32, frameHeight: 48 });
   //this.load.spritesheet("hero", "Charas14.png", { frameWidth: 32, frameHeight: 48 });
-  this.load.spritesheet("gini", "/pic/1345.png", { frameWidth: 48, frameHeight: 48 });       //角色圖
+  this.load.spritesheet("gini", "../Character/"+ ary4[2] +"2.png", { frameWidth: 48, frameHeight: 48 });   //角色圖
    // this.load.spritesheet("npc0", "pic/yuhinamv128.png", { frameWidth: 45, frameHeight: 45 });       //老頭角色圖
       //this.load.spritesheet("gini1", "pic/pacman242.png", { frameWidth: 48, frameHeight: 48 });
   //this.load.spritesheet("hero", "Charas144.png", 32, 48 );
@@ -272,7 +272,7 @@ function create() {
         data: stageNum,           //從第 x欄開始讀
         readRow: Number(ary4[3].substr(1,2))* 10+7,
         sheetUrl: '',
-        sheetTag: 0,        //
+        sheetTag: ary4[3].substr(0,1),        //
         mode: 2.5         //讀取提示模式
     };
     $.get('https://script.google.com/macros/s/AKfycby_1_F9fcOzOB3qFFuFTlNRVfbT5-VKd4d5_wGKB8GFbD843W9F/exec', bbb,     function(tipData){                       //console.log(tipData);
@@ -284,7 +284,7 @@ function create() {
             data: stageNum,           //從第 x欄開始讀
             readRow: Number(ary4[3].substr(1,2))* 10+3,
             sheetUrl: '',
-            sheetTag: 0,        //
+            sheetTag: ary4[3].substr(0,1),        //
             mode: 2         //讀取模式
         };
             //$('#overlay').show();
@@ -812,7 +812,7 @@ function get_object(num) {              //取得物品(物品代號)
 //        }
         
         setTimeout( function(){
-            $('#overlayEnd').html(strWin);
+            $('#overlayEnd').html(strWin + '<div id="gifdiv"><img src="../pic/user16.gif" /></div>');
             //$('#overlayEnd').html('<br>恭喜您過關了！ <br>共花費 秒<br>將自動進到下一關！');
             $('#overlayEnd').show();
         },2000);     //????
@@ -823,7 +823,7 @@ function get_object(num) {              //取得物品(物品代號)
             data: stageNum +','+ timeCount,    //寫入檢驗過關資料  //第1號，寫在第1列。2號寫在11列...
             writeRow: Number(ary4[3].substr(1,2))* 10+1,
             sheetUrl: '',  
-            sheetTag: 0,  //ary4[2],
+            sheetTag: ary4[3].substr(0,1),  //ary4[2],
             mode: 3         //寫入模式
         };
         console.log(a);
@@ -874,6 +874,7 @@ function something_ahead(n,option){           //前方是否有………
     
     if ((option == 'way')||(option == 'Lway')||(option == 'Rway')){
         if ((ground >= 92 )&&(ground <= 129)&&(obj<233)){           //npc、敵人算沒有路
+            if(obj == 231){return false;}                           //前有巨坑算無路
             return true;
         }else{
             return false;

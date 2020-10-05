@@ -39,7 +39,7 @@
 */
         #table01{
             position: fixed;
-            top: 400px;
+            top: 440px;
             left: 200px;
             /*height: 40px;*/
         }
@@ -106,7 +106,7 @@
         #overlay {                     /* 覆蓋在最上層的 div */
             background-color: #000; /*or semitransparent image 半透明圖像*/
             color: #fff;
-            opacity: 0.9;
+            opacity: 0.95;
 /*            display: none;*/
             height: 656px;
             width: 1280px;
@@ -122,7 +122,7 @@
         
         #intro, #intro2{
             height: 150px;
-            width: 680px;
+            width: 930px;
             position: fixed;
             top: 160px;
             left: 170px;
@@ -151,6 +151,16 @@
             top: 60px;
             left: 520px;
         }
+        
+        #gifdiv, #gifdiv img{
+            position: fixed;
+            left: 1150px;
+            top: 530px;
+            width: 48px;
+            height: 48px;
+        }
+        
+        #sPage{     color: aqua;    }
     </style>
     
     <script src ="jquery-3.4.1.js"></script>
@@ -158,19 +168,20 @@
 </head>
     
 <body bgcolor="#222">
-    <div id="overlay"><br>資料讀取中………</div>
+    <div id="overlay"><br>資料讀取中………<div id="gifdiv"><img src="../pic/user16.gif" /></div></div>
     <br/>
     <div id="divTitle">自己設計關卡</div><br/>
     <div id="intro">您可在此設計和修改最多10個關卡。<br/>需通過檢驗(真的能過關)，才算設計完成。
         <br/>設計完成後，就可以讓玩家們上來挑戰囉！
+        <br/>在「挑戰自製關卡」選單中的第 <span id="sPage"></span>頁，可以挑戰您設計好的關卡。
         <table>
             <tr> <td><div class="pass0"></div></td>  <td>表示未通過檢驗　　　</td>
                  <td><div class="pass1"></div></td>  <td>表示已通過檢驗</td>  </tr></table>
     </div>
-    <div id="intro2">恭喜您設計完成！幫您的關卡取個名稱吧：<input name="sName" type="text" value="最多五個字" size="6" maxlength="5" style="font-size:30px; " /> 
+<!--    <div id="intro2">恭喜您設計完成！幫您的關卡取個名稱吧：<input name="sName" type="text" value="最多五個字" size="6" maxlength="5" style="font-size:30px; " />
         <button>上 傳</button>
-<!--        <input name="sName" type="text" disabled="disabled" value="最多五個字" size="5" maxlength="5" readonly="readonly" />-->
-    </div>
+        <input name="sName" type="text" disabled="disabled" value="最多五個字" size="5" maxlength="5" readonly="readonly" />
+    </div>    -->
     
     <div id="table01">
           <table>
@@ -241,6 +252,7 @@
         //$("#userid").text = userID;
         //$("#userimg").attr("background","/pic/1345010101.png");
     
+        document.getElementById('sPage').textContent = Number(userID.substr(0,2))-9;
     
         function linkto(addr){
             let newlink =addr + "?" + ary1[1] + "?" + ary1[2];
@@ -261,7 +273,7 @@
                 data: userID.substr(1,2),           //???
                 uID: userID,
                 sheetUrl: '',
-                sheetTag: 0,//userID.substr(1,1),
+                sheetTag: userID.substr(0,1),
                 mode: 1         //讀取模式
             };
             //document.getElementById('overlay').style.display="";

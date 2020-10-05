@@ -107,7 +107,7 @@
         #overlay, #overlay2, #overlay3, #overlayT, #overlayU, #overlayEnd {         /* 覆蓋在最上層的 div */
             background-color: #000; /*or semitransparent image 半透明圖像*/
             color: #fff;
-            opacity: 0.9;
+            opacity: 0.95;
             display: none;
             height: 656px;
             width: 1280px;
@@ -131,7 +131,7 @@
         #overlay3 {
             background-color: transparent;
             color: #f00;
-            opacity: 0.9;
+            opacity: 0.95;
             height: 70%;
             width: 65%;            
         }
@@ -139,7 +139,7 @@
         
         #dialogbox {                                  /* 在z-index: 90 的 div */
             /*background-color: #ccc;  or semitransparent image 半透明圖像*/
-            background-image: url("/pic/dialog2.png");
+            background-image: url("../pic/dialog2.png");
             display: none;
             height: 145px;
             width: 500px;
@@ -170,7 +170,7 @@
         }
         
         #run ,#run_over{
-            background-image: url("/pic/run.png");
+            background-image: url("../pic/run.png");
             height: 49px;
             width: 90px;
             position: absolute;
@@ -180,7 +180,7 @@
         }
         #run_over{background-color: #666;    z-index: 91;    background-image: url("");    opacity:0.85;}
         #mmenu {
-            background-image: url("/pic/menu.png");
+            background-image: url("../pic/menu.png");
             height: 49px;
             width: 49px;
             position: absolute;
@@ -196,7 +196,7 @@
             background-position:0px -98px;
         }
         #tips, #changeTips, #saveall, #blocktool {
-            background-image: url("/pic/tips0.png");
+            background-image: url("../pic/tips0.png");
             height: 64px;
             width: 100px;
             position: absolute;
@@ -206,15 +206,15 @@
             background-position:0px -64px;
         }
         #changeTips {
-            background-image: url("/pic/tips_chang.png");
+            background-image: url("../pic/tips_chang.png");
             left: 113px;
         }
         #saveall {
-            background-image: url("/pic/upload.png");
+            background-image: url("../pic/upload.png");
             left: 329px;
         }
         #blocktool {
-            background-image: url("/pic/tool.png");
+            background-image: url("../pic/tool.png");
             left: 218px;
         }
         #tips:hover, #changeTips:hover, #saveall:hover, #blocktool:hover  {
@@ -257,7 +257,7 @@
         #userimg{
             height: 60px;
             width: 60px;
-            background-image: '/pic/1345010101.png';
+            background-image: '../pic/1345010101.png';
         }
         #userid{
             line-height: 12px;
@@ -265,7 +265,7 @@
         }
         
         #showgrid {
-            background-image: url("/pic/grid.png");
+            background-image: url("../pic/grid.png");
             height: 49px;
             width: 49px;
             position: fixed;
@@ -282,7 +282,7 @@
             background-position:0px -98px;
         }
         #bgmplay ,#bgmclose{
-            background-image: url("/pic/bgm.png");
+            background-image: url("../pic/bgm.png");
             background-size:60px;
             background-position:0px 0px;
             height: 49px;
@@ -300,7 +300,7 @@
         .selec ,.selec2{
             width: 48px;
             height: 48px;
-            background-image: url("/pic/0-199.png");
+            background-image: url("../pic/0-199.png");
             border: 3px solid #333;
             border-radius: 2px;
 /*            padding: 2px;*/
@@ -320,7 +320,7 @@
             border: 2px #fff solid;
             border-radius: 6px;
         }
-        .selec:hover{
+        .selec:hover, .selec2:hover{
             border: 3px #fff solid;
         }
         .selected{
@@ -328,7 +328,7 @@
             border-color: #f44;
             border-style: dashed;
         }
-        .selec2{background-image:url("/pic/1345.png");}
+        .selec2{background-image:url("../pic/1345.png");}
         
         #tile0{background-image:url(""); background-color: black}
         #tile203{background-position:-96px -960px;}
@@ -364,6 +364,14 @@
             display: none;
         }
         #toolLibrary input {    width:20px;     height:20px;    }
+        
+        #gifdiv, #gifdiv img{
+            position: fixed;
+            left: 1150px;
+            top: 530px;
+            width: 48px;
+            height: 48px;
+        }
 	</style>
     
     <script>
@@ -394,7 +402,7 @@
 //        document.getElementById("userimg").src = imglink;
         //$("#username").text = userName;
         //$("#userid").text = userID;
-        //$("#userimg").attr("background","/pic/1345010101.png");
+        //$("#userimg").attr("background","../pic/1345010101.png");
     
     
         // 工作區中的初始blocks
@@ -424,7 +432,7 @@
                 data: userID.substr(1,2),           //???
                 uID: userID,
                 sheetUrl: '',
-                sheetTag: 0,//userID.substr(1,1),
+                sheetTag: userID.substr(0,1),
                 mode: 1         //讀取模式
             };
             $('#overlay').show();
@@ -527,7 +535,7 @@
 
 
 <body bgcolor="#333333">                                <!-- body 在此！ -->
-    <div id="overlay"><br>資料讀取中………</div>
+    <div id="overlay"><br>資料讀取中………<div id="gifdiv"><img src="../pic/user16.gif" /></div></div>
     <div id="overlay2"></div>
     <div id="overlay3"><br><br>執行中……</div>
     <div id="overlayT"></div>
@@ -559,17 +567,17 @@
         <table id="table02" width="676" border="0" align="left" cellpadding="2px" cellspacing="0">
           <tr>
             <td width="260" height="220" align="left" valign="middle" bgcolor="#E4E4E4">
-              <div>　<input onclick="return false" title="此工具必選" type="checkbox" class="chek" value="1"> <img src="/pic/block1.png"></div>
-              <div>　<input type="checkbox" class="chek" value="2"> <img src="/pic/block2.png"></div>
-              <div>　<input type="checkbox" class="chek" value="3"> <img src="/pic/block3.png"></div>
-              <div>　<input type="checkbox" class="chek" value="4"> <img src="/pic/block4.png"></div>
+              <div>　<input onclick="return false" title="此工具必選" type="checkbox" class="chek" value="1"> <img src="../pic/block1.png"></div>
+              <div>　<input type="checkbox" class="chek" value="2"> <img src="../pic/block2.png"></div>
+              <div>　<input type="checkbox" class="chek" value="3"> <img src="../pic/block3.png"></div>
+              <div>　<input type="checkbox" class="chek" value="4"> <img src="../pic/block4.png"></div>
             </td>
             <td width="15" height="220" align="center" valign="middle"></td>
             <td width="395" height="220" align="left" valign="middle" bgcolor="#E4E4E4">
-              <div>　<input type="checkbox" class="chek" value="31"> <img src="/pic/block31.png"></div>
-              <div>　<input type="checkbox" class="chek" value="32"> <img src="/pic/block32.png"></div>
-              <div>　<input type="checkbox" class="chek" value="33"> <img src="/pic/block33.png"></div>
-              <div>　<input type="checkbox" class="chek" value="34"> <img src="/pic/block34.png"></div>
+              <div>　<input type="checkbox" class="chek" value="31"> <img src="../pic/block31.png"></div>
+              <div>　<input type="checkbox" class="chek" value="32"> <img src="../pic/block32.png"></div>
+              <div>　<input type="checkbox" class="chek" value="33"> <img src="../pic/block33.png"></div>
+              <div>　<input type="checkbox" class="chek" value="34"> <img src="../pic/block34.png"></div>
                 <div>　<input type="checkbox" class="chek" value="40"> <span style="font-size: 18px; background-color: #c57Ba0;">變 數</span><img src=""></div>
             </td>
           </tr>
@@ -580,20 +588,20 @@
           </tr>
           <tr>
             <td width="260" height="310" align="left" valign="middle" bgcolor="#E4E4E4">
-              <div>　<input type="checkbox" class="chek" value="21"> <img src="/pic/block21.png"></div>
-              <div>　<input type="checkbox" class="chek" value="22"> <img src="/pic/block22.png" title="前方、右方、左方有路，則傳回 真(True)"></div>
-              <div>　<input type="checkbox" class="chek" value="23"> <img src="/pic/block23.png" title="前方有樹、山、河，則傳回 真(True)"></div>
-              <div>　<input type="checkbox" class="chek" value="24"> <img src="/pic/block24.png"></div>
-              <div>　<input type="checkbox" class="chek" value="25"> <img src="/pic/block25.png"></div>
-              <div>　<input type="checkbox" class="chek" value="26"> <img src="/pic/block26.png"></div>
-              <div>　<input type="checkbox" class="chek" value="27"> <img src="/pic/block27.png"></div>
+              <div>　<input type="checkbox" class="chek" value="21"> <img src="../pic/block21.png"></div>
+              <div>　<input type="checkbox" class="chek" value="22"> <img src="../pic/block22.png" title="前方、右方、左方有路，則傳回 真(True)"></div>
+              <div>　<input type="checkbox" class="chek" value="23"> <img src="../pic/block23.png" title="前方有樹、山、河，則傳回 真(True)"></div>
+              <div>　<input type="checkbox" class="chek" value="24"> <img src="../pic/block24.png"></div>
+              <div>　<input type="checkbox" class="chek" value="25"> <img src="../pic/block25.png"></div>
+              <div>　<input type="checkbox" class="chek" value="26"> <img src="../pic/block26.png"></div>
+              <div>　<input type="checkbox" class="chek" value="27"> <img src="../pic/block27.png"></div>
               </td>
             <td width="15" height="310" align="center" valign="middle"></td>
             <td width="395" height="310" align="left" valign="middle" bgcolor="#E4E4E4">
-              <div>　<input type="checkbox" class="chek" value="11"> <img src="/pic/block11.png"></div>
-              <div>　<input type="checkbox" class="chek" value="12"> <img src="/pic/block12.png"></div>
-              <div>　<input type="checkbox" class="chek" value="13"> <img src="/pic/block13.png"></div>
-              <div>　<input type="checkbox" class="chek" value="14"> <img src="/pic/block14.png"></div> 
+              <div>　<input type="checkbox" class="chek" value="11"> <img src="../pic/block11.png"></div>
+              <div>　<input type="checkbox" class="chek" value="12"> <img src="../pic/block12.png"></div>
+              <div>　<input type="checkbox" class="chek" value="13"> <img src="../pic/block13.png"></div>
+              <div>　<input type="checkbox" class="chek" value="14"> <img src="../pic/block14.png"></div> 
             </td>
           </tr>
         </table>
@@ -756,7 +764,7 @@
     <div id="tilebox">
         <div class="selec" onclick="selectTile(0);" title="清除地形和物品" id="tile0"></div>
         <div class="selec" onclick="selectTile(203);" title="物品：鑽石" id="tile203"></div>
-        <div class="selec" onclick="selectTile(231);" title="物品：巨坑。放在平路上會被判定為有路" id="tile231"></div>
+        <div class="selec" onclick="selectTile(231);" title="物品：巨坑。放在平路上會被判定為沒有路" id="tile231"></div>
         <div class="selec selected" onclick="selectTile(92);" title="地形：可行走的平路" id="tile92"></div>
         <div class="selec" onclick="selectTile(93);" title="地形：可行走的平路" id="tile93"></div> 
         <div class="selec" onclick="selectTile(94);" title="地形：可行走的平路" id="tile94"></div>
@@ -1118,7 +1126,7 @@
         //console.log(roleary);
         console.log(toolary);
         
-        $('#overlayU').html("<br>資料上傳中，請稍候…");    
+        $('#overlayU').html('<br>資料上傳中，請稍候...<div id="gifdiv"><img src="../pic/user16.gif" /></div>');    
         $('#overlayU').show();
                 
         let a = {
@@ -1130,7 +1138,7 @@
                 toolData: toolary,
                 tips: tipsMsg[stageNum],            //?
                 sheetUrl: '',
-                sheetTag: 0,
+                sheetTag: userID.substr(0,1),
                 mode: 4         //寫入模式
             };
             console.log(a);
