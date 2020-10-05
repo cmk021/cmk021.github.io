@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>挑戰自製關卡</title>
+    
+    <style>
+        
+        a{text-decoration: none;}
+/*
+        .normal, .normal2{
+            color: white;
+            height: 130px;
+            width: 250px;
+            margin: 0px 25px 0px 25px;
+            float: left;
+            border: 3px #363 solid;
+            border-radius: 6px;
+            font-size: 38px;
+            text-align: center;
+            font-family: 'Comic Sans MS', sans-serif, '微軟正黑體';
+            line-height: 64px;
+        }        
+        .normal:hover, .normal2:hover{
+            border:white solid;
+            cursor: pointer;
+            background: #353;
+        }
+        .normal2{
+            margin: 0px;
+            height: 64px;
+            width: 200px;
+            position: fixed;
+            bottom: 50px;
+            right: 20px;
+            
+        }     */
+        
+        #table01{
+            position: fixed;
+            top: 110px;
+            left: 360px;
+            /*height: 40px;*/
+        }
+        #table01 td div{
+          border-width: 2px;
+          border-style: solid;
+          border-radius:50%;
+          font-family: 'Comic Sans MS', sans-serif;
+          font-size: 20px;
+          width:32px;
+          height:32px;
+          text-align: center;
+          line-height: 32px; 
+          margin-left: 6px;
+          margin-right: 6px;
+          margin-bottom: 3px;
+          margin-top: 3px;
+        }
+        .pass0{     /*td div{*/         /*未檢驗通過樣式*/
+/*          border-color: #44f844;*/
+/*          background-color: #fff;*/
+            display: none;
+        }
+        .pass1{     /*td div{*/         /*已檢驗通過樣式*/
+          border-color: #44f844;
+          background-color: #3b3; 
+        }
+        .pass_now{     /*td div{*/         /*正在過關樣式*/
+            width:30px;
+            height:30px;
+            font-size: 20px;
+            line-height: 30px; 
+        }
+        td span div:hover{
+            color: #fff;
+            text-decoration:underline;
+            font-weight:bolder;
+            background-color: #e90;    /*#3a3;*/
+            cursor:pointer;
+        }  
+        .uName{
+            border-width: 0px;
+            font-size: 26px;
+            font-family: 'Comic Sans MS', sans-serif;
+            color: aliceblue;
+        }
+        
+        
+        #userinfo{
+            background: #3a3;
+            color: white;
+            height: 81px;
+            width: 60px;
+            position: absolute;
+            top: 6px;
+            left: 1210px;
+/*            right: 6px;*/
+            z-index: 90;
+            border-radius: 3px;
+            font-size: 15px;
+            text-align: center;
+            font-family: 'Comic Sans MS', sans-serif, '微軟正黑體';
+            padding: 2px;
+            /*border: 1px #fff solid;*/
+        }
+        #userimg{
+            height: 60px;
+            width: 60px;
+            background-image: '/pic/1345010101.png';
+        }
+        #userid{
+            font-size: 12px;
+        }
+        
+        #overlay {                     /* 覆蓋在最上層的 div */
+            background-color: #000; /*or semitransparent image 半透明圖像*/
+            color: #fff;
+            opacity: 0.9;
+/*            display: none;*/
+            height: 656px;
+            width: 1280px;
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            z-index: 100;
+            font-size: 80px;
+            text-align: center;
+            font-family: 'Comic Sans MS', sans-serif, '微軟正黑體';
+            line-height: 110px;
+        }
+        
+        #intro, #intro2{
+            height: 150px;
+            width: 680px;
+            position: fixed;
+            top: 160px;
+            left: 170px;
+/*            z-index: 100;*/
+            font-size: 30px;
+/*            text-align: center;*/
+            font-family: 'Comic Sans MS', sans-serif, '微軟正黑體';
+            line-height: 50px;
+            color: white;
+        }
+        #intro2{  display: none;  height: 50px;   width: 890px;  top: 500px;  }
+        
+        button{
+            font-size: 27px;
+            line-height: 38px; 
+            width: 180px; 
+            font-family: 'Comic Sans MS', sans-serif, '微軟正黑體'; "
+        }
+        
+        #divTitle{
+            color: white;
+            font-size: 44px;
+            text-align: center;
+            font-family: 'Comic Sans MS', sans-serif, '微軟正黑體';
+            line-height: 46px;
+            position: fixed;
+            top: 35px;
+            left: 520px;
+        }
+        
+        #gifdiv, #gifdiv img{
+            position: fixed;
+            left: 1150px;
+            top: 530px;
+            width: 48px;
+            height: 48px;
+        }
+        
+        tr:hover{     background-color: #555;        }
+        
+        .slidecontainer {
+            position: fixed;
+            left: 300px;
+            top: 550px;  
+            width: 680px;
+            color: aliceblue;
+            text-align: right;
+        }
+
+        .slider {
+          -webkit-appearance: none;
+          width: 100%;
+          height: 10px;
+          border-radius: 5px;
+          background: #d3d3d3;
+          outline: none;
+          opacity: 0.65;
+          -webkit-transition: .2s;
+          transition: opacity .2s;
+        }
+
+        .slider:hover {
+          opacity: 1;
+        }
+
+        .slider::-webkit-slider-thumb {
+          -webkit-appearance: none;
+          appearance: none;
+          width: 28px;
+          height: 29px;
+          border: 0;
+          background: url('pic/W_Throw003.png');
+          cursor: pointer;
+        }
+
+        .slider::-moz-range-thumb {
+          width: 28px;
+          height: 29px;
+          border: 0;
+          background: url('pic/W_Throw003.png');
+          cursor: pointer;
+        }
+        
+        #sPage{
+            font-size: 20px;
+            font-family: 'Comic Sans MS', sans-serif, '微軟正黑體';
+        }
+        #showPage, #totalPage{  color:aquamarine ;    }
+        
+        #mmenu {
+            background-image: url("/pic/menu.png");
+            height: 49px;
+            width: 49px;
+            position: absolute;
+            top: 1px;
+            left: 10px;
+            z-index: 90;            
+        }
+        #mmenu:hover ,#run:hover {
+            background-position:0px -49px;
+            cursor: pointer;
+        }
+        #mmenu:active ,#run:active {                       /*按下時的背景圖偏移*/
+            background-position:0px -98px;
+        }
+    </style>
+    
+    <script src ="jquery-3.4.1.js"></script>
+    
+</head>
+    
+<body bgcolor="#222">
+    <div id="overlay"><br>資料讀取中………<div id="gifdiv"><img src="../pic/user16.gif" /></div></div>
+    <br/>
+    <div onclick="linkto3();" id="mmenu" title="back to menu"></div>
+    
+    <div id="divTitle">挑戰自製關卡</div><br/>
+<!--
+    <div id="intro">您可在此設計和修改最多10個關卡。<br/>需通過檢驗(真的能過關)，才算設計完成。
+        <br/>設計完成後，就可以讓玩家們上來挑戰囉！
+        <table>
+            <tr> <td><div class="pass0"></div></td>  <td>表示未通過檢驗　　　</td>
+                 <td><div class="pass1"></div></td>  <td>表示已通過檢驗</td>  </tr></table>
+    </div>
+    <div id="intro2">恭喜您設計完成！幫您的關卡取個名稱吧：<input name="sName" type="text" value="最多五個字" size="6" maxlength="5" style="font-size:30px; " /> 
+        <button>上 傳</button>
+-->
+<!--        <input name="sName" type="text" disabled="disabled" value="最多五個字" size="5" maxlength="5" readonly="readonly" />
+    </div>      -->
+    
+    <div id="table01">
+          <table cellpadding="0" cellspacing="0" border="0">
+            <tr>
+              <td width="115px" align="right">    <span id="nn0" class="uName">...</span>      </td>
+                
+              <td><span>
+                <div onclick="linkto('index.html?t00');" id="t01">1</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t01');" id="t02">2</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t02');" id="t03">3</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t03');" id="t04">4</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t04');" id="t05">5</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t05');" id="t06">6</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t06');" id="t07">7</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t07');" id="t08">8</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t08');" id="t09">9</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t09');" id="t10">10</div>
+              </span></td>
+            </tr>
+              
+            <tr>
+              <td width="80px" align="right">    <span id="nn1" class="uName">...</span>      </td>
+                
+              <td><span>
+                <div onclick="linkto('index.html?t10');" id="t11">1</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t11');" id="t12">2</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t12');" id="t13">3</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t13');" id="t14">4</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t14');" id="t15">5</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t15');" id="t16">6</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t16');" id="t17">7</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t18');" id="t18">8</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t18');" id="t19">9</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t19');" id="t20">10</div>
+              </span></td>
+            </tr>
+              
+            <tr>
+              <td width="80px" align="right">    <span id="nn2" class="uName">...</span>      </td>
+                
+              <td><span>
+                <div onclick="linkto('index.html?t20');" id="t21">1</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t21');" id="t22">2</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t22');" id="t23">3</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t23');" id="t24">4</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t24');" id="t25">5</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t25');" id="t26">6</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t26');" id="t27">7</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t27');" id="t28">8</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t28');" id="t29">9</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t29');" id="t30">10</div>
+              </span></td>
+            </tr>
+              
+            <tr>
+              <td width="80px" align="right">    <span id="nn3" class="uName">...</span>      </td>
+
+              <td><span>
+                <div onclick="linkto('index.html?t30');" id="t31">1</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t31');" id="t32">2</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t32');" id="t33">3</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t33');" id="t34">4</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t34');" id="t35">5</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t35');" id="t36">6</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t36');" id="t37">7</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t37');" id="t38">8</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t38');" id="t39">9</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t39');" id="t40">10</div>
+              </span></td>
+            </tr>
+              
+            <tr>
+              <td width="80px" align="right">    <span id="nn4" class="uName">...</span>      </td>
+
+              <td><span>
+                <div onclick="linkto('index.html?t40');" id="t41">1</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t41');" id="t42">2</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t42');" id="t43">3</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t43');" id="t44">4</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t44');" id="t45">5</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t45');" id="t46">6</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t46');" id="t47">7</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t47');" id="t48">8</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t48');" id="t49">9</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t49');" id="t50">10</div>
+              </span></td>
+            </tr>
+              
+            <tr>
+              <td width="80px" align="right">    <span id="nn5" class="uName">...</span>      </td>
+
+              <td><span>
+                <div onclick="linkto('index.html?t50');" id="t51">1</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t51');" id="t52">2</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t52');" id="t53">3</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t53');" id="t54">4</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t54');" id="t55">5</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t55');" id="t56">6</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t56');" id="t57">7</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t57');" id="t58">8</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t58');" id="t59">9</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t59');" id="t60">10</div>
+              </span></td>
+            </tr>
+              
+            <tr>
+              <td width="80px" align="right">    <span id="nn6" class="uName">...</span>      </td>
+
+              <td><span>
+                <div onclick="linkto('index.html?t60');" id="t61">1</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t61');" id="t62">2</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t62');" id="t63">3</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t63');" id="t64">4</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t64');" id="t65">5</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t65');" id="t66">6</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t66');" id="t67">7</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t67');" id="t68">8</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t68');" id="t69">9</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t69');" id="t70">10</div>
+              </span></td>
+            </tr>
+              
+            <tr>
+              <td width="80px" align="right">    <span id="nn7" class="uName">...</span>      </td>
+
+              <td><span>
+                <div onclick="linkto('index.html?t70');" id="t71">1</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t71');" id="t72">2</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t72');" id="t73">3</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t73');" id="t74">4</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t74');" id="t75">5</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t75');" id="t76">6</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t76');" id="t77">7</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t77');" id="t78">8</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t78');" id="t79">9</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t79');" id="t80">10</div>
+              </span></td>
+            </tr>
+              
+            <tr>
+              <td width="80px" align="right">    <span id="nn8" class="uName">...</span>      </td>
+
+              <td><span>
+                <div onclick="linkto('index.html?t80');" id="t81">1</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t81');" id="t82">2</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t82');" id="t83">3</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t83');" id="t84">4</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t84');" id="t85">5</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t85');" id="t86">6</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t86');" id="t87">7</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t87');" id="t88">8</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t88');" id="t89">9</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t89');" id="t90">10</div>
+              </span></td>
+            </tr>
+              
+            <tr>
+              <td width="80px" align="right">    <span id="nn9" class="uName">...</span>      </td>
+
+              <td><span>
+                <div onclick="linkto('index.html?t90');" id="t91">1</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t91');" id="t92">2</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t92');" id="t93">3</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t93');" id="t94">4</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t94');" id="t95">5</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t95');" id="t96">6</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t96');" id="t97">7</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t97');" id="t98">8</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t98');" id="t99">9</div>
+              </span></td>
+              <td><span>
+                <div onclick="linkto('index.html?t99');" id="t100">10</div>
+              </span></td>
+            </tr>
+          </table>
+      </div>                
+      
+    <div id="userinfo">
+        <img src="" id="userimg">
+<!--        <div id="username"></div>-->
+        <div id="userid"></div>
+    </div> 
+    
+    <div class="slidecontainer">
+      <input type="range" min="1" max="100" value="1" class="slider" id="myRange">
+        <p> </p>
+        <button onclick="linkto2();">前往第<span id="demo"></span>頁</button>
+        <span id="sPage">　　　　　　第<span id="showPage"></span>頁／共<span id="totalPage"></span>頁</span>
+    </div>
+
+    
+</body>
+
+    <script>
+		//先取得網址字串，假設此頁網址為「index.aspx?id=U001&name=GQSM」
+		let url000 = location.href;                             //會是全域變數嗎？
+        let ary1 = [];                                          //會是全域變數嗎？??
+
+		//再來用去尋找網址列中是否有資料傳遞(QueryString)
+		if(url000.indexOf('?')!=-1)
+		{
+		    //之後去分割字串把分割後的字串放進陣列中
+		    ary1 = url000.split('?');
+		}
+        
+        
+        let userName = ary1[1];
+        let userID = ary1[2];
+        let imglink = "../Character/" + ary1[1] + ".png";
+        
+        //document.getElementById('username').textContent = userName;
+        document.getElementById('userid').textContent = userID.substr(-3);
+        document.getElementById("userimg").src = imglink;
+        //$("#username").text = userName;
+        //$("#userid").text = userID;
+        //$("#userimg").attr("background","/pic/1345010101.png");
+    
+    
+        function linkto(addr){
+            let newlink ="";
+            newlink = addr + ary1[3] + "?" + ary1[1] + "?" + ary1[2];
+            console.log(newlink);
+            window.location.href = newlink;
+        } 
+        
+        function linkto2(){                                    //以頭像和ID連往所選的關卡
+            let pageN = String(page);
+            if(page <= 9){
+                pageN = "0" + page;
+            }
+            
+            let newlink2 = "dareMenu.html" + "?" + ary1[1] + "?" + ary1[2] + "?pg" + pageN;
+            console.log(newlink2);
+            window.location.href = newlink2;
+        }
+        
+        function linkto3(){
+            let newlink = "../train/trainMenu.html?" + ary1[1] + "?" + ary1[2];
+            console.log(newlink);
+            window.location.href = newlink;
+        } 
+    </script>
+    
+    
+    <script>
+
+        var data_1 = [];            //存放關卡資訊
+        
+        window.onload=readSheet();                    //網頁載入後，即執行讀取試算表資料
+        function readSheet(){
+            a = {
+                data: userID.substr(1,2),           //???
+                uID: userID,
+                readRow: (Number(ary1[3].substr(-2))-1)*10+1,
+                sheetUrl: '',
+                sheetTag: 'ALL',//userID.substr(1,1),
+                mode: 5         //讀取模式
+            };
+            //document.getElementById('overlay').style.display="";
+            $('#overlay').show();
+            //console.log(a);
+            $.get('https://script.google.com/macros/s/AKfycby_1_F9fcOzOB3qFFuFTlNRVfbT5-VKd4d5_wGKB8GFbD843W9F/exec', a,function(data){
+                
+                console.log(data);
+                if(data =='idError'){   
+                    alert("帳號資料有誤！\n請重新登入");
+                    window.location.href = "/login.html";  
+                }
+                
+                    data_1 = data.split(',');
+                    console.log(data_1);                    //111筆
+                    //let idi="";
+                    
+                    for( var i=0 ; i<100 ; i++ ){
+                        let idi = "#t0" + (i+1) ;       //組合id名稱
+                        if(i>=9){    idi="#t" + String(i+1); }
+                        //console.log(idi);
+                        
+                        if( data_1[i]==0 ){          //未檢驗通過
+                            $(idi).addClass('pass0');
+                        }
+                        else if( data_1[i]==1 ){          //已檢驗通過
+                            $(idi).addClass('pass1');
+                        }
+                        else if( data_1[i]==-1 ){          //未開啟
+                            $(idi).hide();
+                        }                        
+                    }
+                
+                    for( var k=0 ; k<10 ; k++ ){                        //秀出玩家ID末3碼
+                        let idi2 = "nn" + k ;       //組合id名稱
+                        document.getElementById(idi2).textContent = data_1[100+k].substr(-3)+"　";
+                        console.log(data_1[100+k]);
+                    }
+                
+                    document.getElementById('showPage').textContent = Number(ary1[3].substr(-2));
+                    document.getElementById('totalPage').textContent = Math.floor( data_1[110]/10 +0.999);
+                
+                    $('#overlay').html('<br>讀取完成<br>請按一下滑鼠');       //alert(0);
+                    $('#overlay').click(  function(){          
+                        $('#overlay').fadeOut(); 
+                    } ); 
+                   
+                }
+            );
+        }
+    </script>    
+    
+    <script>
+        var slider = document.getElementById("myRange");
+        var output = document.getElementById("demo");
+        
+        var page =1;
+        output.innerHTML = page;
+
+        slider.oninput = function() {
+            page = Math.floor( data_1[110]/10 * this.value /100 +0.999);
+            //page = Math.floor( 50.1 * this.value /100 +0.999);
+            output.innerHTML = page;
+        }
+    </script>
+    
+</html>

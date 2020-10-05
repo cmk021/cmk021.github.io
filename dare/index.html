@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>挑戰自製關卡</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css"/>
+	<!-- <script src="//cdn.jsdelivr.net/npm/phaser@3.11.0/dist/phaser.js"></script>
+	-->
+    <script src="/phaser.min.js"></script>
+
+	<script src ="blocksjs/blockly_compressed.js" > </script> 
+	<script src ="blocksjs/blocks_compressed.js" > </script> 
+	<script src ="blocksjs/javascript_compressed.js"></script>
+
+	<script src ="blocksjs/zh-hant.js" > </script>
+	<script src ="jquery-3.4.1.js"></script>
+	<!-- <script src ="gen_workspace.js" > </script>  -->
+	<style type="text/css">
+        
+		#game-container {         /*遊戲畫面的位置*/
+			position: absolute;
+		  	left: 723px;
+		 	top: 50px;
+	    }
+
+      	#game-container > canvas {
+	        border-radius: 6px;
+	        border: 1px;
+	        border-color: brown;
+            /*border-style: solid;*/
+	    }
+
+        
+        #s00 ,#time01{                             /*顯示剩餘方塊數的元素*/
+            font-family: 'Comic Sans MS', sans-serif, '微軟正黑體';
+            position: fixed;
+            top: 12px;
+            left: 168px; 
+            background-color: #fff;
+            color:#333;
+            border-radius: 4px;
+            border-color: #FFD948;
+            border-width: 3px;
+	        border-style: solid;
+	        padding: 0px 9px;
+            line-height: 30px;
+        }
+        #capacity { color: #b3e;}           /*顯示剩餘方塊數的元素*/
+        #time01{                               /*顯示過關使用時間的元素*/
+            line-height: 27px; 
+            left: 1108px; 
+            width: 70px; 
+            border-color: #3b3; 
+            text-align: right;
+        }        
+        
+        #table01{
+            position: fixed;
+            top: 7px;
+            left: 320px;
+            /*height: 40px;*/
+        }
+        td span div{
+          border-width: 2px;
+          border-style: solid;
+          border-radius:50%;
+          font-family: 'Comic Sans MS', sans-serif;
+          font-size: 15px;
+          width:22px;
+          height:22px;
+          text-align: center;
+          line-height: 22px; 
+          cursor:pointer;
+        }
+        .pass0{     /*td div{*/         /*未過關樣式*/
+          border-color: #44f844;
+          background-color: #fff;
+        }
+        .pass1{     /*td div{*/         /*已過關樣式*/
+          border-color: #44f844;
+          background-color: #3b3; 
+        }
+        .pass_now{     /*td div{*/         /*正在過關樣式*/
+            width:30px;
+            height:30px;
+            font-size: 20px;
+            line-height: 30px; 
+        }
+        td span div:hover{
+            color: #fff;
+            text-decoration:underline;
+            font-weight:bolder;
+            background-color: #e90;    /*#3a3;*/
+        }     
+/*      #table02 div{
+            width: auto;    height: auto;   border: 0px;
+        }
+*/
+        /*div a{
+          color: #111;*/
+          /*line-height: 20px;
+          text-decoration:none;
+        }*/
+        
+        #overlay, #overlay2, #overlay3, #overlayT, #overlayU, #overlayEnd {         /* 覆蓋在最上層的 div */
+            background-color: #000; /*or semitransparent image 半透明圖像*/
+            color: #fff;
+            opacity: 0.95;
+            display: none;
+            height: 656px;
+            width: 1280px;
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            z-index: 100;
+            font-size: 80px;
+            text-align: center;
+            font-family: 'Comic Sans MS', sans-serif, '微軟正黑體';
+            line-height: 110px;
+        }
+        #overlay{display: block;}
+        #overlay2 {
+            background-color: #fff; 
+            /*color: #000;*/
+            opacity: 0.00;
+            height: 100%;
+            width: 100%;
+        }
+        #overlay3 {
+            background-color: transparent;
+            color: #f00;
+            opacity: 0.95;
+            height: 70%;
+            width: 65%;            
+        }
+        #overlayEnd{    line-height: 90px; font-size: 60px;}
+        
+        #dialogbox {                                  /* 在z-index: 90 的 div */
+            /*background-color: #ccc;  or semitransparent image 半透明圖像*/
+            background-image: url("/pic/dialog2.png");
+            display: none;
+            height: 145px;
+            width: 500px;
+            position: absolute;
+            top: 510px;
+            left: 715px;
+            z-index: 90;
+            font-size: 23px;
+            text-align: left;
+            font-family: 'Comic Sans MS', sans-serif, '微軟正黑體';
+            line-height: 33px;
+        }
+        #showAns, #writetips {
+            background-image: url("");
+            display: none;
+            height: 450px;
+            width: 500px;
+            position: absolute;
+            top: 80px;
+            left: 115px;
+            z-index: 90;
+            border-radius: 7px;
+            border-color: #333948;
+            border-width: 15px;
+	        border-style: solid;
+            text-align: center;
+            font-family: 'Comic Sans MS', sans-serif, '微軟正黑體';          
+        }
+        
+        #run ,#run_over{
+            background-image: url("/pic/run.png");
+            height: 49px;
+            width: 90px;
+            position: absolute;
+            top: 1px;
+            left: 69px;
+            z-index: 90;            
+        }
+        #run_over{background-color: #666;    z-index: 91;    background-image: url("");    opacity:0.85;}
+        #mmenu {
+            background-image: url("/pic/menu.png");
+            height: 49px;
+            width: 49px;
+            position: absolute;
+            top: 1px;
+            left: 10px;
+            z-index: 90;            
+        }
+        #mmenu:hover ,#run:hover {
+            background-position:0px -49px;
+            cursor: pointer;
+        }
+        #mmenu:active ,#run:active {                       /*按下時的背景圖偏移*/
+            background-position:0px -98px;
+        }
+        #tips, #changeTips, #saveall, #blocktool {
+            background-image: url("/pic/tips0.png");
+            height: 64px;
+            width: 100px;
+            position: absolute;
+            top: 590px;
+            left: 8px;
+            z-index: 90;
+            background-position:0px -64px;
+        }
+
+        #tips:hover, #changeTips:hover, #saveall:hover, #blocktool:hover  {
+            background-position:0px 0px;
+            cursor: pointer;
+        }
+        
+        #userinfo{
+            background: #3a3;
+            color: white;
+            height: 78px;
+            width: 60px;
+            position: absolute;
+            top: 6px;
+            left: 1210px;
+/*            right: 6px;*/
+            z-index: 90;
+            border-radius: 3px;
+/*            font-size: 15px;*/
+            text-align: center;
+            font-family: 'Comic Sans MS', sans-serif, '微軟正黑體';
+            padding: 2px;
+            /*border: 1px #fff solid;*/
+        }
+        #userimg{
+            height: 60px;
+            width: 60px;
+            background-image: '/pic/1345010101.png';
+        }
+        #userid{
+            line-height: 12px;
+            font-size: 12px;
+        }
+        
+        #showgrid {
+            background-image: url("/pic/grid.png");
+            height: 49px;
+            width: 49px;
+            position: fixed;
+            top: 98px;
+/*            right: 19px;*/
+            left: 1212px;
+            z-index: 90;            
+        }
+        #showgrid:hover {
+            background-position:0px -49px;
+            cursor: pointer;
+        }
+        #showgrid:active {                       /*按下時的背景圖偏移*/
+            background-position:0px -98px;
+        }
+        #bgmplay ,#bgmclose{
+            background-image: url("/pic/bgm.png");
+            background-size:60px;
+            background-position:0px 0px;
+            height: 49px;
+            width: 60px;
+            position: fixed;
+            top: 160px;
+/*            right: 8px;*/
+            left: 1212px;
+            z-index: 90;
+            cursor: pointer;
+        }
+        #bgmplay{   z-index: 91;    background-position:0px -51px;     }
+        
+        #gifdiv, #gifdiv img{
+            position: fixed;
+            left: 1150px;
+            top: 530px;
+            width: 48px;
+            height: 48px;
+        }
+        
+        #blocklyDiv{
+            position: fixed;
+            left: 10px;
+            top: 53px;
+            height: 535px; 
+            width: 700px;
+        }
+        div {font-family: 'Comic Sans MS', sans-serif, '微軟正黑體';}
+	</style>
+    
+    <script>
+		//先取得網址字串，假設此頁網址為「index.aspx?id=U001&name=GQSM」
+		let url000 = location.href;                             //會是全域變數嗎？
+        let ary1 = [];                                          //會是全域變數嗎？??
+
+		//再來用去尋找網址列中是否有資料傳遞(QueryString)
+		if(url000.indexOf('?')!=-1)
+		{
+		    //之後去分割字串把分割後的字串放進陣列中
+		    ary1 = url000.split('?');
+		}else{                       //假如網址沒有問號
+            //ary1[0] = "";
+            //ary1[1] = "toolbox00";
+        }
+    
+		//gen_workspace(ary1[1]);		 //產生工作區????   移到讀取自創關卡資料之後
+        
+        let userName = ary1[2];
+        let userID = ary1[3];
+        let imglink = "/Character/" + ary1[2] + ".png";
+        
+          
+    </script>
+    
+    <script>
+        
+        let bgmusic=[];                     //背景音樂
+        let bgmIndex = 0;                   //背景音樂曲目索引
+        bgmIndex = Math.floor( Math.random()*2 );
+        bgmusic[0] = new Audio('/sound/2005rhythm1.mp3');
+        bgmusic[1] = new Audio('/sound/song18_use.mp3');
+        //this.load.audio('bgmusic', '/sound/2005rhythm1.mp3');
+        //this.load.audio('bgmusic2', '/sound/song18_use.mp3');
+    
+        
+        var timeCount = 0;          //遊玩時間計算
+        var timer = null;
+        var data_1 = [];            //存放關卡資訊
+        //document.getElementById('run').setAttribute("background-position","0px -98px")
+        window.onload=readSheet;                    //網頁載入後，即執行讀取試算表資料
+        function readSheet(){
+            a = {
+                data: userID.substr(1,2),           //???
+                uID: userID,
+                //readCol: Number(ary1[1].substr(2,1)),
+                sheetUrl: '',
+                sheetTag: userID.substr(0,1),
+                mode: 6         //讀取模式
+            };
+            $('#overlay').show();
+            //console.log(a);
+            $.get('https://script.google.com/macros/s/AKfycby_1_F9fcOzOB3qFFuFTlNRVfbT5-VKd4d5_wGKB8GFbD843W9F/exec', a,function(data){
+                
+                if(data =='idError'){   
+                    alert("帳號資料有誤！\n請重新登入");
+                    window.location.href = "/login.html";  
+                }
+                
+                    //data_1 = data.split(',');
+                    console.log(data);                    //共20?筆
+                    
+//                    for( i=0 ; i<10 ; i++ ){
+//                        let idi = "#t0" + (i+1) ;       //組合id名稱
+//                        if(i==9){    idi="#t10"; }
+//                        console.log(idi);
+//                        
+//                        if( data_1[i]==0 ){          //未檢驗
+//                            $(idi).addClass('pass0');
+//                        }
+//                        else if( data_1[i]==1 ){          //已檢驗通過
+//                            $(idi).addClass('pass1');
+//                        }
+//                        else if( data_1[i]==-1 ){          //未開啟
+//                            $(idi).hide();
+//                        }
+//                        if( idi.substr(-1)==ary1[1].substr(-1) ){ //location.href.substr(-1) ){ //目前正在玩這一關
+//                            $(idi).addClass('pass_now');     // console.log(333334);  
+//                        }
+//                    }
+                    
+                    $('#overlay').html('<br>讀取完成<br>請按一下滑鼠');       //alert(0);
+                    $('#overlay').click(  function(){                   //這麼做是為了避免自動播放音樂會產生錯誤
+                        $('#overlay').hide(); 
+                        
+                        timer = setInterval(function() {            //開始計時
+                            timeCount++;      
+                            document.getElementById('timerC').textContent = Math.floor(timeCount / 10);
+                                //console.log(timeCount);
+                            if ((timeCount%100) == 40)
+                            {
+                                //if(timeCount==40){bgmusic[bgmIndex].play();}
+                                console.log(bgmusic[bgmIndex].paused);
+                                if( bgmusic[bgmIndex].paused == true ){
+                                    //bgmusic[bgmIndex].pause();               //保險起見，以免兩首同時播
+                                    bgmusic[bgmIndex].currentTime =0;
+                                    bgmIndex = (bgmIndex + 1) % 2;
+                                    bgmusic[bgmIndex].play();
+                                }
+                            }
+                            
+                        }, 100);    
+                        
+                        //$('#time01').hide();                  //畫面空間不夠，先隱藏起來
+                    } ); 
+                   
+                }
+            );
+           
+        }
+        
+        function linkto(addr){
+            let newlink =addr + "?" + ary1[2] + "?" + ary1[3] + "?" + ary1[1].substr(-4);
+            console.log(newlink);
+            window.location.href = newlink;
+        }
+//        
+//        function selectTile(tileN){
+//            selectedTile = tileN;
+//            selectsound.play();
+//            $('.selec').removeClass('selected');
+//            $('.selec2').removeClass('selected');           //四個角色圖的div
+//            $('#tile'+tileN).addClass('selected');
+//        }
+//        selectsound = new Audio('/sound/MenuSelect1_use.wav');
+        
+        function bgmonoff(onoff){
+            if(onoff==0){
+                $('#bgmplay').hide();
+                bgmusic[0].volume = 0.00;
+                bgmusic[1].volume = 0.00;
+                //bgmusic[bgmIndex].pause();
+                //console.log("hide");
+            } else{
+                $('#bgmplay').show();
+                bgmusic[bgmIndex].play();
+                bgmusic[0].volume = 1;
+                bgmusic[1].volume = 1;
+            }           
+        }
+    </script>
+    
+    <script src ="newblocks3.js" >                   //定義新方塊
+    </script>                 
+	<script src ="index4.js"></script>	
+    
+</head>
+
+
+<body bgcolor="#333333">                                <!-- body 在此！ -->
+    <div id="overlay"><br>資料讀取中………<div id="gifdiv"><img src="../pic/user16.gif" /></div></div>
+    <div id="overlay2"></div>
+    <div id="overlay3"><br><br>執行中……</div>
+    <div id="overlayT"></div>
+    <div id="overlayU"></div>
+    <div id="overlayEnd" title="按一下滑鼠"><br>您的程式有問題！<br>重新試一次吧！</div>
+<!--    <div id="overlayEnd" title="按一下滑鼠"><br>確實過關才能通過檢驗, <br>請重新檢查一下吧！</div>-->
+    
+    <div class="animate__animated animate__flipInX" id="dialogbox"><div id="diatext" style="padding: 19px 35px;"></div></div>
+<!--
+    <div class="animate__animated animate__flipInX" id="writetips"> <br><br>
+        <textarea id="wtips" onKeyDown='if (this.value.length>=50){
+                                            this.value = this.value.substr(0,49);
+                                        }'></textarea>  <br><br>     超過 50字，無法再輸入 
+        <button id="savetips">儲 存</button>　
+        <button id="giveup">放 棄</button>
+    </div>                          
+-->
+    
+
+    <div onclick="linkto('dareMenu.html');" id="mmenu" title="back to menu"></div>
+<!--    <div id="run_over" title="將關卡設定上傳後才能執行檢驗"></div>    -->
+    <div onclick="runCode();" id="run"></div>
+
+    <div id="s00">剩下<span id="capacity">0</span>個方塊</div>
+    <div id="time01"><span id="timerC">0</span> sec</div>
+    <div onclick="talk( stageNum );" id="tips" title="show tips"></div>
+                        <!-- 網址末兩碼 --> 
+<!--    <div onclick="showAnswer( ary1[1].substr(-2) );" id="ansTips" title="show answer"></div>-->
+<!--
+    <div onclick="editTips( ary1[1].substr(-2) );" id="changeTips" title="change tips"></div>
+    <div onclick="uploadDesign();" id="saveall" title="先上傳資料，才能執行檢驗(save to cloud)"></div>
+    <div onclick="choosetool();" id="blocktool" title="選擇可用的指令方塊"></div>
+-->
+    
+    <div style="position: fixed; top: 621px; left: 501px; text-align: right; width: 205px; color: #fff; font-size: 22px;">
+        已取得 <label id="getDim" style="color: #0ff;">0</label>顆鑽石</div>
+    <div style="position: fixed; top: 592px; left: 501px; text-align: right; width: 205px; color: #fff; font-size: 22px;">
+        需取得 <label id="needDim2" style="color: #b3f;">0</label>顆鑽石</div>
+    
+
+    <div id="userinfo">
+        <img src="" id="userimg">
+<!--        <div id="username"></div>-->
+        <div id="userid"></div>
+    </div> 
+    
+    <div onclick="drawLine();" id="showgrid"></div>
+    <div onclick="bgmonoff(0);" id="bgmplay"></div>    
+    <div onclick="bgmonoff(1);" id="bgmclose"></div>    
+    
+    
+
+    <!--    程式塊工作區的 div  在這裡    -->
+    <div id="blocklyDiv" style="">
+    </div>
+
+    <div id="game-container"></div>
+    		
+
+	<xml id="toolbox11" style="display: none">
+        <block type="action_move_forward"></block>
+          
+	</xml>
+
+	<xml id="toolbox12" style="display: none">
+        <block type="action_move_forward"></block>
+        
+	</xml>
+        
+    <xml id="toolbox13" style="display: none">
+        <block type="action_move_forward"></block>
+        
+	</xml>
+    
+    <xml id="toolbox14" style="display: none">
+        <block type="action_move_forward"></block>
+        
+	</xml>
+    
+    <xml id="toolbox15" style="display: none">
+        <block type="action_move_forward"></block>
+        
+	</xml>
+    
+    <xml id="toolbox16" style="display: none">
+        <block type="action_move_forward"></block>
+       
+	</xml>
+    
+    <xml id="toolbox17" style="display: none">
+        <block type="action_move_back"></block>
+        
+	</xml>    
+    
+    <xml id="toolbox18" style="display: none">
+        <block type="action_move_forward"></block>
+               
+	</xml> 
+    
+     <xml id="toolbox19" style="display: none">
+         <block type="action_move_forward"></block>
+                 
+	</xml> 
+    
+    <xml id="toolbox20" style="display: none">
+        <block type="action_move_forward"></block>
+    
+	</xml> 
+    
+	<script src ="gen_workspace.js" > </script>        
+
+    <script>
+
+	    function showCode() {
+	      // Generate JavaScript code and display it.
+	      //Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
+            Blockly.JavaScript.STATEMENT_PREFIX = 'highlightBlock(%1);\n';  //
+            Blockly.JavaScript.addReservedWords('highlightBlock');          //
+	      var code = Blockly.JavaScript.workspaceToCode(workspace);
+            
+            code2 ="~async function(){ \n    const delay = t => { \n        return new Promise(resolve => { \n                setTimeout(resolve, t);      });      };\n await delay(300); \n" + code + " highlightBlock(null); \n }(); "
+            
+	      alert(code2);
+	      console.log('123123');
+	    }
+
+	    var milisec;
+
+	    function runCode() {                               //執行指令！
+	    	//milisec = 300;		//行動等待時間
+          $('#overlay2').show();
+          $('#overlay3').show();
+	      // Generate JavaScript code and run it.
+	      window.LoopTrap = 1000;
+	      Blockly.JavaScript.INFINITE_LOOP_TRAP =
+	          'if (--window.LoopTrap == 0) throw "Infinite loop.";\n';
+          Blockly.JavaScript.addReservedWords('code');
+            
+            Blockly.JavaScript.STATEMENT_PREFIX = 'highlightBlock(%1);\n';  //
+            Blockly.JavaScript.addReservedWords('highlightBlock');          //
+	      var code = Blockly.JavaScript.workspaceToCode(workspace);
+            
+            code ="codeOver=1; \n ~async function(){ \n    const delay = t => { \n        return new Promise(resolve => { \n                setTimeout(resolve, t);      });      };\n await delay(300); \n" + code + " highlightBlock(null); \n  codeOver=2; \n  $('#overlay2').hide(); $('#overlay3').hide(); }(); "        
+            
+	      Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
+	      try {
+	        eval(code);
+	      } catch (e) {
+	        alert(e);
+	      }
+          
+	    }
+
+        
+        function Editable(tf) {                    //限制編輯、搬移、刪除block    //tf 即True或False
+            var blocks = workspace.getAllBlocks();
+            for(var i = 0, block; block = blocks[i]; i++) {         //???奇怪的用法…
+                block.setEditable(tf);
+                block.setDeletable(tf);
+                //block.
+                block.setMovable(tf);
+                //原始程式：block.setEditable(!block.isEditable());
+                console.log(tf);
+            }
+        }
+        
+        
+	</script>
+
+</body>
+    
+<script>
+	    var highlightPause = false;
+        //var latestCode = '';
+
+        function highlightBlock(id) {
+            workspace.highlightBlock(id);
+            highlightPause = true;
+        }
+        
+        
+        function onchange(event) {
+            document.getElementById('capacity').textContent = workspace.remainingCapacity();                      //剩餘容量(方塊數量)
+        }
+
+        //workspace.addChangeListener(onchange);
+        //onchange();                             //????
+        
+</script>
+    
+    <script>
+        document.getElementById('userid').textContent = userID.substr(-3);
+        document.getElementById("userimg").src = imglink;
+    </script>
+    
+<script>
+    let tipsMsg =["",
+                  "",
+                  "",
+                  "",
+                  "",
+                  "",
+                  "",
+                  "",
+                  "",
+                  "",
+                  "",
+                  ""   ];
+    
+    let tips = new Audio('/sound/free_ping.wav');
+    let click01 = new Audio('/sound/Click.1.use.wav');
+    let tipsMsgIndex =0;
+    
+    function talk(num0){
+        //console.log(tipsMsg[num0]);        //n = Number(num0) -10 ;
+        tipsMsgIndex = num0;
+        
+        //document.getElementById('diatext').innerHTML = tipsMsg[num0];
+        document.getElementById('diatext').textContent = tipsMsg[num0];
+        
+        $('#dialogbox').show();
+        if(num0<=10){  tips.play();   }
+    }
+    
+    $('#dialogbox').click(function(){
+        click01.play();
+        $('#dialogbox').fadeOut();
+        //$('#dialogbox').addClass('zoomOut');
+    });
+ 
+    
+    function toolAryToXML(){                            //把選用 blocks的代號 的陣列，轉成XML
+        let category =0;
+        toolsXML = addBlocks[0];
+        for(var i = 0; i < toolsAry.length; i++){
+            if( category < Math.floor(toolsAry[i] /10) ){
+                toolsXML += addBlocks[42];                      //加上 結尾標記
+                category = Math.floor(toolsAry[i] /10);
+                toolsXML += addBlocks[category*10];             //加上 開始標記
+            }
+            
+            if (category != 4){                          //
+                toolsXML += addBlocks[toolsAry[i]];             //加上 block的XML
+                
+                if(i == (toolsAry.length-1)){                   //不是 變數40  ，又是最後一筆
+                    toolsXML += addBlocks[42];                  //加上 結尾標記
+                }
+                
+            }else{ }   
+        }        
+        console.log(toolsXML);
+    }
+    
+</script>   
+    
+</html>
