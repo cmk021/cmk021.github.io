@@ -738,7 +738,7 @@ function get_object(num) {              //取得物品(物品代號)
         
         //timeCount += Number(data_1[ stageNum+10-1 ]);            //加上上次花的時間
         //let strWin ="<br>恭喜您過關了！ <br>共花費 " +(timeCount/10)+ "秒<br>將自動進到下一關！";
-        let strWin ="<br>恭喜您過關了！ <br>累計共花費 " +(timeCount/10)+ "秒，<br>將自動回到選單！";
+        let strWin ="<br>恭喜您過關了！ <br>您花費了 " +(timeCount/10)+ "秒，<br>將自動回到選單！";
         console.log(timeCount/10);
 //        if (data_1[ stageNum*2-1 ]!=0 ){
 //            if( timeCount < data_1[ stageNum*2-1 ] ) {
