@@ -267,12 +267,12 @@ function create() {
         stageObject[i] = [];
     }    
     
-
+    let readRow0 = Math.floor(Number(ary4[1].substr(-2))/10)*100 + Number(ary4[1].substr(1,1))* 10+7;
     let bbb = {
         data: Number(ary4[1].substr(2,1))+1,           //從第 x欄開始讀
-        readRow: Number(ary4[3].substr(1,2))* 10+7,
+        readRow: readRow0,                              //放提示的列
         sheetUrl: '',
-        sheetTag: ary4[3].substr(0,1),        //
+        sheetTag: Math.floor(Number(ary4[1].substr(-2))/10) +1,        //
         mode: 2.5         //讀取提示模式
     };
     $.get('https://script.google.com/macros/s/AKfycby_1_F9fcOzOB3qFFuFTlNRVfbT5-VKd4d5_wGKB8GFbD843W9F/exec', bbb,     function(tipData){                       
@@ -280,12 +280,12 @@ function create() {
             //console.log(tipsMsg[stageNum]+'abc');
     });
     
-    
+        readRow0 = Math.floor(Number(ary4[1].substr(-2))/10)*100 + Number(ary4[1].substr(1,1))* 10+3;
         let aaa = {
             data: Number(ary4[1].substr(2,1))+1,           //從第 x欄開始讀
-            readRow: Number(ary4[3].substr(1,2))* 10+3,
+            readRow: readRow0,
             sheetUrl: '',
-            sheetTag: ary4[3].substr(0,1),        //
+            sheetTag: Math.floor(Number(ary4[1].substr(-2))/10) +1,        //
             mode: 2         //讀取模式
         };
             //$('#overlay').show();
