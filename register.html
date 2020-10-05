@@ -119,10 +119,10 @@
             color:darkred;
         }
         
-        #overlay, #overlay2 {                     /* 覆蓋在最上層的 div */
+        #overlay, #overlay2, #overlay3, #overlay4 {                     /* 覆蓋在最上層的 div */
             background-color: #000; /*or semitransparent image 半透明圖像*/
             color: #fff;
-            opacity: 0.9;
+            opacity: 0.95;
 /*            display: none;*/
             height: 656px;
             width: 1280px;
@@ -135,7 +135,7 @@
             font-family: 'Comic Sans MS', sans-serif, '微軟正黑體';
             line-height: 105px;
         }
-        #overlay {  display: none;  }
+        #overlay, #overlay3, #overlay4 {  display: none;  }
         
         #regist, #verifi{
             line-height: 45px;
@@ -160,6 +160,14 @@
         .invalid{
             border:3px solid red;
         }
+        
+        #gifdiv, #gifdiv img{
+            position: fixed;
+            left: 1150px;
+            top: 530px;
+            width: 48px;
+            height: 48px;
+        }        
     </style>
 </head>
 
@@ -197,7 +205,9 @@
     
 <body bgcolor="#333">
     &nbsp;<a id="backhome" href="index.html"><img title="回首頁" style="width: 60px; height:60px" src="pic/home2.png" /></a>
-    <div id="overlay2"><br></div>
+    <div id="overlay4"></div>
+    <div id="overlay3"></div>
+    <div id="overlay2"></div>
     <div id="overlay"> </div>
     
     
@@ -440,7 +450,7 @@
                 sheetTag: 'ACC',
                 mode: 8     //註冊模式
             };
-            $('#overlay').html('<br>註冊帳號中<br>請稍候……');
+            $('#overlay').html('<br>註冊帳號中<br>請稍候……<div id="gifdiv"><img src="pic/user16.gif" /></div>');
             $('#overlay').show();
             $.get('https://script.google.com/macros/s/AKfycbxwHMUuQTA4uWU54Tj3S7Ia3ZySAL_T48cuGhsWT1vwwt0tvthX/exec', a, function(data8){
                     getdata = data8;
@@ -456,7 +466,7 @@
                         $('#backhome').hide();
                         inputs.disabled = true;
                         
-                        $('#overlay').click(  function(){                   //這麼做是為了避免自動播放音樂會產生錯誤
+                        $('#overlay').click(  function(){                   //
                             $('#overlay').hide(); 
                             bgmusic.play();     bgmusic.volume=0.3;
                         } ); 
@@ -491,35 +501,37 @@
                 sheetTag: 'ACC',
                 mode: 9     //驗證模式
             };
-            $('#overlay').html('<br>帳號驗證中<br>請稍候……');
-            $('#overlay').show();
+            $('#overlay3').html('<br>帳號驗證中<br>請稍候……<div id="gifdiv"><img src="pic/user16.gif" /></div>');
+            $('#overlay3').show();
+            document.getElementById('verifi').disabled =false;
             $.get('https://script.google.com/macros/s/AKfycbxwHMUuQTA4uWU54Tj3S7Ia3ZySAL_T48cuGhsWT1vwwt0tvthX/exec', a, function(data9){
             
                 if(data9.substr(0,7) != 'success'){                 console.log(data9);
                     testTime++;
                     if(testTime >=3 ){
-                        $('#overlay').html('<br>抱歉！驗證碼仍然錯誤！<br>請重新註冊<br>網頁將重新整理…');
+                        $('#overlay3').html('<br>抱歉！驗證碼仍然錯誤！<br>請重新註冊<br>網頁將重新整理…');
                         setTimeout( function(){ location.reload(); } , 3000 );
                     }else{
-                        $('#overlay').html('<br>抱歉！驗證碼錯誤！<br>請重新輸入…<br>請按一下滑鼠');
+                        $('#overlay3').html('<br>抱歉！驗證碼錯誤！<br>請重新輸入…');   //<br>請按一下滑鼠');
                         document.getElementById('vercode').textContent ="";
                         
-                        $('#overlay').click(  function(){ 
-                        $('#overlay').hide();                             
+                        $('#overlay3').click(  function(){ 
+                        setTimeout( function(){ $('#overlay3').hide(); } , 3000 );                             
                         } ); 
                     }
                         
                 }else{
-                    $('#overlay').html('<br>恭喜您成功建立帳號！<br>將自動轉往登入頁面');
+                    $('#overlay3').html('<br>恭喜您成功建立帳號！<br>將自動轉往登入頁面');
                     
-                    // 將id 寫入至記錄過關資料的試算表
+                    // 將id 寫入至記錄過關資料 及地圖編輯資料的試算表
                     var newid = data9.substr(-8);           //新的id
                     var aa = {
-                        data: newid,           
-                        writecol: Number(newid.substr(2,1))*5+1 ,           //計算要寫入的列
+                        data: newid, 
+                        writeRow: Number(newid.substr(1,2))*5+1,               //計算要寫入過關資料試算表的列
+                        writeRowMap: Number(newid.substr(1,2))*10+3 ,           //計算要寫入地圖試算表的列
                         sheetUrl: '',
-                        sheetTag: newid.substr(1,1),
-                        mode: 5     //寫入模式
+                        sheetTag: newid.substr(0,1),
+                        mode: 25     //寫入模式
                     };
                     $.get('https://script.google.com/macros/s/AKfycbzFB_nW8mOycJPRL_N25wG3EcX_5ZrlX0X9HxbROLOB5qbDEUGc/exec', aa,function(data5){
                         if(data5=='write ok'){

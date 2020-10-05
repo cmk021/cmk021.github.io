@@ -72,6 +72,7 @@
             width: 96px;
             height: 96px;
         }
+        
         #rolebox{
             padding-top: 0px;
             padding-left: 10px;
@@ -106,7 +107,7 @@
         #overlay, #overlay2 {                     /* 覆蓋在最上層的 div */
             background-color: #000; /*or semitransparent image 半透明圖像*/
             color: #fff;
-            opacity: 0.9;
+            opacity: 0.95;
 /*            display: none;*/
             height: 656px;
             width: 1280px;
@@ -136,6 +137,14 @@
         
         a img{ border: 2px solid #fff;  border-radius: 6px;}
         a img:hover{  border: 2px solid #0ff;  background-color: white;}
+        
+        #gifdiv, #gifdiv img{
+            position: fixed;
+            left: 1150px;
+            top: 530px;
+            width: 48px;
+            height: 48px;
+        }
     </style>
 </head>
 
@@ -199,7 +208,7 @@
         }else if(userNum==10){                  //表示尚未選取角色
             alert("您還沒選擇角色。");
         }else{
-                                        //先檢查該帳號是否先被人佔用。 若無，就請他先到註冊網頁註冊???！
+                                        
             let data5 = userID;         //(userNum + 1) + "," + userID;       console.log(data5);
             a = {
                 data: data5,           //從第 userNum + 1 欄讀取
@@ -207,7 +216,7 @@
                 sheetTag: 'ACC',
                 mode: 10   //登入模式
             };
-            $('#overlay').html('<br>登入帳號中<br>請稍候……');
+            $('#overlay').html('<br>登入帳號中<br>請稍候……<div id="gifdiv"><img src="pic/user16.gif" /></div>');
             $('#overlay').show();
             $.get('https://script.google.com/macros/s/AKfycbxwHMUuQTA4uWU54Tj3S7Ia3ZySAL_T48cuGhsWT1vwwt0tvthX/exec', a, function(reData){
                     //getdata = data;
@@ -233,7 +242,9 @@
     
 <body bgcolor="#333">
     &nbsp;<a href="index.html"><img title="回首頁" style="width: 60px; height:60px" src="pic/home2.png" /></a> 
-    <div id="overlay2"><br>請輸入已註冊通過的Email<br>並選用一個頭像<br><br>請按一下滑鼠</div>
+    <div id="overlay2"><br>請輸入已註冊通過的Email<br>並選用一個頭像<br><br>請按一下滑鼠
+        <div id="gifdiv"><img src="pic/user16.gif" /></div>
+    </div>
     <div id="overlay"> </div>
     
 <!--    <button onclick="log_in();" id="regist">登 入</button>-->
