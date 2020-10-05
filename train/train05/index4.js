@@ -110,7 +110,7 @@ function preload() {
     
   //this.load.spritesheet("hero", "dude.png", { frameWidth: 32, frameHeight: 48 });
   //this.load.spritesheet("hero", "Charas14.png", { frameWidth: 32, frameHeight: 48 });
-  this.load.spritesheet("gini", "pic/1345.png", { frameWidth: 48, frameHeight: 48 });       //角色圖
+  this.load.spritesheet("gini", "../../Character/"+ ary4[2] +"2.png", { frameWidth: 48, frameHeight: 48 }); //角色圖
    // this.load.spritesheet("npc0", "pic/yuhinamv128.png", { frameWidth: 45, frameHeight: 45 });       //老頭角色圖
       //this.load.spritesheet("gini1", "pic/pacman242.png", { frameWidth: 48, frameHeight: 48 });
   //this.load.spritesheet("hero", "Charas144.png", 32, 48 );
@@ -751,17 +751,17 @@ function get_object(num) {              //取得物品(物品代號)
         timer = null;               // 將狀態轉為空
 
         let strWin ="<br>恭喜您過關了！ <br>共花費 " +(timeCount/10)+ "秒<br>將自動進到下一關！";
-        if (data_1[ stageNum*2-1 ]!=0 ){                                //data_1是index裡的全域變數，放20筆資料
-            if( timeCount < data_1[ stageNum*2-1 ] ) {
+        if (data_1[ stageNum+10-1 ]!=0 ){                                //data_1是index裡的全域變數，放20筆資料
+            if( timeCount < data_1[ stageNum+10-1 ] ) {
                 strWin = "<br>★☆創新紀錄★☆" + strWin;
             }else{
-                timeCount = data_1[ stageNum*2-1 ];
+                timeCount = data_1[ stageNum+10-1 ];
                 console.log( timeCount);
             }
         }
         
         setTimeout( function(){
-            $('#overlayEnd').html(strWin);
+            $('#overlayEnd').html(strWin + '<div id="gifdiv"><img src="../../pic/user16.gif" /></div>');
             //$('#overlayEnd').html('<br>恭喜您過關了！ <br>共花費 秒<br>將自動進到下一關！');
             $('#overlayEnd').show();
             
@@ -769,11 +769,12 @@ function get_object(num) {              //取得物品(物品代號)
         
         //寫入過關資料
         a = {
-            data: '2'+','+ (stageNum+20) +','+ '1' +','+ timeCount,       //寫入到工作表的第2列    //1代表過關
-            idNum: ary4[3].substr(2,1) ,           //從第3碼開始取1個字！
+            data: stageNum+20,
+            timeCost: timeCount,
+            idNum: ary4[3].substr(1,2) ,           //從第2碼開始取2個字！
             sheetUrl: '',
-            sheetTag: ary4[3].substr(1,1) ,                  //！ 從第2碼開始取1個字
-            mode: 3         //寫入模式
+            sheetTag: ary4[3].substr(0,1) ,                  //！ 從第1碼開始取1個字
+            mode: 23         //寫入模式
         };
         console.log(a);
         
@@ -823,6 +824,7 @@ function something_ahead(n,option){           //前方是否有………
     
     if ((option == 'way')||(option == 'Lway')||(option == 'Rway')){
         if ((ground >= 92 )&&(ground <= 129)&&(obj<233)){           //npc、敵人算沒有路
+            if(obj == 231){return false;}                           //前有巨坑算無路
             return true;
         }else{
             return false;

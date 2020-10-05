@@ -42,11 +42,11 @@
         function readSheet(){
             a = {
                 data: 21,           //從第21列開始讀
-                idNum: ary1[3].substr(2,1) ,                    //從第3碼開始取1個字！
+                idNum: ary1[3].substr(1,2) ,           //從第2碼開始取2個字！
                 uID: ary1[3],                           //比對id用
                 sheetUrl: '',
-                sheetTag: ary1[3].substr(1,1) ,                  //！ 從第2碼開始取1個字
-                mode: 2         //讀取模式
+                sheetTag: ary1[3].substr(0,1) ,                  //！ 從第1碼開始取1個字
+                mode: 22         //讀取模式
             };
             $('#overlay').show();
             console.log(a);
@@ -65,13 +65,13 @@
                         if(i==9){    idi="#t10"; }
                         console.log(idi);
                         
-                        if( data_1[i*2]==0 ){          //未過關
+                        if( data_1[i]==0 ){          //未過關
                             $(idi).addClass('pass0');
                         }
-                        else if( data_1[i*2]==1 ){          //已過關
+                        else if( data_1[i]==1 ){          //已過關
                             $(idi).addClass('pass1');
                         }
-                        else if( data_1[i*2]==-1 ){          //未開啟
+                        else if( data_1[i]==-1 ){          //未開啟
                             $(idi).hide();
                         }
                         if( idi.substr(-1)==ary1[1].substr(-1) ){ //location.href.substr(-1) ){ //目前正在玩這一關
@@ -138,7 +138,7 @@
 
 
 <body bgcolor="#333333">                                <!-- body 在此！ -->
-    <div id="overlay"><br>資料讀取中………</div>
+    <div id="overlay"><br>資料讀取中………<div id="gifdiv"><img src="../../pic/user16.gif" /></div></div>
     <div id="overlay2"></div>
     <div id="overlay3"><br><br>執行中……</div>
     <div id="overlayEnd" title="按一下滑鼠"><br>您的程式有問題！<br>重新試一次吧！</div>
