@@ -56,7 +56,7 @@
         #overlay {                     /* 覆蓋在最上層的 div */
             background-color: #000; /*or semitransparent image 半透明圖像*/
             color: #fff;
-            opacity: 0.9;
+            opacity: 0.95;
 /*            display: none;*/
             height: 656px;
             width: 1280px;
@@ -94,6 +94,14 @@
         }
         #userid{
             font-size: 12px;
+        }
+        
+        #gifdiv, #gifdiv img{
+            position: fixed;
+            left: 1150px;
+            top: 530px;
+            width: 48px;
+            height: 48px;
         }
     </style>
     
@@ -137,7 +145,7 @@
                 <div class="normal" style="line-height: 120px;" onclick="linkto('../design/designMenu.html');">自行設計關卡</div>
             </td>
             <td height="150" align="center" valign="middle">
-                <div class="normal" style="line-height: 120px;" title="建構中...">挑戰自製關卡</div>
+                <div class="normal" style="line-height: 120px;" onclick="linkto('../dare/dareMenu.html');">挑戰自製關卡</div>
             </td>
         </tr>
         <tr>
@@ -149,7 +157,7 @@
     </table>   </div>
     
     
-    <div id="overlay"><br>資料讀取中……</div>
+    <div id="overlay"><br>資料讀取中……<div id="gifdiv"><img src="../pic/user16.gif" /></div></div>
     
     <div id="userinfo">
         <img src="" id="userimg"/>
@@ -168,21 +176,25 @@
 
     function linkto(addr){                                    //以頭像和ID連往所選的關卡
         let newlink =addr + "?" + arym[1] + "?" + arym[2];
+        if(addr.substr(-13) == "dareMenu.html"){
+            newlink +="?pg01";                               //???? 
+        }
         window.location.href = newlink;
     }
     //train01/index.html?toolbox11
     //window.location.href;
         
-    bgmusic = new Audio('../sound/bocuma-Skyliner-10PeacefulAtom_use.mp3');
+    //bgmusic = new Audio('../sound/bocuma-Skyliner-10PeacefulAtom_use.mp3');
+    bgmusic = new Audio('../sound/rank_use.mp3');
     
     
     window.onload=readSheet;                    //網頁載入後，即執行讀取試算表資料
     function readSheet(){
             a = {
-                data: arym[2].substr(2,1) ,           //從第3碼開始取1個字！
+                data: arym[2].substr(1,2) ,           //從第2碼開始取2個字！
                 sheetUrl: '',
-                sheetTag: arym[2].substr(1,1) ,                  //！ 從第2碼開始取1個字
-                mode: 4         //讀取模式
+                sheetTag: arym[2].substr(0,1) ,                  //！ 從第1碼開始取1個字
+                mode: 24         //讀取模式
             };
             $('#overlay').show();
             console.log(a);
@@ -195,6 +207,7 @@
                     $('#overlay').click(  function(){                   //這麼做是為了避免自動播放音樂會產生錯誤
                         $('#overlay').hide(); 
                         bgmusic.play();
+                        bgmusic.loop = true;
                         showdata();
                     } )
                 }

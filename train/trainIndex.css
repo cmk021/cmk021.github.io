@@ -84,7 +84,7 @@
         #overlay ,#overlay2 ,#overlay3 ,#overlayEnd{                     /* 覆蓋在最上層的 div */
             background-color: #000; /*or semitransparent image 半透明圖像*/
             color: #fff;
-            opacity: 0.9;
+            opacity: 0.95;
             display: none;
             height: 656px;
             width: 1280px;
@@ -108,7 +108,7 @@
         #overlay3 {
             background-color: transparent;
             color: #f00;
-            opacity: 0.9;
+            opacity: 0.95;
             height: 70%;
             width: 65%;            
         }
@@ -248,3 +248,11 @@
         #bgmplay{   z-index: 91;    background-position:0px -51px;     }
         
         div {font-family: 'Comic Sans MS', sans-serif, '微軟正黑體';}
+
+        #gifdiv, #gifdiv img{
+            position: fixed;
+            left: 1150px;
+            top: 530px;
+            width: 48px;
+            height: 48px;
+        }
