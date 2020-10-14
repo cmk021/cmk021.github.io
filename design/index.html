@@ -347,16 +347,24 @@
         #tile301{background-position:-48px -144px;}
         #tile302{background-position:-48px -48px;}
         #tile303{background-position:-48px -0px;}
+        #tileNum{
+            background-image:url(""); 
+            background-color: black;
+            font-family: 'Arial Black';
+            font-size: 26px;
+            color: #fff;
+            line-height: 48px;
+        }
         
         #toolLibrary {
             padding-top: 8px;
             padding-left: 30px;
             text-align: center;
-            width: 820px;
+            width: 920px;
             height: 605px;
             position: fixed;
             top: 20px;
-            left: 210px;
+            left: 150px;
             border: 2px #fff solid;
             border-radius: 6px;
 /*            margin: auto;*/
@@ -371,6 +379,47 @@
             top: 530px;
             width: 48px;
             height: 48px;
+        }
+        
+        .slidecontainer {
+            position: fixed;
+            left: 600px;
+            top: 550px;  
+            width: 600px;
+            color: aliceblue;
+            text-align: center;
+            z-index: 102;
+            display: none;
+        }
+        .slider {
+          -webkit-appearance: none;
+          width: 100%;
+          height: 10px;
+          border-radius: 5px;
+          background: #d3d3d3;
+          outline: none;
+          opacity: 0.65;
+          -webkit-transition: .2s;
+          transition: opacity .2s;
+        }
+        .slider:hover {
+          opacity: 1;
+        }
+        .slider::-webkit-slider-thumb {
+          -webkit-appearance: none;
+          appearance: none;
+          width: 28px;
+          height: 29px;
+          border: 0;
+          background: url('pic/W_Throw003.png');
+          cursor: pointer;
+        }
+        .slider::-moz-range-thumb {
+          width: 28px;
+          height: 29px;
+          border: 0;
+          background: url('pic/W_Throw003.png');
+          cursor: pointer;
         }
 	</style>
     
@@ -510,6 +559,7 @@
             $('#tile'+tileN).addClass('selected');
         }
         selectsound = new Audio('/sound/MenuSelect1_use.wav');
+
         
         function bgmonoff(onoff){
             if(onoff==0){
@@ -564,13 +614,17 @@
     <div onclick="choosetool();" id="blocktool" title="選擇可用的指令方塊"></div>
     
     <div id="toolLibrary">  <br>
-        <table id="table02" width="676" border="0" align="left" cellpadding="2px" cellspacing="0">
+        <table id="table02" width="786" border="0" align="left" cellpadding="2px" cellspacing="0">
           <tr>
-            <td width="260" height="220" align="left" valign="middle" bgcolor="#E4E4E4">
-              <div>　<input onclick="return false" title="此工具必選" type="checkbox" class="chek" value="1"> <img src="../pic/block1.png"></div>
+            <td width="370" height="220" align="left" valign="middle" bgcolor="#E4E4E4">
+<!--              <div>　<input onclick="return false" title="此工具必選" type="checkbox" class="chek" value="1"> <img src="../pic/block1.png"></div>-->
+              <div>　<input type="checkbox" class="chek" value="1"> <img src="../pic/block1.png"></div>
               <div>　<input type="checkbox" class="chek" value="2"> <img src="../pic/block2.png"></div>
               <div>　<input type="checkbox" class="chek" value="3"> <img src="../pic/block3.png"></div>
               <div>　<input type="checkbox" class="chek" value="4"> <img src="../pic/block4.png"></div>
+              <div style="position: fixed; left: 348px; top: 59px;">　<input type="checkbox" class="chek" value="5"> <img src="../pic/block5.png"></div>
+              <div style="position: fixed; left: 348px; top: 122px;">　<input type="checkbox" class="chek" value="6"> <img src="../pic/block6.png"></div>
+              <div style="position: fixed; left: 348px; top: 160px;">　<input type="checkbox" class="chek" value="7"> <img src="../pic/block7.png"></div>
             </td>
             <td width="15" height="220" align="center" valign="middle"></td>
             <td width="395" height="220" align="left" valign="middle" bgcolor="#E4E4E4">
@@ -578,11 +632,11 @@
               <div>　<input type="checkbox" class="chek" value="32"> <img src="../pic/block32.png"></div>
               <div>　<input type="checkbox" class="chek" value="33"> <img src="../pic/block33.png"></div>
               <div>　<input type="checkbox" class="chek" value="34"> <img src="../pic/block34.png"></div>
-                <div>　<input type="checkbox" class="chek" value="40"> <span style="font-size: 18px; background-color: #c57Ba0;">變 數</span><img src=""></div>
+              <div>　<input type="checkbox" class="chek" value="40" id="block40"> <span style="font-size: 18px; background-color: #c57Ba0;">變 數</span><img src=""></div>
             </td>
           </tr>
           <tr>
-            <td width="260" height="10" align="center" valign="middle"></td>
+            <td width="370" height="10" align="center" valign="middle"></td>
             <td width="15" height="10" align="center" valign="middle"></td>
             <td width="395" height="10" align="center" valign="middle"></td>
           </tr>
@@ -600,7 +654,7 @@
             <td width="395" height="310" align="left" valign="middle" bgcolor="#E4E4E4">
               <div>　<input type="checkbox" class="chek" value="11"> <img src="../pic/block11.png"></div>
               <div>　<input type="checkbox" class="chek" value="12"> <img src="../pic/block12.png"></div>
-              <div>　<input type="checkbox" class="chek" value="13"> <img src="../pic/block13.png"></div>
+              <div>　<input type="checkbox" class="chek" value="13" id="block13" onclick="check13(this);"> <img src="../pic/block13.png"></div>
               <div>　<input type="checkbox" class="chek" value="14"> <img src="../pic/block14.png"></div> 
             </td>
           </tr>
@@ -650,7 +704,7 @@
          </select>
       </label>
         <br><br><br><br><br><br><br>
-        <p style="color: white"><input type="checkbox" name="all" onclick="check_all(this)" />全選/全不選</p>
+        <p style="color: white"><input type="checkbox" name="all" onclick="check_all(this);" />全選/全不選</p>
 <!--        <button id="selecall" onclick="selectAll();">全 選</button>-->
         <br>
         <button id="savetooles" onclick="saveTools();">儲 存</button>
@@ -779,6 +833,13 @@
         <div class="selec2" onclick="selectTile(301);" title="主角" id="tile301"></div>
         <div class="selec2" onclick="selectTile(302);" title="主角" id="tile302"></div>
         <div class="selec2" onclick="selectTile(303);" title="主角" id="tile303"></div>
+        <div class="selec" onclick="selectNum();" title="數字" id="tileNum">0</div>
+    </div>
+    
+    <div class="slidecontainer">
+      <input type="range" min="0" max="99" value="0" class="slider" id="myRange">
+        <p> </p>
+        <button onclick="chooseNum();" style="font: 22px 微軟正黑體">選取<span id="demo"></span></button>
     </div>
     
 
@@ -1048,11 +1109,18 @@
         $('#run_over').show();      //蓋住執行按鈕
     }   
     
-    function check_all(obj){
+    function check_all(obj){                                        //全選
         var idd2 = document.getElementsByClassName('chek');              //取得全部的核取方塊元素
         
         for(var i = 1; i < idd2.length; i++  ){
-            idd2[i].checked = obj.checked;;
+            idd2[i].checked = obj.checked;
+        }
+    }
+    function check13(obj){
+        var idd40 = document.getElementById('block40');              //取得全部的核取方塊元素
+        if(obj.checked){
+            console.log(obj.checked);
+            idd40.checked = true;
         }
     }
     
@@ -1108,13 +1176,16 @@
         let objary="";
         let roleary="";
         let toolary="";
+        let numberary="";
         
         for(var i=0; i<99; i++){
             gndary += (stageGround[ Math.floor(i/10)+1][i%10+1] +",");
             objary += (stageObject[ Math.floor(i/10)+1][i%10+1] +",");
+            numberary += (stageText[i%10+1][ Math.floor(i/10)+1 ] +",");
         }
-        gndary += stageGround[10][10];          //console.log(gndary);
+        gndary += stageGround[10][10];          //最後一筆資料不用再加逗號 console.log(gndary);
         objary += stageObject[10][10];         // console.log(objary);
+        numberary += stageText[10][10];         console.log(numberary);
 
         roleary = player[0].nowx +","+ player[0].nowy +","+ player[0].face +","+ diamondNeed[stageNum] +","+ maxblock[stageNum];
         
@@ -1134,12 +1205,13 @@
                 writeRow: Number(ary1[3].substr(1,2))* 10,          //根據ID計算要寫入在哪一列
                 gndData: gndary,
                 objData: objary,
+                numData: numberary,
                 roleData: roleary,
                 toolData: toolary,
                 tips: tipsMsg[stageNum],            //?
                 sheetUrl: '',
                 sheetTag: userID.substr(0,1),
-                mode: 4         //寫入模式
+                mode: 4.4         //寫入模式
             };
             console.log(a);
         
@@ -1163,5 +1235,36 @@
     }
     
 </script>   
+    
+    <script>
+        function selectNum(){                           //顯示選擇數字介面
+            $('#overlayT').show();
+            $('.slidecontainer').fadeIn();
+            //selectedTile = 500;                         //???
+            selectsound.play();
+            $('.selec').removeClass('selected');
+            $('.selec2').removeClass('selected');           //四個角色圖的div
+            $('#tileNum').addClass('selected');
+        }
+        
+        var slider = document.getElementById("myRange");
+        var output = document.getElementById("demo");
+        
+        var Numb =0;
+        output.textContent = Numb;
+
+        slider.oninput = function() {
+            Numb = this.value
+            
+            output.textContent = String(Numb);
+        }
+        
+        function chooseNum(){                       //按下選取數字按鈕
+            document.getElementById('tileNum').textContent = Numb;
+            selectedTile = 500 + Number(Numb);
+            $('#overlayT').fadeOut();
+            $('.slidecontainer').fadeOut();
+        }
+    </script>
     
 </html>
