@@ -61,7 +61,7 @@ Blockly.Blocks['action_goto_num'] = {
 Blockly.JavaScript['action_goto_num'] = function(block) {
   var value_numb1 = Blockly.JavaScript.valueToCode(block, 'numb1', Blockly.JavaScript.ORDER_ATOMIC);
   // TODO: Assemble JavaScript into code variable.
-  var code = 'gotoNum(0,' + value_numb1 + ');\n await delay(1000); \n';
+  var code = 'gotoNum(0,' + value_numb1 + '); \n await delay(1000); \n';
   return code;
 };
 

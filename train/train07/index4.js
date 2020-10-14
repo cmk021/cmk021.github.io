@@ -446,13 +446,13 @@ function update(time, delta) {
     //}
     // move_(1,delta); 
   
-    if(player[0].die == 1){
+    if(player[0].die == 1){                                     //墜落而亡
         role_fadeout(player[0].role,delta);
     }
     else if((codeOver == 2) && (diamondNum < diamondNeed[stageNum])){          //程式執行結束，且未收集到足夠的鑽石
         codeOver = 3;
         console.log("die 3");
-        if(player[0].die != 10){    role_die(2);    }                   //已經以其它死法完成死亡
+        if(player[0].die != 10){    role_die(2);    }                   //已經以其它死法完成死亡????
     }
 
     //text.setText("Tile X: " + Math.floor(player[0].role.x/48+1) +" Y: " + Math.floor(player[0].role.y/48+1));   //+1??
