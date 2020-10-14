@@ -762,6 +762,7 @@ function get_object(num) {              //取得物品(物品代號)
         
         setTimeout( function(){
             $('#overlayEnd').html(strWin + '<div id="gifdiv"><img src="../../pic/user16.gif" /></div>');
+            document.getElementById('overlayEnd').title = '';
             //$('#overlayEnd').html('<br>恭喜您過關了！ <br>共花費 秒<br>將自動進到下一關！');
             $('#overlayEnd').show();
             
