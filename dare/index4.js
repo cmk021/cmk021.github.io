@@ -36,7 +36,7 @@ var keys;                           //可以用的按鍵設置
 var map;                            //???
 var gndLayer;
 var objectLayer;
-//var player;
+var textLayer=[];
 //var layer;                      //????
 var text;
 let diamondNum = 0;         //取得的鑽石數量
@@ -52,7 +52,7 @@ let alpha0 = 1;             //角色0 的透明度。 ！！過於簡略！
 
 var stage;//用來存放地圖關卡json資料
 var stageNum = 0;   //目前關卡代號   範圍從 1~10
-//var stageFood=[];
+var stageText=[];
 var stageObject=[];
 var stageGround=[];
 let jsonfile="json/0-199.json";           //???
@@ -102,7 +102,7 @@ let sound_bump;                     //取得撞路障音效
 let sound_error;                    //死亡音效
 let sound_error2;                   //死亡音效2
 let sound_success;                  //過關音效
-//let page_flip;                      //翻頁音效???
+let sound_clear;                    //數字消失音效
 let foot_step;                      //走路音效
 
 function preload() {
@@ -127,7 +127,7 @@ function preload() {
     this.load.audio('sounderror', '/sound/freesound_8-bit-death-sound.wav');
     this.load.audio('sounderror2', '/sound/freesound_autistic-lucario_error.wav');
     this.load.audio('soundsuccess', '/sound/freesound_success-1.wav');
-    //this.load.audio('pageflip', '/sound/free_page-flip.mp3');
+    this.load.audio('soundclear', '/sound/maoudamashii_wind02.ogg');
     this.load.audio('footstep', '/sound/freesound_by_inspectorj_running-snow.wav');
 }
 
@@ -265,7 +265,20 @@ function create() {
         //stageFood[i] = [];
         stageGround[i] = [];
         stageObject[i] = [];
-    }    
+        stageText[i] = [];
+        textLayer[i] = [];
+    } 
+    
+    for (var i=0 ; i<100 ; i++){
+        var xt = i%10+1;
+        var yt = Math.floor(i/10)+1;
+        
+        textLayer[ xt ][ yt ] = this.add.text(-31+xt*48, -25+yt*48, "", { font: "20px Arial Black", fill: "#fff" }).setStroke(0x000000, 3);             //0x000000 沒作用.. ??
+        
+        textLayer[ xt ][ yt ].alpha = 0.6;
+        //text.setAlign('center');
+    }
+    
     
     let readRow0 = Math.floor(Number(ary4[1].substr(-2))/10)*100 + Number(ary4[1].substr(1,1))* 10+7;
     let bbb = {
@@ -286,7 +299,7 @@ function create() {
             readRow: readRow0,
             sheetUrl: '',
             sheetTag: Math.floor(Number(ary4[1].substr(-2))/10) +1,        //
-            mode: 2         //讀取模式
+            mode: 2.2         //讀取模式
         };
             //$('#overlay').show();
             //console.log(a);
@@ -302,30 +315,39 @@ function create() {
                     for (i=0 ; i<100 ; i++){                            //讀入地圖資料
                         //stageGround[ Math.floor(i/10)+1][i%10+1] = stage.layers[0].data[i];             //+1 ??
                         //stageObject[ Math.floor(i/10)+1][i%10+1] = stage.layers[1].data[i];             //+1 ??
-                        stageGround[ Math.floor(i/10)+1][i%10+1] = data_Design[i];
-                        stageObject[ Math.floor(i/10)+1][i%10+1] = data_Design[i+100];
+                        stageText[i%10+1][ Math.floor(i/10)+1 ] = Number(data_Design[i]);
+                        stageGround[ Math.floor(i/10)+1][i%10+1] = Number(data_Design[i+100]);
+                        stageObject[ Math.floor(i/10)+1][i%10+1] = Number(data_Design[i+200]);
                         
-                        gndLayer.fill(Number(data_Design[i]) ,i%10 ,Math.floor(i/10) ,1,1);      //更新地圖
-                        objectLayer.fill(Number(data_Design[i+100]) ,i%10 ,Math.floor(i/10) ,1,1);  //更新地圖物品
+                        if(data_Design[i] != -1){
+                            if(data_Design[i] < 10){
+                                textLayer[i%10+1][Math.floor(i/10)+1].text = " "+ Number(data_Design[i]); 
+                            }else{
+                                textLayer[i%10+1][Math.floor(i/10)+1].text = Number(data_Design[i]);      //??
+                            }
+                            
+                        }
+                        gndLayer.fill(Number(data_Design[i+100]) ,i%10 ,Math.floor(i/10) ,1,1);      //更新地圖
+                        objectLayer.fill(Number(data_Design[i+200]) ,i%10 ,Math.floor(i/10) ,1,1);  //更新地圖物品
                     }
-                    stage.xx= data_Design[200];             //這三行不太需要…
-                    stage.yy= data_Design[201];
-                    stage.ff= data_Design[202];
-                    diamondNeed[stageNum]= Number(data_Design[203]);
-                    maxblock[stageNum]= Number(data_Design[204]);
+                    stage.xx= data_Design[300];             //這三行不太需要…
+                    stage.yy= data_Design[301];
+                    stage.ff= data_Design[302];
+                    diamondNeed[stageNum]= Number(data_Design[303]);
+                    maxblock[stageNum]= Number(data_Design[304]);
                     //$('#needDim').val(diamondNeed[stageNum]);
                     $('#maxB').val(maxblock[stageNum]);
                     document.getElementById('needDim2').innerHTML= diamondNeed[stageNum];
                 
-                    player[0].nowx= Number(data_Design[200]);       //Number  非常重要！！！
-                    player[0].nowy= Number(data_Design[201]);
-                    player[0].face= Number(data_Design[202]);       //console.log(player[0].face);
-                
+                    player[0].nowx= Number(data_Design[300]);       //Number  非常重要！！！
+                    player[0].nowy= Number(data_Design[301]);
+                    player[0].face= Number(data_Design[302]);       //console.log(player[0].face);
+                   
                     player[0].role.x = (player[0].nowx - 1) * 48;
                     player[0].role.y = (player[0].nowy - 1) * 48;
                     player[0].role.anims.play(fff[player[0].face], true);       //
                 
-                    toolsAry = data_Design.slice(205, data_Design.length );       //截取 從205到最後
+                    toolsAry = data_Design.slice(305, data_Design.length );       //截取 從205到最後
                     toolAryToXML();
                     document.getElementById('toolbox'+(stageNum+10) ).innerHTML = toolsXML;
                     gen_workspace('toolbox'+(stageNum+10));		 //產生工作區????
@@ -652,12 +674,15 @@ function move_back(n){                  //倒退
     }   
     
     
-    if( ((nextGround>=131)&&(nextGround<=160))||(nextObject>=232) ){            //地刺、陷阱????
+    if( !((nextGround>=1)&&(nextGround<=130)) ){
         sound_bump.play();
         camera0.shake(160,0.008);                      //指定晃動時間 和 強度
         //return "exit";
-    }
-    else{
+    }else if(nextObject>=232){      //232以上都不可行走( ((nextGround>=131)&&(nextGround<=160))||(nextObject>=232) ){
+        sound_bump.play();
+        camera0.shake(160,0.008);                      //指定晃動時間 和 強度
+        //return "exit";
+    }else{
         if (player[n].face == 2){
             back_right(n);
         }
@@ -740,31 +765,15 @@ function get_object(num) {              //取得物品(物品代號)
         //let strWin ="<br>恭喜您過關了！ <br>共花費 " +(timeCount/10)+ "秒<br>將自動進到下一關！";
         let strWin ="<br>恭喜您過關了！ <br>您花費了 " +(timeCount/10)+ "秒，<br>將自動回到選單！";
         console.log(timeCount/10);
-//        if (data_1[ stageNum*2-1 ]!=0 ){
-//            if( timeCount < data_1[ stageNum*2-1 ] ) {
-//                strWin = "<br>★☆創新紀錄★☆" + strWin;
-//            }else{
-//                timeCount = data_1[ stageNum*2-1 ];
-//                console.log( timeCount);
-//            }
-//        }
+
         
         setTimeout( function(){
-            $('#overlayEnd').html(strWin);
+            $('#overlayEnd').html(strWin + '<div id="gifdiv"><img src="../../pic/user16.gif" /></div>');
+            document.getElementById('overlayEnd').title = '';
             //$('#overlayEnd').html('<br>恭喜您過關了！ <br>共花費 秒<br>將自動進到下一關！');
             $('#overlayEnd').show();
         },2000);     //????
         
-        //寫入通過檢驗資料
-//        a = {
-//            //data: '2'+','+ (stageNum+30) +','+ '1' +','+ timeCount,       //寫入到工作表的第2欄    //1代表過關
-//            data: stageNum +','+ timeCount,    //寫入檢驗過關資料  //第1號，寫在第1列。2號寫在11列...
-//            writeRow: Number(ary4[3].substr(1,2))* 10+1,
-//            sheetUrl: '',  
-//            sheetTag: ary4[3].substr(0,1),  //ary4[2],
-//            mode: 3         //寫入模式
-//        };
-//        console.log(a);
         
         setTimeout(function(){              //這裡連結要改！！
             window.location.href = "dareMenu.html?" + ary4[2] + "?" + ary4[3] + "?" + ary4[1].substr(-3);    
@@ -860,6 +869,135 @@ function drawLine(){
     }
 }
 
+
+//數字羅盤，轉向該數字，以有鑽石203的地方優先
+function turnToNum(NN,numXX) {
+    if ((stageText[player[NN].nowx+1][player[NN].nowy] == numXX) && (stageObject[player[NN].nowy][player[NN].nowx+1] == 203)){
+        player[NN].face = 0;    //turn_right(NN);
+    }
+    else if ((stageText[player[NN].nowx][player[NN].nowy-1] == numXX) && (stageObject[player[NN].nowy-1][player[NN].nowx] == 203)){
+        player[NN].face = 1;    //turn_up(NN);
+    }
+    else if ((stageText[player[NN].nowx-1][player[NN].nowy] == numXX) && (stageObject[player[NN].nowy][player[NN].nowx-1] == 203)){
+        player[NN].face = 2;    //turn_left(NN);
+    }
+    else if ((stageText[player[NN].nowx][player[NN].nowy+1] == numXX) && (stageObject[player[NN].nowy+1][player[NN].nowx] == 203)){
+        player[NN].face = 3;    //turn_down(NN);
+    }
+    else if ((stageText[player[NN].nowx+1][player[NN].nowy] == numXX)){
+        player[NN].face = 0;    //turn_right(NN);
+    }
+    else if ((stageText[player[NN].nowx][player[NN].nowy-1] == numXX)){
+        player[NN].face = 1;    //turn_up(NN);
+    }
+    else if ((stageText[player[NN].nowx-1][player[NN].nowy] == numXX)){
+        player[NN].face = 2;    //turn_left(NN);
+    }
+    else if ((stageText[player[NN].nowx][player[NN].nowy+1] == numXX)){
+        player[NN].face = 3;    //turn_down(NN);
+    }else{
+        //return;
+    }
+    
+    player[NN].move = -2;            //原地轉向
+}
+
+//前往該數字，以有鑽石203的地方優先
+function gotoNum(NN,numXX) {
+    
+    if ((stageText[player[NN].nowx+1][player[NN].nowy] == numXX) && (stageObject[player[NN].nowy][player[NN].nowx+1] == 203)){
+        player[NN].face = 0;    //turn_right(NN);
+    }
+    else if ((stageText[player[NN].nowx][player[NN].nowy-1] == numXX) && (stageObject[player[NN].nowy-1][player[NN].nowx] == 203)){
+        player[NN].face = 1;    //turn_up(NN);
+    }
+    else if ((stageText[player[NN].nowx-1][player[NN].nowy] == numXX) && (stageObject[player[NN].nowy][player[NN].nowx-1] == 203)){
+        player[NN].face = 2;    //turn_left(NN);
+    }
+    else if ((stageText[player[NN].nowx][player[NN].nowy+1] == numXX) && (stageObject[player[NN].nowy+1][player[NN].nowx] == 203)){
+        player[NN].face = 3;    //turn_down(NN);
+    }
+    else if ((stageText[player[NN].nowx+1][player[NN].nowy] == numXX)){
+        player[NN].face = 0;    //turn_right(NN);
+    }
+    else if ((stageText[player[NN].nowx][player[NN].nowy-1] == numXX)){
+        player[NN].face = 1;    //turn_up(NN);
+    }
+    else if ((stageText[player[NN].nowx-1][player[NN].nowy] == numXX)){
+        player[NN].face = 2;    //turn_left(NN);
+    }
+    else if ((stageText[player[NN].nowx][player[NN].nowy+1] == numXX)){
+        player[NN].face = 3;    //turn_down(NN);
+    }else{
+        return;                 //四周都沒有要前往的數字
+    }    
+    
+      //！！應先判斷前方是否有路，再做移動
+    let nextGround = 0;         //目標地塊的編號
+    let nextObject = 0;         //目標地塊上的物品編號
+    
+    if (player[NN].face == 0){
+        nextGround = stageGround[player[NN].nowy][player[NN].nowx+1];     
+        nextObject = stageObject[player[NN].nowy][player[NN].nowx+1];
+    }
+    if (player[NN].face == 1){
+        nextGround = stageGround[player[NN].nowy-1][player[NN].nowx];
+        nextObject = stageObject[player[NN].nowy-1][player[NN].nowx];
+    }
+    if (player[NN].face == 2){
+        nextGround = stageGround[player[NN].nowy][player[NN].nowx-1];
+        nextObject = stageObject[player[NN].nowy][player[NN].nowx-1];
+    }
+    if (player[NN].face == 3){
+        nextGround = stageGround[player[NN].nowy+1][player[NN].nowx];
+        nextObject = stageObject[player[NN].nowy+1][player[NN].nowx];
+    }
+    
+    
+    if( !((nextGround>=1)&&(nextGround<=130)) ){
+        sound_bump.play();
+        camera0.shake(160,0.008);                      //指定晃動時間 和 強度
+        //return "exit";
+    }else if(nextObject>=232){   //232以上都不可行走( ((nextGround>=131)&&(nextGround<=160))||(nextObject>=232) ){
+        sound_bump.play();
+        camera0.shake(160,0.008);                      //指定晃動時間 和 強度
+        //return "exit";
+    }else{
+        if (player[NN].face == 0){
+            move_right(NN);
+        }
+        if (player[NN].face == 1){
+            move_up(NN);
+        }
+        if (player[NN].face == 2){
+            move_left(NN);
+        }
+        if (player[NN].face == 3){
+            move_down(NN);       
+        }
+        if (nextObject==231) {return "exit";}              //掉入巨坑 
+    }
+}
+
+
+var textFadeOutAnim =0;
+//清除目前所在位置的數字
+function clearNum(NN){         
+    if(stageText[player[NN].nowx][player[NN].nowy] == -1){  return;  }
+    
+    stageText[player[NN].nowx][player[NN].nowy] =-1;
+    textLayer[player[NN].nowx][player[NN].nowy].setColor("#f33");
+    sound_clear.play();
+    textFadeOutAnim = 1;                //啟動文字消失動畫
+}
+function textFadeOut(NN){
+    textLayer[player[NN].nowx][player[NN].nowy].alpha -= 0.04;              //15影格字消失
+    if(textLayer[player[NN].nowx][player[NN].nowy].alpha <= 0){
+        textFadeOutAnim = 0;            //動畫停止
+        textLayer[player[NN].nowx][player[NN].nowy].text = "";
+        textLayer[player[NN].nowx][player[NN].nowy].setColor("#fff");
+    }
+}
 /*
 let eatNum = 0;         //已吃掉的食物量
 function eat(num000,N) {                        //吃數字或字母(要吃掉的數字,第N個角色)

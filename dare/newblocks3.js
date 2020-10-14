@@ -4,9 +4,9 @@ addBlocks = [
             '<block type="action_turn_left"></block>',
             '<block type="action_turn_right"></block>',
             '<block type="action_move_back"></block>',
-            '',             //5  
-            '',               
-            '',               
+            '<block type="action_turn_to_num"></block>',             //5  
+            '<block type="action_clear_num"></block>',               
+            '<block type="action_goto_num"></block>',
             '',               
             '',               
             '<category name="重複" colour="#5ba55b">',             //10               
@@ -46,6 +46,65 @@ addBlocks = [
 //
 //      以下都是 定義新的 方塊，及其對應的程式碼
 //
+Blockly.Blocks['action_goto_num'] = {
+  init: function() {
+    this.appendValueInput("numb1")
+        .setCheck("Number")
+        .appendField("前往數字");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour("aaa000");
+ this.setTooltip("前往指定的數字");
+ this.setHelpUrl("");
+  }
+};
+Blockly.JavaScript['action_goto_num'] = function(block) {
+  var value_numb1 = Blockly.JavaScript.valueToCode(block, 'numb1', Blockly.JavaScript.ORDER_ATOMIC);
+  // TODO: Assemble JavaScript into code variable.
+  var code = 'gotoNum(0,' + value_numb1 + ');\n await delay(1000); \n';
+  return code;
+};
+
+
+Blockly.Blocks['action_clear_num'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("清除數字");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour("aaa000");
+ this.setTooltip("會將目前所在位置的數字清除");
+ this.setHelpUrl("");
+  }
+};
+Blockly.JavaScript['action_clear_num'] = function(block) {
+  // TODO: Assemble JavaScript into code variable.
+  var code = 'clearNum(0);\n await delay(1000); \n';
+  return code;
+};
+
+
+Blockly.Blocks['action_turn_to_num'] = {
+  init: function() {
+    this.appendValueInput("NUM1")
+        .setCheck("Number")
+        .appendField("數字羅盤")
+        .appendField(new Blockly.FieldImage("pic/991.png", 40, 40, "pic"));
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour("aaa000");
+    this.setTooltip("會讓主角轉向指定的數字（以有鑽石的地方優先）");
+    this.setHelpUrl("");
+  }
+};
+Blockly.JavaScript['action_turn_to_num'] = function(block) {
+  var value_num1 = Blockly.JavaScript.valueToCode(block, 'NUM1', Blockly.JavaScript.ORDER_ATOMIC);
+  // TODO: Assemble JavaScript into code variable.
+  var code = 'turnToNum(0,' + value_num1 + ');\n await delay(1000); \n';
+  return code;
+};
+
+
 Blockly.Blocks['something_ahead3'] = {
     init: function() {
     //this.appendDummyInput()
