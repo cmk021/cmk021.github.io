@@ -15,7 +15,7 @@ Blockly.JavaScript['something_ahead'] = function(block) {
     // TODO: Assemble JavaScript into code variable.
 
     var code;                     //！！重要
-     code = "something_ahead(0," +dropdown_opt+ ");";
+     code = "something_ahead(0," +dropdown_opt+ ")";
     console.log(code);
     /*if (dropdown_opt=="way"){
         code = "something_ahead(0,'way')";   }
