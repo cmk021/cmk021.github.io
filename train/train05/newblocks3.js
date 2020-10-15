@@ -19,7 +19,7 @@ Blockly.JavaScript['something_ahead'] = function(block) {
     // TODO: Assemble JavaScript into code variable.
 
     var code;                     //！！重要
-     code = "something_ahead(0," +dropdown_opt+ ");";
+     code = "something_ahead(0," +dropdown_opt+ ")";
     console.log(code);
     // TODO: Change ORDER_NONE to the correct strength.
     return [code, Blockly.JavaScript.ORDER_NONE];
@@ -42,7 +42,7 @@ Blockly.JavaScript['something_ahead2'] = function(block) {
     // TODO: Assemble JavaScript into code variable.
 
     var code;                     //！！重要
-     code = "something_ahead(0," +dropdown_opt+ ");";
+     code = "something_ahead(0," +dropdown_opt+ ")";
     console.log(code);
     // TODO: Change ORDER_NONE to the correct strength.
     return [code, Blockly.JavaScript.ORDER_NONE];
@@ -64,7 +64,7 @@ Blockly.JavaScript['something_ahead3'] = function(block) {
     // TODO: Assemble JavaScript into code variable.
 
     var code;                     //！！重要
-     code = "something_ahead(0," +dropdown_opt+ ");";
+     code = "something_ahead(0," +dropdown_opt+ ")";
     console.log(code);
     // TODO: Change ORDER_NONE to the correct strength.
     return [code, Blockly.JavaScript.ORDER_NONE];
