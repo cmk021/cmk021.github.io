@@ -344,7 +344,7 @@ function create() {
                     player[0].role.y = (player[0].nowy - 1) * 48;
                     player[0].role.anims.play(fff[player[0].face], true);       //
                 
-                    toolsAry = data_Design.slice(305, data_Design.length );       //截取 從205到最後
+                    toolsAry = data_Design.slice(305, data_Design.length );       //截取 從305到最後
                     toolAryToXML();
                     document.getElementById('toolbox'+(stageNum+10) ).innerHTML = toolsXML;
                     gen_workspace(ary1[1]);		 //產生工作區????

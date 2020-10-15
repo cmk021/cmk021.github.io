@@ -229,7 +229,7 @@
             padding: 7px;
             font-family: 'Comic Sans MS', sans-serif, '微軟正黑體'; 
         }
-        #savetips, #savetooles, #giveup, #selecall{
+        #savetips, #savetooles, #giveup, #giveup2, #selecall{
             font-size: 35px;
             line-height: 42px;
             font-weight: bold;
@@ -510,8 +510,12 @@
                         else if( data_1[i]==-1 ){          //未開啟
                             $(idi).hide();
                         }
+                        
                         if( idi.substr(-1)==ary1[1].substr(-1) ){ //location.href.substr(-1) ){ //目前正在玩這一關
-                            $(idi).addClass('pass_now');     // console.log(333334);  
+                            $(idi).addClass('pass_now');     // console.log(333334);
+                            if( data_1[i]==1 ){          //進入原本已檢驗通過的關卡
+                                $('#run_over').hide();          //
+                            }
                         }
                     }
                     
@@ -707,7 +711,8 @@
         <p style="color: white"><input type="checkbox" name="all" onclick="check_all(this);" />全選/全不選</p>
 <!--        <button id="selecall" onclick="selectAll();">全 選</button>-->
         <br>
-        <button id="savetooles" onclick="saveTools();">儲 存</button>
+        <button id="savetooles" onclick="saveTools();">儲 存</button> <br><br>
+        <button id="giveup2">放 棄</button>
         
     </div>   
     
@@ -1099,32 +1104,51 @@
         console.log(tipsMsg[stageNum].length);
         $('#writetips').fadeOut();
     });
+    $('#giveup2').click(function(){                 //????放棄修改選用工具
+        click01.play();
+        $('#toolLibrary').fadeOut();
+        $('#overlayT').fadeOut();
+    });
     
+    var toolsAry = new Array();             //存放已被選用的 block工具
     
     function choosetool(){
         //先開啟 overlayT    再開啟選擇工具的div：toolLibrary
         $('#overlayT').show();
         $('#toolLibrary').fadeIn();
-        //$('#maxB').val(maxblock[stageNum]);
-        $('#run_over').show();      //蓋住執行按鈕
+        $('#maxB').val(maxblock[stageNum]);
+        //$('#run_over').show();      //???蓋住執行按鈕
+        //先全部不選，再勾選記錄中己勾選的工具
+        var idd0 = document.getElementsByClassName('chek');              //取得全部的核取方塊元素
+        for(var i = 1; i < idd0.length; i++  ){
+            idd0[i].checked = false;
+        }
+        for (i=0 ; i<toolsAry.length ; i++){
+            for (var k = 0; k < idd0.length; k++  ){
+                if( idd0[k].value == toolsAry[i]){
+                    idd0[k].checked = true;                        //設為已核取
+                    break;
+                }
+            }
+        }
     }   
     
     function check_all(obj){                                        //全選
         var idd2 = document.getElementsByClassName('chek');              //取得全部的核取方塊元素
         
-        for(var i = 1; i < idd2.length; i++  ){
+        for(var i = 0; i < idd2.length; i++  ){                 //前進  也可不選
             idd2[i].checked = obj.checked;
         }
     }
-    function check13(obj){
-        var idd40 = document.getElementById('block40');              //取得全部的核取方塊元素
+    function check13(obj){                                      //選取計次迴圈，則自動勾選變數
+        var idd40 = document.getElementById('block40');              
         if(obj.checked){
             console.log(obj.checked);
             idd40.checked = true;
         }
     }
     
-    var toolsAry = new Array();             //存放已被選用的 block工具
+    //var toolsAry = new Array();             //存放已被選用的 block工具
     var toolsXML;                           //存放已被選用的 block工具 的XML
     
     function saveTools(){
@@ -1138,8 +1162,9 @@
         }
         toolsAry.sort( function(a, b) {    return a - b;   } );         //按數字大小排序，由小到大
         //console.log(toolsAry);        
-        maxblock[stageNum]=Number($('#maxB').val());     console.log(maxblock[stageNum]);
         toolAryToXML();
+        
+        maxblock[stageNum]=Number($('#maxB').val());     console.log(maxblock[stageNum]);
         
         document.getElementById('toolbox'+(stageNum+10) ).innerHTML= toolsXML;
         gen_workspace(ary1[1]);		 //產生工作區????
@@ -1147,6 +1172,7 @@
         
         $('#overlayT').hide();
         $('#toolLibrary').fadeOut();
+        $('#run_over').show();
     }
     
     function toolAryToXML(){                            //把選用 blocks的代號 的陣列，轉成XML
