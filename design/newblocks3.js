@@ -21,8 +21,8 @@ addBlocks = [
             '',               
             '<category name="選擇(邏輯)" colour="#5b80a5">',             //20               
             '<block type="controls_if"></block>',               //if  then  else
-            '<block type="something_ahead3"></block>',              //前左右方有路               
-            '<block type="something_ahead2"></block>',              //前方有樹山水 
+            '<block type="something_ahead2"></block>',              //前左右方有路               
+            '<block type="something_ahead3"></block>',              //前方有樹山水 
             '<block type="logic_compare"><field name="OP">EQ</field></block>',               //比較運算
             '<block type="logic_operation"><field name="OP">AND</field></block>',             //25   //和、或
             '<block type="logic_negate"></block>',               //not
