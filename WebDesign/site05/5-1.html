@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+<title>網頁設計丙級─國家公園介紹網</title>
+	<style type="text/css">
+    body {
+		margin-left: 0px;
+		margin-top: 0px;
+		background-color: #000;
+    }
+    video {
+		position: absolute;
+		z-index: 1;
+		left: 280px;
+		top: 0;
+	}
+	#apDiv1 {
+		position: absolute;
+		width: 280px;
+		height: 650px;
+		z-index: 1;
+		left: 0px;
+		top: 0;
+		background-color: #CCCCCC;
+		color: #444;
+	}
+	.mark {
+		font-size:17px;
+		background-color: #ffff99;
+		color: #000;
+		font-family: "微軟正黑體", sans-serif;
+		line-height:20px;
+	}
+    #apDiv1 table tr td {
+		/*cursor: pointer;*/
+	}
+	td:hover:not(#t00,#t000){
+		border: #900 solid 1px;
+		cursor: pointer;
+	}
+	#t00{
+		font-size: 26px;
+		color: #900;
+		cursor: ;
+		font-weight: bolder;
+	}
+	#t000{
+		font-size: 18px;
+		color: #900;
+		cursor: ;
+		font-weight: bold;
+	}
+    span:hover {
+		border: solid 1px #FF0000;
+		background-color: #3FF;
+		cursor: help;
+	}
+	#apDiv1:not(#t00,#t000) {
+		line-height:17px;
+	}
+    #tip1_1, #tip1_2, #tip1_3, #tip1_4, #tip6_5, #tip6_6, #tip6_7, #tip1_8, #tip6_9, #tip6_10, #tip2_1 {
+		position: absolute;
+		padding: 9px;
+		background-color: #111;
+		color: #FFF;
+		left: 270px;
+		top: 5px;
+		visibility: hidden;
+		z-index: 13;
+		border:dashed #FFFFFF 2px;
+		border-radius: 6px;
+	}
+	/*#tip6_3 {
+		width: 534px;
+		height: 419px;
+	}
+	#tip6_4 {
+	width: 534px;
+	height: 394px;
+	}*/	
+    </style>
+    <!--<script src ="jquery-3.4.1.js"></script> -->
+    <script>
+		var v01;
+		window.onload= function(){
+			v01 = document.getElementById("v001");
+			
+			setInterval(function(){ 
+				if((v01.currentTime >= 4)&&(v01.currentTime < 28)){
+					//$("t01").addClass("mark");
+					document.getElementById("t01").classList.add("mark");
+				}else {//if ( document.getElementById("t01").classList ) {
+					document.getElementById("t01").classList.remove("mark");
+				}
+				
+				if((v01.currentTime >= 29)&&(v01.currentTime < 36)){
+					//$("t01").addClass("mark");
+					document.getElementById("t02").classList.add("mark");
+				}else {//if ( document.getElementById("t01").classList ) {
+					document.getElementById("t02").classList.remove("mark");
+				}
+				
+				if((v01.currentTime >= 48)&&(v01.currentTime < 80)){
+					//$("t01").addClass("mark");
+					document.getElementById("t03").classList.add("mark");
+				}else {//if ( document.getElementById("t01").classList ) {
+					document.getElementById("t03").classList.remove("mark");
+				}
+				
+				if((v01.currentTime >= 37)&&(v01.currentTime < 41)){
+					//$("t01").addClass("mark");
+					document.getElementById("t04").classList.add("mark");
+				}else {//if ( document.getElementById("t01").classList ) {
+					document.getElementById("t04").classList.remove("mark");
+				}
+				
+				if((v01.currentTime >= 48)&&(v01.currentTime < 80)){
+					//$("t01").addClass("mark");
+					document.getElementById("t05").classList.add("mark");
+				}else {//if ( document.getElementById("t01").classList ) {
+					document.getElementById("t05").classList.remove("mark");
+				}
+								
+				if((v01.currentTime >= 41)&&(v01.currentTime < 47)){
+					//$("t01").addClass("mark");
+					document.getElementById("t06").classList.add("mark");
+				}else {//if ( document.getElementById("t01").classList ) {
+					document.getElementById("t06").classList.remove("mark");
+				}
+				
+				if((v01.currentTime >= 105)&&(v01.currentTime < 134)){
+					//$("t01").addClass("mark");
+					document.getElementById("t07").classList.add("mark");
+				}else {//if ( document.getElementById("t01").classList ) {
+					document.getElementById("t07").classList.remove("mark");
+				}		
+						
+				if((v01.currentTime >= 87)&&(v01.currentTime < 104)){
+					//$("t01").addClass("mark");
+					document.getElementById("t08").classList.add("mark");
+				}else {//if ( document.getElementById("t01").classList ) {
+					document.getElementById("t08").classList.remove("mark");
+				}
+			}, 500);
+			
+		};
+		
+		function gotoTime(n){	
+			v01.currentTime = n;
+			v01.play();
+		}
+		
+		function show_tips(n){	
+			//$('#tip6_1').show();
+			document.getElementById(n).style.visibility = "visible";
+			//document.getElementById(n).style.top = event.clientY;			  
+			document.getElementById(n).style.left = (event.pageX+8) +"px";
+			  
+			if( n=='tip1_3' ){ //alert(event.pageY);
+				document.getElementById(n).style.top = "70px";	
+			}else {
+				document.getElementById(n).style.top = (event.pageY+7) +"px";
+			}
+			
+		}
+		function close_tips(n){	
+			//$('#tip6_1').show();
+			document.getElementById(n).style.visibility = "hidden";
+			//document.getElementById('tip6_1').innerHTML="";
+		}	
+    </script>
+</head>
+<body>
+<video controls width="1000" id="v001">
+    <source src="001.mp4"
+            type="video/mp4">
+
+    Sorry, your browser doesn't support embedded videos.
+</video>
+	<div id="tip1_1">網站的資料夾及檔案位置如下圖：
+        <br>其中的「main.html」「album5.html」題目沒有講明，需自行建立。(腦補) <br><img src="pic/1-1.PNG" width="625" height="468"></div>
+    <div id="tip1_2">開啟Dreamweaver，點選 「網站 → 新增網站」。如下圖：
+		<br>
+		<img src="pic/1-2.PNG" width="383" height="67"></div>
+        
+<div id="tip1_3"> 設定網站資料夾。如下圖：<br>
+	<img src="pic/1-3.PNG" width="800" height="538"></div>
+    
+    <div id="tip1_4"> <br>
+      <img src="pic/1-4.PNG">
+    </div>
+    
+<div id="tip6_5"> 點選以上任一圖片，	按滑鼠右鍵 → CSS樣式 → 開新檔案<br>
+      出現下圖後點選「複合」，如下圖，在 img 後面輸入 :hover ，按下「確定」<br>
+      <img src="pic/6-35.PNG">      
+    </div>
+    
+<div id="tip6_6">點選左側分類中的「擴充功能」，如下圖，在 Filter 選單中點選 Invert<br>
+          在 Invert 後面輸入 (1)<br>
+      <img src="pic/6-36.PNG">     
+    </div>
+    
+    <div id="tip6_7">點選「陽明山國家公園」圖片。參照下圖，在屬性面板的「替代」欄位輸入「陽明山國家公園」。<br>
+      設定「連結」欄位連結至 park 資料夾內的 yangmingshan.html<br>
+      在「目標」欄位輸入 imain<br>
+      <img src="pic/6-7.png">     
+    </div>
+    
+    <div id="tip1_8">在 album5資料夾內 新增一個網頁 「 album5.html 」     
+    </div>
+    
+    <div id="tip6_9">在7×1表格的右邊點一下滑鼠。按Enter鍵。<br>
+      輸入「檔案下載」。  <br>選取「檔案下載」四個字
+    </div>
+    
+<div id="tip6_10">選取「檔案下載」四個字。如下圖，在屬性面板點選 HTML 。<br>
+      設定「連結」欄位連結至 others 資料夾內的 park.mp3  <br><img src="pic/6-9.PNG"><br>如下圖。在工具列點選「分割」，找到右邊這行程式碼<img src="pic/6-11.PNG"><br>在 .mp3" 的後面輸入一個半型空白，及 download 
+  <br><img src="pic/6-10.PNG">
+    </div>
+    
+        <div id="tip2_1">在 webXX 資料夾內，再建立一個網頁 「 main.html 」    
+    </div>
+    
+        <div id="tip6_17">點選「玉山國家公園」圖片。<br>參照下圖，在屬性面板的「替代」欄位輸入「玉山國家公園」。<br>
+      <img src="pic/6-17.PNG">     
+    </div>
+    
+<div id="apDiv1">
+  <table width="272" border="0" align="center" cellpadding="1" cellspacing="3">
+    <tr>
+      <td height="30" align="center" id="t00">(一)建立網站架構</td>
+    </tr>
+    <tr>
+      <td height="20" align="center" id="t000">網站架構圖解 <span id="tip1" onMouseOver="show_tips('tip1_1')" onMouseOut="close_tips('tip1_1')">💡</span></td>
+    </tr>
+    <tr>
+      <td id="t01" onClick="gotoTime(4)">1. 在C：磁碟建立本網站主文件資料夾「webXX」，儲存製作完成的結果。(XX為個人檢定工作崗位號碼，如01、02、…、30等)。<br><span id="tip1" onMouseOver="show_tips('tip1_2')" onMouseOut="close_tips('tip1_2')">💡</span> → <span id="tip12" onMouseOver="show_tips('tip1_3')" onMouseOut="close_tips('tip1_3')">💡</span> → <span id="tip13" onMouseOver="show_tips('tip1_4')" onMouseOut="close_tips('tip1_4')">💡</span></td>
+    </tr>
+    <tr>
+      <td id="t02" onClick="gotoTime(29)">3-1. 在「webXX」資料夾下建立「images」資料夾，</td>
+    </tr>
+    <tr>
+      <td id="t03" onClick="gotoTime(48)">3-2. 將所有應使用的圖形檔均放置在「images」資料夾中。</td>
+    </tr>
+    <tr>
+      <td height="42" id="t04" onClick="gotoTime(38)">4-1. 在「webXX」資料夾下建立「music」資料夾，</td>
+    </tr>
+    <tr>
+      <td id="t05" onClick="gotoTime(49)">4-2. 將所有應使用到的音樂檔均放置在「music」資料夾中。</td>
+    </tr>
+    <tr>
+      <td id="t06" onClick="gotoTime(42)">5-1. 在「webXX」資料夾下建立「album5」資料夾，</td>
+    </tr>
+    <tr>
+      <td id="t07" onClick="gotoTime(105)">5-2. 將製作相簿時，所完成的檔案放置於「album5」資料夾中。<span id="tip8" onMouseOver="show_tips('tip1_8')" onMouseOut="close_tips('tip1_8')">💡</span></td>
+    </tr>
+    <tr>
+      <td id="t08" onClick="gotoTime(87)">（二）設計首頁，內容包括：<br>
+      1.首頁檔名為index.htm(l)或default.htm(l)，置於網站的根目錄（C:\webXX）<span id="tip16" onMouseOver="show_tips('tip2_1')" onMouseOut="close_tips('tip2_1')">💡</span></td>
+    </tr>
+    
+  </table>
+</div>
+<!--<p> <button onClick="gotoTime(3);">goto</button> </p> -->
+</body>
+</html>
