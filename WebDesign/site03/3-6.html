@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+<title>網頁設計丙級─國家公園介紹網</title>
+	<style type="text/css">
+    body {
+		margin-left: 0px;
+		margin-top: 0px;
+		background-color: #000;
+    }
+    video {
+		position: absolute;
+		z-index: 1;
+		left: 280px;
+		top: 0;
+	}
+	#apDiv1 {
+		position: absolute;
+		width: 280px;
+		height: 650px;
+		z-index: 1;
+		left: 0px;
+		top: 0;
+		background-color: #CCCCCC;
+		color: #444;
+	}
+	.mark {
+		font-size:17px;
+		background-color: #ffff99;
+		color: #000;
+		font-family: "微軟正黑體", sans-serif;
+		line-height:20px;
+	}
+    #apDiv1 table tr td {
+		/*cursor: pointer;*/
+	}
+	td:hover:not(#t00,#t000){
+		border: #900 solid 1px;
+		cursor: pointer;
+	}
+	#t00{
+		font-size: 26px;
+		color: #900;
+		cursor: ;
+		font-weight: bolder;
+	}
+	#t000{
+		font-size: 18px;
+		color: #900;
+		cursor: ;
+		font-weight: bold;
+	}
+    span:hover {
+		border: solid 1px #FF0000;
+		background-color: #3FF;
+		cursor: help;
+	}
+	#apDiv1:not(#t00,#t000) {
+		line-height:17px;
+	}
+    #tip6_1, #tip6_2, #tip6_3, #tip6_4, #tip6_5, #tip6_6, #tip6_7, #tip6_8, #tip6_9, #tip6_10, #tip6_16, #tip6_17 {
+		position: absolute;
+		padding: 9px;
+		background-color: #111;
+		color: #FFF;
+		left: 270px;
+		top: 5px;
+		visibility: hidden;
+		z-index: 13;
+		border:dashed #FFFFFF 2px;
+		border-radius: 6px;
+	}
+	/*#tip6_3 {
+		width: 534px;
+		height: 419px;
+	}
+	#tip6_4 {
+	width: 534px;
+	height: 394px;
+	}*/	
+    </style>
+    <!--<script src ="jquery-3.4.1.js"></script> -->
+    <script>
+		var v01;
+		window.onload= function(){
+			v01 = document.getElementById("v001");
+			
+			setInterval(function(){ 
+				if((v01.currentTime >= 3)&&(v01.currentTime < 12)){
+					//$("t01").addClass("mark");
+					document.getElementById("t01").classList.add("mark");
+				}else {//if ( document.getElementById("t01").classList ) {
+					document.getElementById("t01").classList.remove("mark");
+				}
+				
+				if((v01.currentTime >= 20)&&(v01.currentTime < 62)){
+					//$("t01").addClass("mark");
+					document.getElementById("t02").classList.add("mark");
+				}else {//if ( document.getElementById("t01").classList ) {
+					document.getElementById("t02").classList.remove("mark");
+				}
+				
+				if((v01.currentTime >= 75)&&(v01.currentTime < 155)){
+					//$("t01").addClass("mark");
+					document.getElementById("t03").classList.add("mark");
+				}else {//if ( document.getElementById("t01").classList ) {
+					document.getElementById("t03").classList.remove("mark");
+				}
+				
+				if((v01.currentTime >= 155)&&(v01.currentTime < 186)){
+					//$("t01").addClass("mark");
+					document.getElementById("t04").classList.add("mark");
+				}else {//if ( document.getElementById("t01").classList ) {
+					document.getElementById("t04").classList.remove("mark");
+				}
+				
+				if((v01.currentTime >= 196)&&(v01.currentTime < 248)){
+					//$("t01").addClass("mark");
+					document.getElementById("t05").classList.add("mark");
+				}else {//if ( document.getElementById("t01").classList ) {
+					document.getElementById("t05").classList.remove("mark");
+				}
+								
+				if((v01.currentTime >= 260)&&(v01.currentTime < 287)){
+					//$("t01").addClass("mark");
+					document.getElementById("t06").classList.add("mark");
+				}else {//if ( document.getElementById("t01").classList ) {
+					document.getElementById("t06").classList.remove("mark");
+				}
+				
+				if((v01.currentTime >= 287)&&(v01.currentTime < 299)){
+					//$("t01").addClass("mark");
+					document.getElementById("t07").classList.add("mark");
+				}else {//if ( document.getElementById("t01").classList ) {
+					document.getElementById("t07").classList.remove("mark");
+				}		
+						
+				if((v01.currentTime >= 328)&&(v01.currentTime < 398)){
+					//$("t01").addClass("mark");
+					document.getElementById("t08").classList.add("mark");
+				}else {//if ( document.getElementById("t01").classList ) {
+					document.getElementById("t08").classList.remove("mark");
+				}
+			}, 500);
+			
+		};
+		
+		function gotoTime(n){	
+			v01.currentTime = n;
+			v01.play();
+		}
+		
+		function show_tips(n){	
+			//$('#tip6_1').show();
+			document.getElementById(n).style.visibility = "visible";
+			//document.getElementById(n).style.top = event.clientY;			  
+			document.getElementById(n).style.left = (event.pageX+8) +"px";
+			  
+			if( event.pageY > 200 ){ //alert(event.pageY);
+				document.getElementById(n).style.top = "207px";	
+			}else {
+				document.getElementById(n).style.top = (event.pageY+7) +"px";
+			}
+			
+		}
+		function close_tips(n){	
+			//$('#tip6_1').show();
+			document.getElementById(n).style.visibility = "hidden";
+			//document.getElementById('tip6_1').innerHTML="";
+		}	
+    </script>
+</head>
+<body>
+<video controls width="1000" id="v001">
+    <source src="001.mp4"
+            type="video/mp4">
+
+    Sorry, your browser doesn't support embedded videos.
+</video>
+	<div id="tip6_1">在頁面內的選單區按一下滑鼠左鍵。設定儲存格屬性如下圖：
+        <br><img src="pic/6-1.PNG" width="575" height="55"></div>
+    <div id="tip6_2">點選 「插入 → 表格」，並按照下圖設定
+		<br>
+		<img src="pic/6-2.PNG" width="370" height="175"></div>
+        
+<div id="tip6_3"> 在表格第一列點選 「插入 → 影像」，點選 images
+		資料夾→ park0302.jpg<br>
+		在表格第三列點選 「插入 → 影像」，點選 park0303.jpg<br>
+  其餘依此類推。<br>
+	<img src="pic/6-31.PNG" width="534" height="358"></div>
+    
+    <div id="tip6_4"> 點選以上任一圖片，	按滑鼠右鍵 → CSS樣式 → 開新檔案<br>
+      出現下圖後點選「複合」，按下「確定」<br>
+      <img src="pic/6-33.PNG"><br> 
+      點選左側分類中的「方框」，再按照下圖設定寬度、高度。<br>
+      <img src="pic/6-34.PNG">
+    </div>
+    
+<div id="tip6_5"> 點選以上任一圖片，	按滑鼠右鍵 → CSS樣式 → 開新檔案<br>
+      出現下圖後點選「複合」，如下圖，在 img 後面輸入 :hover ，按下「確定」<br>
+      <img src="pic/6-35.PNG">      
+    </div>
+    
+<div id="tip6_6">點選左側分類中的「擴充功能」，如下圖，在 Filter 選單中點選 Invert<br>
+          在 Invert 後面輸入 (1)<br>
+      <img src="pic/6-36.PNG">     
+    </div>
+    
+    <div id="tip6_7">點選「陽明山國家公園」圖片。參照下圖，在屬性面板的「替代」欄位輸入「陽明山國家公園」。<br>
+      設定「連結」欄位連結至 park 資料夾內的 yangmingshan.html<br>
+      在「目標」欄位輸入 imain<br>
+      <img src="pic/6-7.png">     
+    </div>
+    
+    <div id="tip6_8">點選「雪霸國家公園」圖片。參照下圖，在屬性面板的「替代」欄位輸入「雪霸國家公園」。<br>
+      設定「連結」欄位連結至 park 資料夾內的 sheipa.html<br>
+      在「目標」欄位輸入 imain<br>
+      <img src="pic/6-8.PNG">     
+    </div>
+    
+    <div id="tip6_9">在7×1表格的右邊點一下滑鼠。按Enter鍵。<br>
+      輸入「檔案下載」。  <br>選取「檔案下載」四個字
+    </div>
+    
+<div id="tip6_10">選取「檔案下載」四個字。如下圖，在屬性面板點選 HTML 。<br>
+      設定「連結」欄位連結至 others 資料夾內的 park.mp3  <br><img src="pic/6-9.PNG"><br>如下圖。在工具列點選「分割」，找到右邊這行程式碼<img src="pic/6-11.PNG"><br>在 .mp3" 的後面輸入一個半型空白，及 download 
+  <br><img src="pic/6-10.PNG">
+    </div>
+    
+        <div id="tip6_16">點選「太魯閣國家公園」圖片。<br>參照下圖，在屬性面板的「替代」欄位輸入「太魯閣國家公園」。<br>
+      <img src="pic/6-16.PNG">     
+    </div>
+    
+        <div id="tip6_17">點選「玉山國家公園」圖片。<br>參照下圖，在屬性面板的「替代」欄位輸入「玉山國家公園」。<br>
+      <img src="pic/6-17.PNG">     
+    </div>
+    
+<div id="apDiv1">
+  <table width="272" border="0" align="center" cellpadding="1" cellspacing="3">
+    <tr>
+      <td height="30" align="center" id="t00">(六)選單區<span style="font-size: medium; color: #06F;"><a href="web03OK/index.html" target="ans">(完成結果)</a></span></td>
+    </tr>
+    <tr>
+      <td height="20" align="center" id="t000">不使用影像處理軟體解題</td>
+    </tr>
+    <tr>
+      <td id="t01" onClick="gotoTime(3)">1. 網頁背景顏色#00FFFF。<span id="tip1" onMouseOver="show_tips('tip6_1')" onMouseOut="close_tips('tip6_1')">💡</span></td>
+    </tr>
+    <tr>
+      <td id="t02" onClick="gotoTime(20)">2. 網頁內製作一個71（七列一欄）表格，框線0像素，水平置中對齊。<span id="tip2" onMouseOver="show_tips('tip6_2')" onMouseOut="close_tips('tip6_2')">💡</span></td>
+    </tr>
+    <tr>
+      <td id="t03" onClick="gotoTime(75)">3-1. 表格第一、三、五、七列分別插入park0302.jpg、park0303.jpg、park0304.jpg、park0305.jpg等四張圖片，<span id="tip3" onMouseOver="show_tips('tip6_3')" onMouseOut="close_tips('tip6_3')">💡</span></td>
+    </tr>
+    <tr>
+      <td id="t04" onClick="gotoTime(155)">3-2. 每張圖片寬120px、高40px，水平置中對齊，<span id="tip4" onMouseOver="show_tips('tip6_4')" onMouseOut="close_tips('tip6_4')">💡</span></td>
+    </tr>
+    <tr>
+      <td id="t05" onClick="gotoTime(196)">3-3. 當滑鼠移過時需呈現同樣圖片、不同顏色的動態效果。<span id="tip5" onMouseOver="show_tips('tip6_5')" onMouseOut="close_tips('tip6_5')">💡</span> → <span id="tip6" onMouseOver="show_tips('tip6_6')" onMouseOut="close_tips('tip6_6')">💡</span></td>
+    </tr>
+    <tr>
+      <td id="t06" onClick="gotoTime(260)">4. 表格中「陽明山國家公園」圖片替代文字為「陽明山國家公園」，並設定超連結到動作要求(七)的yangmingshan.htm(l)，呈現的目的區塊為網頁內容區。<span id="tip7" onMouseOver="show_tips('tip6_7')" onMouseOut="close_tips('tip6_7')">💡</span></td>
+    </tr>
+    <tr>
+      <td id="t07" onClick="gotoTime(287)">5. 表格中「雪霸國家公園」圖片替代文字為「雪霸國家公園」，並設定超連結到動作要求(八)的sheipa.htm(l)，呈現的目的區塊為網頁內容區。<span id="tip8" onMouseOver="show_tips('tip6_8')" onMouseOut="close_tips('tip6_8')">💡</span></td>
+    </tr>
+    <tr>
+      <td>6. 表格中「太魯閣國家公園」圖片替代文字為「太魯閣國家公園」。<span id="tip16" onMouseOver="show_tips('tip6_16')" onMouseOut="close_tips('tip6_16')">💡</span></td>
+    </tr>
+    <tr>
+      <td>7. 表格中「玉山國家公園」圖片替代文字為「玉山國家公園」。<span id="tip17" onMouseOver="show_tips('tip6_17')" onMouseOut="close_tips('tip6_17')">💡</span></td>
+    </tr>
+    <tr>
+      <td id="t08" onClick="gotoTime(328)">8. 表格下方輸入文字「檔案下載」<span id="tip9" onMouseOver="show_tips('tip6_9')" onMouseOut="close_tips('tip6_9')">💡</span>，水平置中對齊，並設定超連結，且在點選超連結後具有下載park.mp3檔案的功能（即彈出檔案下載的視窗）。<span id="tip10" onMouseOver="show_tips('tip6_10')" onMouseOut="close_tips('tip6_10')">💡</span></td>
+    </tr>
+  </table>
+</div>
+<!--<p> <button onClick="gotoTime(3);">goto</button> </p> -->
+</body>
+</html>
