@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+<title>網頁設計丙級─書曼的旅遊相簿</title>
+	<style type="text/css">
+    body {
+		margin-left: 0px;
+		margin-top: 0px;
+		background-color: #000;
+    }
+    video {
+		position: absolute;
+		z-index: 1;
+		left: 280px;
+		top: 0;
+	}
+	#apDiv1 {
+		position: absolute;
+		width: 280px;
+		height: 650px;
+		z-index: 1;
+		left: 0px;
+		top: 0;
+		background-color: #CCCCCC;
+		color: #444;
+	}
+    #v001 {
+		position: absolute;
+		z-index: 1;
+		left: 284px;
+		top: 0;
+	}    
+	.mark {
+		font-size:17px;
+		background-color: #ffff99;
+		color: #000;
+		font-family: "微軟正黑體", sans-serif;
+		line-height:20px;
+	}
+    #apDiv1 table tr td {
+		/*cursor: pointer;*/
+	}
+	td:hover:not(#t00,#t000){
+		border: #900 solid 1px;
+		cursor: pointer;
+	}
+	#t00{
+		font-size: 26px;
+		color: #900;
+		cursor: ;
+		font-weight: bolder;
+	}
+	#t000{
+		font-size: 18px;
+		color: #900;
+		cursor: ;
+		font-weight: bold;
+	}
+    span:hover {
+		border: solid 1px #FF0000;
+		background-color: #3FF;
+		cursor: help;
+	}
+	#apDiv1:not(#t00,#t000) {
+		line-height:17px;
+	}
+    #tip1_1, #tip1_2, #tip1_3, #tip1_4, #tip1_5, #tip1_6, #tip1_7, #tip1_8, #tip1_9, #tip1_62, #tip2_1 {
+		position: absolute;
+		padding: 9px;
+		background-color: #111;
+		color: #FFF;
+		left: 270px;
+		top: 5px;
+		visibility: hidden;
+		z-index: 13;
+		border:dashed #FFFFFF 2px;
+		border-radius: 6px;
+	}
+	/*#tip6_3 {
+		width: 534px;
+		height: 419px;
+	}
+	#tip6_4 {
+	width: 534px;
+	height: 394px;
+	}*/	
+    </style>
+    <!--<script src ="jquery-3.4.1.js"></script> -->
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <script>
+        var player;
+        function onYouTubeIframeAPIReady() {
+          player = new YT.Player('v001', {
+            height: '552',
+            width: '992',
+            videoId: 'Zw181fDkEeA',
+            events: {
+              'onReady': onPlayerReady
+            }
+          });
+        }
+
+        function onPlayerReady(event) {
+          event.target.playVideo();
+        }
+    </script>
+    <script>
+		//var v01;
+		window.onload= function(){
+			//v01 = document.getElementById("v001");
+			
+			setInterval(function(){ 
+                var CTime = Math.floor(player.getCurrentTime());
+				/*if((CTime >= 4)&&(CTime < 28)){
+					//$("t01").addClass("mark");
+					document.getElementById("t01").classList.add("mark");
+				}else {//if ( document.getElementById("t01").classList ) {
+					document.getElementById("t01").classList.remove("mark");
+				}*/
+				
+				if((CTime >= 6)&&(CTime < 12)){
+					//$("t01").addClass("mark");
+					document.getElementById("t02").classList.add("mark");
+				}else {//if ( document.getElementById("t01").classList ) {
+					document.getElementById("t02").classList.remove("mark");
+				}
+				
+				if((CTime >= 140)&&(CTime < 158)){
+					//$("t01").addClass("mark");
+					document.getElementById("t03").classList.add("mark");
+				}else {//if ( document.getElementById("t01").classList ) {
+					document.getElementById("t03").classList.remove("mark");
+				}
+								
+				if((CTime >= 13)&&(CTime < 30)){
+					//$("t01").addClass("mark");
+					document.getElementById("t032").classList.add("mark");
+				}else {//if ( document.getElementById("t01").classList ) {
+					document.getElementById("t032").classList.remove("mark");
+				}
+				
+				if((CTime >= 163)&&(CTime < 192)){
+					//$("t01").addClass("mark");
+					document.getElementById("t04").classList.add("mark");
+				}else {//if ( document.getElementById("t01").classList ) {
+					document.getElementById("t04").classList.remove("mark");
+				}
+				
+				if((CTime >= 34)&&(CTime < 139)){
+					//$("t01").addClass("mark");
+					document.getElementById("t05").classList.add("mark");
+				}else {//if ( document.getElementById("t01").classList ) {
+					document.getElementById("t05").classList.remove("mark");
+				}
+                
+				if((CTime >= 198)&&(CTime < 338)){
+					//$("t01").addClass("mark");
+					document.getElementById("t06").classList.add("mark");
+				}else {//if ( document.getElementById("t01").classList ) {
+					document.getElementById("t06").classList.remove("mark");
+				}				
+				
+						
+				/*if((CTime >= 140)&&(CTime < 158)){
+					//$("t01").addClass("mark");
+                    console.log('123');
+					document.getElementById("t03").classList.add("mark");
+				}else {//if ( document.getElementById("t01").classList ) {
+					document.getElementById("t03").classList.remove("mark");
+				}*/
+			}, 400);
+			
+		};
+		
+		function gotoTime(n){	
+            player.seekTo(n);
+            player.playVideo();
+			//Math.floor(player.getCurrentTime()) = n;
+			//v01.play();
+		}
+		
+		function show_tips(n){	
+			//$('#tip6_1').show();
+			document.getElementById(n).style.visibility = "visible";
+			//document.getElementById(n).style.top = event.clientY;			  
+			document.getElementById(n).style.left = (event.pageX+8) +"px";
+			  
+			if( n=='tip1_4' ){
+                document.getElementById(n).style.top = "110px";
+            
+			}else if( n=='tip1_7' ){
+				document.getElementById(n).style.top = "100px";
+            
+			}else if( n=='tip1_9' ){
+				document.getElementById(n).style.top = "100px";
+            
+			}else{
+				document.getElementById(n).style.top = (event.pageY+7) +"px";
+			}
+			
+		}
+		function close_tips(n){	
+			//$('#tip6_1').show();
+			document.getElementById(n).style.visibility = "hidden";
+			//document.getElementById('tip6_1').innerHTML="";
+		}	
+    </script>
+</head>
+<body>
+    <!--<video controls width="1000" id="v001">
+        <source src="https://www.youtube.com/watch?v=4CvVL-rSX8E"
+                type="video/mp4">
+
+        Sorry, your browser doesn't support embedded videos.
+    </video>-->
+    <div id="v001"></div>
+    
+    
+	<div id="tip1_1"><img src="pic/2-1.png"></div>
+    <div id="tip1_2">先將首頁 index.html 開啟。<br>
+		<img src="pic/2-2.png"></div>
+        
+<div id="tip1_3">這個步驟要等做完第5點插入表格後，再設定表格的背景顏色。<br>
+	如下圖，點一下＜table＞標籤以選取整個表格。<br>
+      <img src="pic/2-6.png"><br>
+      再點選 「修改」 → 「編輯標籤」。<br>
+  <img src="pic/2-7.png">
+</div>
+<div id="tip1_8">設定表格背景顏色，如下圖。<br>
+      <img src="pic/2-8.png">
+</div>    
+    
+<div id="tip1_4">在下方的「屬性」面版，點按「頁面屬性」<br>
+      <img src="pic/2-3.png"><br>
+      <img src="pic/2-4.png">
+    </div>
+    
+<div id="tip1_5">在網頁空白處(body標籤) 點選「插入」→「媒體」→「Plugin」 <br>
+	並選取 music資料夾裡的 0501.mp3 ，按確定。<br>
+    (在選取embed標籤的狀態下) 再直接點選 「修改」 → 「編輯標籤」<br>
+      <img src="pic/2-9.png">    
+    </div>
+    
+<div id="tip1_6">勾選「自動開始」和「隱藏」，如下圖：<br>
+       <img src="pic/2-91.png"> 
+    </div>
+    
+    <div id="tip1_62">「插入」 → 「表格」，按照下圖設定：<br>
+       <img src="pic/2-5.png"> 
+    </div>
+    
+<div id="tip1_7">首先，在表格中，網頁內容區所在的儲存格，設定水平和垂直皆置中對齊。<br>
+再點選「插入」 → 「標籤」，然後依照下圖操作<br>
+       <img src="pic/2-93.png"> 
+    </div>
+    
+    <div id="tip1_9">設定iframe的各項屬性，如下圖黃色處。<br>
+       <img src="pic/2-94.png"> 
+    </div>
+    
+<div id="apDiv1">
+  <table width="272" border="0" align="center" cellpadding="1" cellspacing="3">
+    <tr>
+      <td height="30" align="center" id="t00">(二)設計首頁</td>
+    </tr>
+    <tr>
+      <td height="20" align="center" id="t000">圖5-2 版型寬高度示意圖
+ <span id="tip1" onMouseOver="show_tips('tip1_1')" onMouseOut="close_tips('tip1_1')">💡</span></td>
+    </tr>
+    <tr>
+        <td id="t01">1. 這個部份，請參考上一個主題「<a href="5-1.html" target="page">建立網站架構</a>」<br>
+        </td>
+    </tr>
+    <tr>
+      <td id="t02" onClick="gotoTime(6)">2. 首頁標題「書曼的旅遊相簿」。<span id="tip1" onMouseOver="show_tips('tip1_2')" onMouseOut="close_tips('tip1_2')">💡</span></td>
+    </tr>
+    <tr>
+      <td id="t03" onClick="gotoTime(140)">3-1. 設定首頁區域內的背景顏色#FFFFCC，<span id="tip1" onMouseOver="show_tips('tip1_3')" onMouseOut="close_tips('tip1_3')">💡</span> → <span id="tip1" onMouseOver="show_tips('tip1_8')" onMouseOut="close_tips('tip1_8')">💡</span></td>
+    </tr>
+    <tr>
+      <td id="t032" onClick="gotoTime(13)">3-2. 區域外的背景顏色#333333。
+<span id="tip1" onMouseOver="show_tips('tip1_4')" onMouseOut="close_tips('tip1_4')">💡</span></td>
+    </tr>
+    <tr>
+      <td id="t04" onClick="gotoTime(163)">4. 網頁背景音樂「0501.mp3」。<br><span id="tip1" onMouseOver="show_tips('tip1_5')" onMouseOut="close_tips('tip1_5')">💡</span> → <span id="tip1" onMouseOver="show_tips('tip1_6')" onMouseOut="close_tips('tip1_6')">💡</span>
+</td>
+    </tr>
+    <tr>
+      <td id="t05" onClick="gotoTime(34)">5.首頁版面水平置中，包含四個區塊，分別為首頁區(main)、選單區(menu)、跑馬燈廣告區(marquee)、網頁內容區(content)。各個區塊的寬度、高度、內外距(padding/margin)、邊框(border)、顏色(color、background-color)等項目，尺寸大小如圖5-2 所示。(英文標註僅供參考，不列入評分)<span id="tip1" onMouseOver="show_tips('tip1_62')" onMouseOut="close_tips('tip1_62')">💡</span>
+</td>
+    </tr>
+    <tr>
+      <td id="t06" onClick="gotoTime(296)">（五）網頁內容區需含下面的資訊：<br>
+          1. 網頁內容呈現時，上、下、左、右內距(padding)至少須保留36px。<br>
+<span id="tip1" onMouseOver="show_tips('tip1_7')" onMouseOut="close_tips('tip1_7')">💡</span> → <span id="tip1" onMouseOver="show_tips('tip1_9')" onMouseOut="close_tips('tip1_9')">💡</span></td>
+    </tr>
+  </table>
+</div>
+<!--<p> <button onClick="gotoTime(3);">goto</button> </p> -->
+</body>
+</html>
