@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+<title>網頁設計丙級─書曼的旅遊相簿</title>
+	<style type="text/css">
+    body {
+		margin-left: 0px;
+		margin-top: 0px;
+		background-color: #000;
+		overflow:hidden;
+    }
+
+	#apDiv1 {
+		position: absolute;
+		width: 320px;
+		height: 620px;
+		z-index: 1;
+		left: 0px;
+		top: 0px;
+		background-color: #CCCCCC;
+		color: #444;
+		overflow-y:auto;
+		scroll-behavior:smooth;
+	}
+    #v001 {
+		position: absolute;
+		z-index: 1;
+		left: 320px;
+		top: 35px;
+	}    
+	.mark {
+		font-size:17px;
+		background-color: #ffff99;
+		color: #000;
+		font-family: "微軟正黑體", sans-serif;
+		line-height:20px;
+	}
+    #apDiv1 table tr td {
+		/*cursor: pointer;*/
+	}
+	td:hover:not(.chap,#t000){
+		border: #900 solid 1px;
+		cursor: pointer;
+	}
+	.chap{
+		font-size: 26px;
+		color: #900;
+		cursor: ;
+		font-weight: bolder;
+	}
+	#t000{
+		font-size: 18px;
+		color: #900;
+		cursor: ;
+		font-weight: bold;
+	}
+    span:hover {
+		border: solid 1px #FF0000;
+		background-color: #3FF;
+		cursor: help;
+	}
+	#apDiv1:not(#t00,#t000) {
+		line-height:17px;
+	}
+    .tips { /*#tip1_1, #tip1_2, #tip1_3, #tip1_4, #tip1_5, #tip6_6, #tip6_7, #tip1_8, #tip6_9, #tip6_10, #tip2_1 {*/
+		position: absolute;
+		padding: 8px;
+		background-color: #111;
+		color: #FFF;
+		left: 300px;
+		top: 5px;
+		visibility: hidden;
+		z-index: 13;
+		border:dashed #FFFFFF 2px;
+		border-radius: 6px;
+	}
+        
+	ul{
+       /*ul預設會有些微的margin、padding*/
+        margin:0;
+        padding:0;
+        list-style:none;  
+    }
+    ul > li{  
+    /*讓選單變成水平的關鍵*/
+      float:left;
+    }
+    ul > li > a{
+        /*a元素預設display:inline;不支援width、height*/
+        font-family: "微軟正黑體", sans-serif;
+        display:inline-block;
+        text-decoration:none;
+/*        width:100px;*/
+        height:33px;
+        line-height:33px;/*文字垂直置中*/
+        text-align:center;/*文字水平置中*/ 
+        border:1px solid #d2d2d2;
+        border-right-width:0px;
+        color: #434eae;/*前景色深藍色*/
+        background: #fff;/*背景色白色*/
+        transition:0.4s;/*a元素會改變背景色，對a加上transition即可*/
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    ul> li > a.last_a{
+        border-right-width:1px; 
+    }
+    ul > li > a:hover{
+        /*當滑鼠hover時的變化*/
+        color: #fff;/*前景色白色*/
+        background: #434eae;/*背景色藍色*/
+    }
+        #menu{
+            position: absolute;
+/*            width:700px;*/
+            height:33px;
+            z-index: 23;
+            left: 320px;
+		    top: 0px;
+        }
+    </style>
+    <!--<script src ="jquery-3.4.1.js"></script> -->
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <script>
+        var player;
+        function onYouTubeIframeAPIReady() {
+          player = new YT.Player('v001', {
+            height: '585',
+            width: '1040',
+            videoId: 'X0qpb5t8c64',
+            events: {
+              'onReady': onPlayerReady
+            }
+          });
+        }
+
+        function onPlayerReady(event) {
+          event.target.playVideo();
+        }
+    </script>
+    <script>
+        var gif0508 = 0;
+        var gif0510a = 0;
+        
+		window.onload= function(){
+			
+        setInterval(function(){ 
+                var CTime = Math.floor(player.getCurrentTime());
+                var scrollID ="";
+            
+				if((CTime >= 4)&&(CTime < 29)){
+					document.getElementById("t01").classList.add("mark");
+					scrollID ="t00";
+				}else {
+					document.getElementById("t01").classList.remove("mark");
+				}
+				
+				if((CTime >= 29)&&(CTime < 40)){
+					document.getElementById("t02").classList.add("mark");
+					scrollID ="t01";
+				}else {
+					document.getElementById("t02").classList.remove("mark");
+				}
+				
+				if((CTime >= 40)&&(CTime < 59)){
+					document.getElementById("t03").classList.add("mark");
+					scrollID ="t02";
+				}else {
+					document.getElementById("t03").classList.remove("mark");
+				}
+				
+				if((CTime >= 59)&&(CTime < 69)){
+					document.getElementById("t04").classList.add("mark");
+					scrollID ="t03";
+				}else {
+					document.getElementById("t04").classList.remove("mark");
+				}
+				
+				if((CTime >= 59)&&(CTime < 69)){
+					document.getElementById("t05").classList.add("mark");
+					//document.getElementById("t04").scrollIntoView();
+				}else {
+					document.getElementById("t05").classList.remove("mark");
+				}
+								
+				if((CTime >= 69)&&(CTime < 77)){
+					document.getElementById("t06").classList.add("mark");
+					scrollID ="t05";
+				}else {
+					document.getElementById("t06").classList.remove("mark");
+				}
+				if((CTime >= 80)&&(CTime < 101)){
+					document.getElementById("t01").classList.add("mark");
+					scrollID ="t00";
+				}else {
+					document.getElementById("t01").classList.remove("mark");
+				}
+				if((CTime >= 104)&&(CTime < 115)){
+					document.getElementById("t07").classList.add("mark");
+					scrollID ="t06";
+				}else {
+					document.getElementById("t07").classList.remove("mark");
+				}		
+						
+				if((CTime >= 115)&&(CTime < 128)){
+					document.getElementById("t08").classList.add("mark");
+					scrollID ="t002";
+				}else {
+					document.getElementById("t08").classList.remove("mark");
+				}
+                if((CTime >= 132)&&(CTime < 165)){
+					document.getElementById("t127").classList.add("mark");
+					scrollID ="t07";
+				}else {
+					document.getElementById("t127").classList.remove("mark");
+				}
+                if((CTime >= 175)&&(CTime < 190)){
+					document.getElementById("t22").classList.add("mark");
+					scrollID ="t002";
+				}else {
+					document.getElementById("t22").classList.remove("mark");
+				}
+                if((CTime >= 198)&&(CTime < 209)){
+					document.getElementById("t232").classList.add("mark");
+					scrollID ="t231";
+				}else {
+					document.getElementById("t232").classList.remove("mark");
+				}
+                if((CTime >= 210)&&(CTime < 242)){
+					document.getElementById("t24").classList.add("mark");
+					scrollID ="t232";
+				}else {
+					document.getElementById("t24").classList.remove("mark");
+				}
+                if((CTime >= 270)&&(CTime < 288)){
+					document.getElementById("t231").classList.add("mark");
+					scrollID ="t22";
+				}else {
+					document.getElementById("t231").classList.remove("mark");
+				}
+                if((CTime >= 243)&&(CTime < 344)){
+					document.getElementById("t25").classList.add("mark");
+					scrollID ="t22";
+				}else {
+					document.getElementById("t25").classList.remove("mark");
+				}
+                if((CTime >= 373)&&(CTime < 413)){
+					document.getElementById("t31").classList.add("mark");
+					scrollID ="t003";
+				}else {
+					document.getElementById("t31").classList.remove("mark");
+				}
+                if((CTime >= 415)&&(CTime < 1060)){
+                    if(gif0508 == 0){
+                        alert("此段影片是示範用Photoshop製作0508.gif動畫，請問是否要跳過這一段影片？");
+                        gif0508 = 1;
+                    }
+					document.getElementById("t32").classList.add("mark");
+					scrollID ="t31";
+				}else {
+					document.getElementById("t32").classList.remove("mark");
+				}
+                if((CTime >= 1061)&&(CTime < 1091)){
+					document.getElementById("t33").classList.add("mark");
+					scrollID ="t32";
+				}else {
+					document.getElementById("t33").classList.remove("mark");
+				}
+                
+                if((CTime >= 1092)&&(CTime < 1126)){
+					document.getElementById("t34").classList.add("mark");
+					scrollID ="t33";
+				}else {
+					document.getElementById("t34").classList.remove("mark");
+				}
+                if((CTime >= 1126)&&(CTime < 1179)){
+					document.getElementById("t35").classList.add("mark");
+					scrollID ="t34";
+				}else {
+					document.getElementById("t35").classList.remove("mark");
+				}
+                if((CTime >= 1179)&&(CTime < 1211)){
+					document.getElementById("t36").classList.add("mark");
+					scrollID ="t35";
+				}else {
+					document.getElementById("t36").classList.remove("mark");
+				}
+                if((CTime >= 1211)&&(CTime < 1242)){
+					document.getElementById("t37").classList.add("mark");
+					scrollID ="t36";
+				}else {
+					document.getElementById("t37").classList.remove("mark");
+				}
+                if((CTime >= 1242)&&(CTime < 1272)){
+					document.getElementById("t38").classList.add("mark");
+					scrollID ="t37";
+				}else {
+					document.getElementById("t38").classList.remove("mark");
+				}
+                if((CTime >= 1272)&&(CTime < 1320)){
+					document.getElementById("t39").classList.add("mark");
+					scrollID ="t38";
+				}else {
+					document.getElementById("t39").classList.remove("mark");
+				}
+                if((CTime >= 1320)&&(CTime < 1409)){
+					document.getElementById("t310").classList.add("mark");
+					scrollID ="t39";
+				}else {
+					document.getElementById("t310").classList.remove("mark");
+				}
+                if((CTime >= 1412)&&(CTime < 1454)){
+					document.getElementById("t311").classList.add("mark");
+					scrollID ="t310";
+				}else {
+					document.getElementById("t311").classList.remove("mark");
+				}
+            
+                if((CTime >= 1480)&&(CTime < 1565)){
+					document.getElementById("t42").classList.add("mark");
+					scrollID ="t41";
+				}else {
+					document.getElementById("t42").classList.remove("mark");
+				}
+                
+                if((CTime >= 1568)&&(CTime < 1688)){
+					document.getElementById("t51").classList.add("mark");
+					scrollID ="t005";
+				}else {
+					document.getElementById("t51").classList.remove("mark");
+				}
+                if((CTime >= 1688)&&(CTime < 2160)){
+                    if(gif0510a == 0){
+                        alert("此段影片是示範用Photoshop製作影像合成圖，請問是否要跳過這一段影片？");
+                        gif0510a = 1;
+                    }
+					document.getElementById("t52").classList.add("mark");
+					scrollID ="t51";
+				}else {
+					document.getElementById("t52").classList.remove("mark");
+				}
+                if((CTime >= 2163)&&(CTime < 2213)){
+					document.getElementById("t58").classList.add("mark");
+					scrollID ="t52";
+				}else {
+					document.getElementById("t58").classList.remove("mark");
+				}
+                if((CTime >= 2218)&&(CTime < 2256)){
+					document.getElementById("t59").classList.add("mark");
+					scrollID ="t58";
+				}else {
+					document.getElementById("t59").classList.remove("mark");
+				}
+            
+                if((CTime >= 2260)&&(CTime < 2288)){
+					document.getElementById("t61").classList.add("mark");
+					scrollID ="t006";
+				}else {
+					document.getElementById("t61").classList.remove("mark");
+				}
+                if((CTime >= 2353)&&(CTime < 2756)){
+					document.getElementById("t62").classList.add("mark");
+                    document.getElementById("t63").classList.add("mark");
+					scrollID ="t61";
+				}else {
+					document.getElementById("t62").classList.remove("mark");
+                    document.getElementById("t63").classList.remove("mark");
+				}
+//                if((CTime >= 2239)&&(CTime < 2350)){
+//					document.getElementById("t63").classList.add("mark");
+//					scrollID ="t62";
+//				}else {
+//					document.getElementById("t63").classList.remove("mark");
+//				}
+                if((CTime >= 2293)&&(CTime < 2350)){
+					document.getElementById("t64").classList.add("mark");
+					scrollID ="t63";
+				}else {
+					document.getElementById("t64").classList.remove("mark");
+				}
+            
+                if(player.getPlayerState()==1){           //暫停狀態
+                    document.getElementById(scrollID).scrollIntoView();     //捲軸滾動
+                }                    
+            
+			}, 400);
+			
+		};
+		
+		function gotoTime(n){	
+            player.seekTo(n);
+            player.playVideo();
+		}
+		
+		function show_tips(n){	
+			document.getElementById(n).style.visibility = "visible";
+					  
+			document.getElementById(n).style.left = (event.pageX+8) +"px";
+			  
+			document.getElementById(n).style.top = (event.pageY-5) +"px";			
+		}
+		
+		function close_tips(n){	
+			document.getElementById(n).style.visibility = "hidden";
+		}	
+    </script>
+</head>
+<body>
+
+    <div id="v001"></div>
+    
+	<div class="tips" id="tip1_1">網站的資料夾及檔案位置如下圖：
+        <br>其中的「main.html」「album5.html」題目沒有講明，需自行(腦補)建立。<br><img src="pic/1-1.png" width="625" height="468"></div>
+    <div class="tips" id="tip1_2">開啟Dreamweaver CS6，點選 「網站 → 新增網站」。如下圖：
+		<br>
+		<img src="pic/1-2.png" width="383" height="67"></div>
+            
+    <div class="tips" id="tip1_4"> <br>
+      <img src="pic/1-40.png">
+    </div>
+    
+<div class="tips" id="tip1_5">在 C:\webXX 資料夾上按 右鍵 → 點選 「新增資料夾」<br>
+            資料夾名稱為 「 images 」 <br>
+            用相同的方式，再新增一個資料夾，名稱為 「 music 」 <br>
+            用相同的方式，再新增一個資料夾，名稱為 「 album5 」 <br>
+      <img src="pic/1-5.png">    
+    </div>
+    
+<div class="tips" id="tip6_6">這個部份要在windows的檔案總管做。不是在Dreamweaver做。<br>
+        到檢定提供的素材資料夾中，點兩下「17300-104305」資料夾，<br>
+        將裡面全部的檔案複製。再到「 C:\webXX\images\ 」資料夾，貼上。<br>
+        將檔案「 0501.mp3 」剪下，再到「 C:\webXX\music\ 」資料夾，貼上。<br>
+        《注意！》 images 資料夾裡面，不可以有 0501.mp3 這個檔案。
+    </div>
+    
+    <div class="tips" id="tip1_8">在 album5 資料夾上按 右鍵 → 「開新檔案」<br>
+      新增一個網頁 「 album5.html 」 <br>
+          <img src="pic/1-6.png">     
+    </div>
+    <div class="tips" id="tip2_1">在 C:\webXX 資料夾上按 右鍵 → 「開新檔案」<br>
+            檔案名稱為 「 index.html 」 <br>
+            然後再新增一個檔案，名稱為 「 main.html 」    
+    </div>
+    <div class="tips" id="tip5_2_0"><img src="pic/2-1.png"></div>
+    <div class="tips" id="tip2_2">先將首頁 index.html 開啟。再依下圖設定標題。<br>
+		<img src="pic/2-2.png"></div>
+        
+    <div class="tips" id="tip2_31">這個步驟要等做完第5點插入表格後，再設定表格的背景顏色。<br>
+        如下圖，點一下＜table＞標籤以選取整個表格。<br>
+          <img src="pic/2-6.png"><br>
+          再點選 「修改」 → 「編輯標籤」。<br>
+      <img src="pic/2-7.png">
+    </div>
+    <div class="tips" id="tip2_32">設定表格背景顏色，如下圖。<br>
+          <img src="pic/2-8.png">
+    </div>    
+
+    <div class="tips" id="tip2_33">在下方的「屬性」面版，點按「頁面屬性」<br>
+          <img src="pic/2-3.png"><br>
+          <img src="pic/2-4.png">
+        </div>
+
+    <div class="tips" id="tip2_41">在網頁空白處(body標籤) 點選「插入」→「媒體」→「Plugin」 <br>
+        並選取 music資料夾裡的 0501.mp3 ，按確定。<br>
+        (在選取embed標籤的狀態下) 再直接點選 「修改」 → 「編輯標籤」<br>
+          <img src="pic/2-9.png">    
+        </div>
+
+    <div class="tips" id="tip2_42">勾選「自動開始」和「隱藏」，如下圖：<br>
+           <img src="pic/2-91.png"> 
+        </div>
+
+        <div class="tips" id="tip1_62">「插入」 → 「表格」，按照下圖設定：<br>
+           <img src="pic/2-5.png"> 
+        </div>
+
+    <div class="tips" id="tip5_1_1">首先，在表格中，網頁內容區所在的儲存格，設定水平和垂直皆置中對齊。<br>
+    再點選「插入」 → 「標籤」，然後依照下圖操作<br>
+           <img src="pic/2-93.png"> 
+    </div>
+    
+    <div class="tips" id="tip5_1_2">設定iframe的各項屬性，如下圖黃色處。<br>
+       <img src="pic/2-94.png"> 
+    </div>
+    
+    <div class="tips" id="tip530">   <img src="pic/3-0.png"> 
+    </div>
+    <div class="tips" id="tip591">   <img src="pic/591.png"> 
+    </div>
+    <!--  -----------------------------------------------------------  -->
+    
+<div id="apDiv1">
+  <table width="300" border="0" align="center" cellpadding="1" cellspacing="2">
+    <tr>
+      <td height="30" align="center" id="t00" class="chap">（一）建立網站架構</td>
+    </tr>
+    <tr>
+      <td height="20" align="center" id="t000">網站架構圖解 <span id="tip1" onMouseOver="show_tips('tip1_1')" onMouseOut="close_tips('tip1_1')">💡</span></td>
+    </tr>
+    <tr>
+      <td id="t01" onClick="gotoTime(7)">1. 在C：磁碟建立本網站主文件資料夾「webXX」，儲存製作完成的結果。(XX為個人檢定工作崗位號碼，如01、02、…、30等)。<br><span id="tip1" onMouseOver="show_tips('tip1_2')" onMouseOut="close_tips('tip1_2')">💡</span> → <span id="tip13" onMouseOver="show_tips('tip1_4')" onMouseOut="close_tips('tip1_4')">💡</span></td>
+    </tr>
+    <tr>
+      <td id="t02" onClick="gotoTime(29)">3-1. 在「webXX」資料夾下建立「images」資料夾，<span id="tip1" onMouseOver="show_tips('tip1_5')" onMouseOut="close_tips('tip1_5')">💡</span></td>
+    </tr>
+    <tr>
+      <td id="t03" onClick="gotoTime(40)">3-2. 將所有應使用的圖形檔均放置在「images」資料夾中。<span id="tip1" onMouseOver="show_tips('tip6_6')" onMouseOut="close_tips('tip6_6')">💡</span></td>
+    </tr>
+    <tr>
+      <td height="42" id="t04" onClick="gotoTime(59)">4-1. 在「webXX」資料夾下建立「music」資料夾，</td>
+    </tr>
+    <tr>
+      <td id="t05" onClick="gotoTime(59)">4-2. 將所有應使用到的音樂檔均放置在「music」資料夾中。</td>
+    </tr>
+    <tr>
+      <td id="t06" onClick="gotoTime(70)">5-1. 在「webXX」資料夾下建立「album5」資料夾，</td>
+    </tr>
+    <tr>
+      <td id="t07" onClick="gotoTime(104)">5-2. 將製作相簿時，所完成的檔案放置於「album5」資料夾中。<span id="tip8" onMouseOver="show_tips('tip1_8')" onMouseOut="close_tips('tip1_8')">💡</span></td>
+    </tr>
+    <tr>
+      <td id="t127" onClick="gotoTime(132)">6.應檢人需自行架設本機網站伺服器，可於瀏覽器網址列(URL)中輸入http://127.0.0.1/ 或http://localhost/ 以瀏覽網站。</td>
+    </tr>
+    <tr>
+      <td height="30" align="center" id="t002" class="chap">（二）設計首頁</td>
+    </tr>
+    <tr>
+      <td height="20" align="center" id="t000">圖5-2 版型寬高度示意圖
+ <span id="tip520" onMouseOver="show_tips('tip5_2_0')" onMouseOut="close_tips('tip5_2_0')">💡</span></td>
+    </tr>
+    <tr>
+      <td id="t08" onClick="gotoTime(115)">1.首頁檔名為index.htm(l)或default.htm(l)，置於網站的根目錄（C:\webXX）<span id="tip16" onMouseOver="show_tips('tip2_1')" onMouseOut="close_tips('tip2_1')">💡</span></td>
+    </tr>
+    
+    <tr>
+      <td id="t22" onClick="gotoTime(175)">2. 首頁標題「書曼的旅遊相簿」。<span id="tip1" onMouseOver="show_tips('tip2_2')" onMouseOut="close_tips('tip2_2')">💡</span></td>
+    </tr>
+    <tr>
+      <td id="t231" onClick="gotoTime(256)">3-1. 設定首頁區域內的背景顏色#FFFFCC，<span id="tip1" onMouseOver="show_tips('tip2_31')" onMouseOut="close_tips('tip2_31')">💡</span> → <span id="tip1" onMouseOver="show_tips('tip2_32')" onMouseOut="close_tips('tip2_32')">💡</span></td>
+    </tr>
+    <tr>
+      <td id="t232" onClick="gotoTime(198)">3-2. 區域外的背景顏色#333333。
+<span id="tip1" onMouseOver="show_tips('tip2_33')" onMouseOut="close_tips('tip2_33')">💡</span></td>
+    </tr>
+    <tr>
+      <td id="t24" onClick="gotoTime(210)">4. 網頁背景音樂「0501.mp3」。<br><span id="tip1" onMouseOver="show_tips('tip2_41')" onMouseOut="close_tips('tip2_41')">💡</span> → <span id="tip1" onMouseOver="show_tips('tip2_42')" onMouseOut="close_tips('tip2_42')">💡</span>
+</td>
+    </tr>
+    <tr>
+      <td id="t25" onClick="gotoTime(243)">5.首頁版面水平置中，包含四個區塊，分別為首頁區(main)、選單區(menu)、跑馬燈廣告區(marquee)、網頁內容區(content)。各個區塊的寬度、高度、內外距(padding/margin)、邊框(border)、顏色(color、background-color)等項目，尺寸大小如圖5-2 所示。(英文標註僅供參考，不列入評分)<span id="tip1" onMouseOver="show_tips('tip1_62')" onMouseOut="close_tips('tip1_62')">💡</span>
+</td>
+    </tr>
+      
+    <tr>
+      <td height="30" align="center" id="t003" class="chap">（三）選單區</td>
+    </tr>
+    <tr>
+      <td height="20" align="center" id="t000">選單區 完成畫面
+ <span id="t530" onMouseOver="show_tips('tip530')" onMouseOut="close_tips('tip530')">💡</span></td>
+    </tr>
+    <tr>
+      <td id="t31" onClick="gotoTime(386)">1. 製作一個12×1（十二列一欄）表格，表格邊框粗細為0px，水平置中對齊。</td>
+    </tr>  
+    <tr>
+      <td id="t32" onClick="gotoTime(414)">2. 製作一個「書曼的旅遊相簿」圖片，檔名為「0508.gif」、標楷體、外框字效果、背景為透明色，字體外框顏色依序如下列(A)至(D)標註，其中「書曼的」的顏色固定，「旅遊相簿」等四個字元的間隔約1秒輪替循環變化。<br>
+        <a href="https://youtu.be/4uo0vHnpu9I" target="_blank">請參考教學影片「0508.gif動畫，使用PhotoImpact製作」</a>
+        </td>
+    </tr> 
+    <tr>
+      <td id="t33" onClick="gotoTime(1061)">3. 表格第一列插入圖片「0508.gif」，寬125px、高20px，水平置中對齊，替代文字為「書曼的旅遊相簿」。</td>
+    </tr> 
+    <tr>
+      <td id="t34" onClick="gotoTime(1092)">4. 表格第二列插入圖片「0507.jpg」，寬120px、高120px，水平置中對齊，替代文字為「書曼」。</td>
+    </tr> 
+    <tr>
+      <td id="t35" onClick="gotoTime(1126)">5. 表格第四列插入圖片「0501b.gif」，水平置中對齊，替代文字為「金門逍遙遊」，當滑鼠移入時交換成圖片「0501r.gif」。</td>
+    </tr> 
+    <tr>
+      <td id="t36" onClick="gotoTime(1179)">6. 表格第五列插入圖片「0502b.gif」，水平置中對齊，替代文字為「卡蹓到馬祖」，當滑鼠移入時交換成圖片「0502r.gif」。</td>
+    </tr> 
+    <tr>
+      <td id="t37" onClick="gotoTime(1211)">7. 表格第六列插入圖片「0503b.gif」，水平置中對齊，替代文字為「踏浪澎湖行」，當滑鼠移入時交換成圖片「0503r.gif」。</td>
+    </tr> 
+    <tr>
+      <td id="t38" onClick="gotoTime(1242)">8. 表格第七列插入圖片「0504b.gif」，水平置中對齊，替代文字為「綠島唱夜曲」，當滑鼠移入時交換成圖片「0504r.gif」。</td>
+    </tr> 
+    <tr>
+      <td id="t39" onClick="gotoTime(1272)">9. 表格第八列插入圖片「0505b.gif」，水平置中對齊，替代文字為「蘭嶼賞魚去」，當滑鼠移入時交換成圖片「0505r.gif」，點按時，相對應之相簿內容（功能要求(六)album5）需在網頁內容區呈現。</td>
+    </tr> 
+    <tr>
+      <td id="t310" onClick="gotoTime(1320)">10. 表格第十列分行輸入「日期：yyyy/mm/dd」、「維護：XX○○○」，字型大小12px、加粗(bolder)、新細明體、顏色#FF0000，水平置中對齊。【yyyy/mm/dd為應檢日期，其中yyyy：西元年、mm：月份、dd：日期；XX：崗位號碼，○○○：應檢人姓名】</td>
+    </tr> 
+    <tr>
+      <td id="t311" onClick="gotoTime(1412)">11. 表格第十二列插入圖片「0506b.gif」，水平置中對齊，替代文字為「回首頁」，當滑鼠移入時交換成圖片「0506r.gif」；點按時，連結到預設首頁呈現整個版面。</td>
+    </tr>   
+    
+    <tr>
+      <td height="30" align="center" id="t004" class="chap">（四）跑馬燈廣告區</td>
+    </tr>
+    <tr>
+      <td id="t41" onClick="">1. 跑馬燈廣告區內的上、下、左、右與邊界的內距(padding)均為0px，且無捲動軸。</td>
+    </tr>  
+    <tr>
+      <td id="t42" onClick="gotoTime(1480)">2. 區域內以跑馬燈動態方式呈現，方向由右到左呈現「歡迎來到書曼的旅遊相簿，本網站有我的旅遊影像紀錄介紹耶！」，字型大小24px (x-large、size=5)、標楷體、加粗(bolder)、顏色#FF0000，需水平置中對齊、垂直置中對齊。</td>
+    </tr>  
+      
+    <tr>
+      <td height="30" align="center" id="t005" class="chap">（五）網頁內容區</td>
+    </tr>
+    <tr>
+      <td id="t51" onClick="gotoTime(1571)">1. 網頁內容呈現時，上、下、左、右內距(padding)至少須保留36px。<br>
+<span id="tip1" onMouseOver="show_tips('tip5_1_1')" onMouseOut="close_tips('tip5_1_1')">💡</span> → <span id="tip1" onMouseOver="show_tips('tip5_1_2')" onMouseOut="close_tips('tip5_1_2')">💡</span></td>
+    </tr>
+    <tr>
+      <td id="t52" onClick="gotoTime(1688)">第2.～7.題 製作影像合成圖片…………。<br><br>
+        <a href="https://youtu.be/ehGvbpUF-Nk" target="_blank">請參考教學影片「影像合成圖，使用PhotoImpact製作」</a>
+        </td>
+    </tr>
+    <tr>
+      <td id="t58" onClick="gotoTime(2163)">8. 網頁內插入圖片「0510a.gif」，寬610px、高300px，水平置中對齊。</td>
+    </tr>
+    <tr>
+      <td id="t59" onClick="gotoTime(2226)">9. 圖片「0510a.gif」中之「0551a.jpg」的圖像上建立影像地圖(區域如下圖虛線部分)<span id="tip1" onMouseOver="show_tips('tip591')" onMouseOut="close_tips('tip591')">💡</span>，點按時，相對應之相簿內容（功能要求(六)album5）需在網頁內容區中呈現。</td>
+    </tr>
+      
+    <tr>
+      <td height="30" align="center" id="t006" class="chap">（六）album5電子相簿</td>
+    </tr>
+    <tr>
+      <td id="t61" onClick="gotoTime(2263)">1. 背景顏色#FFFFCC，電子相簿內容皆須水平置中，並於網頁內容區呈現。</td>
+    </tr>
+    <tr>
+      <td id="t62" onClick="gotoTime(2382)">2. 將「0551.jpg」、「0552.jpg」、「0553.jpg」、「0554.jpg」、「0555.jpg」等五張圖片製作一個由左至右的電子相簿，每張小圖片寬60px、高45px，框線顏色#0000FF、實線(solid)、中等粗細(medium)。</td>
+    </tr>
+    <tr>
+      <td id="t63" onClick="gotoTime(2382)">3.下圖中，滑鼠移入每張小圖片時，指標為(pointer)、框線顏色#00FFFF；滑鼠移出及瀏覽過後，恢復為原來的顏色#0000FF。點按時，上方呈現相對應之原圖片，其寬400px、高300px、框線粗細5px、框線顏色#0000FF（例如點按第4張的小圖片，則出現相對應之圖片，參考結果如下圖）。</td>
+    </tr>
+    <tr>
+      <td id="t64" onClick="gotoTime(2293)">4.原圖片上方呈現電子相簿標題文字「蘭嶼賞魚去」，字型大小20px、標楷體、加粗(bolder)、底線、顏色#0000FF。</td>
+    </tr>
+    <tr>
+      <td id="t7" onClick=""></td>
+    </tr>
+         
+    
+  </table>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+</div>
+    
+    <div id="menu">
+        <ul>
+		<li>
+		   <a href="#" onClick="gotoTime(5)">(一)建立網站架構</a>
+		</li>
+		<li>
+	     	<a href="#" onClick="gotoTime(174)">(二)設計首頁</a>
+		</li>
+		<li>
+	    	<a href="#" onClick="gotoTime(374)">(三)選單區</a>
+		</li>
+		<li>
+             <a href="#" onClick="gotoTime(1463)">(四)跑馬燈廣告區</a>
+		</li>
+		<li>
+		      <a href="#" onClick="gotoTime(1568)">(五)網頁內容區</a>
+		</li>
+        <li>
+		      <a href="#" onClick="gotoTime(2260)" class="last_a">(六)album5電子相簿</a>
+		</li>
+        </ul>
+    </div>
+<!--<p> <button onClick="gotoTime(3);">goto</button> </p> -->
+</body>
+</html>
