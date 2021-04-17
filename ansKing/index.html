@@ -16,6 +16,22 @@ body {
 	border: solid 2px #990000;
 	cursor: pointer;
 }
+#apDiv1 {
+	position: absolute;
+	width: 350px;
+	height: 100px;
+	z-index: 5;
+	font-family: "微軟正黑體";
+	font-size: 56px;
+	font-weight: bold;
+	color: #600;
+	border: 3px solid #000;
+	right: 0px;
+	bottom: 0px;
+	line-height: 100px;
+	text-align:center;
+	cursor: pointer;
+}
 </style>
 
 <script>
@@ -51,29 +67,38 @@ body {
     <td width="720">&nbsp;</td>
   </tr>
   <tr>
-    <td id="t01" width="720" bgcolor="#FFFF99" class="t1">&nbsp;
+    <td width="720" height="80" bgcolor="#FFFF99" class="t1" id="t01">&nbsp;
     </td>
   </tr>
   <tr>
-    <td width="720" class="t2" id="t02">&nbsp;</td>
+    <td width="720" height="80" class="t2" id="t02">&nbsp;</td>
   </tr>
   <tr>
-    <td width="720" class="t2" id="t03">&nbsp;</td>
+    <td width="720" height="80" class="t2" id="t03">&nbsp;</td>
   </tr>
   <tr>
-    <td width="720" class="t2" id="t04">&nbsp;</td>
+    <td width="720" height="80" class="t2" id="t04">&nbsp;</td>
   </tr>
   <tr>
-    <td width="720" class="t2" id="t05">&nbsp;</td>
+    <td width="720" height="80" class="t2" id="t05">&nbsp;</td>
   </tr>
 </table>
+<div id="apDiv1" onclick="next()">下一題</div>
 </body>
 
 <script>
-
+	var tNum = 0
 	for(i=1 ; i<=5 ; i++){
 		var idd = "t0"+i;
 		document.getElementById(idd).innerHTML = topic[0][i];
+	}
+
+	function next(){
+		tNum ++;
+		for(i=1 ; i<=5 ; i++){
+		var idd = "t0"+i;
+		document.getElementById(idd).innerHTML = topic[tNum][i];
+	}
 	}
 
 </script>
