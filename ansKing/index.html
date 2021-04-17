@@ -8,22 +8,74 @@ body {
 	margin-left: 0px;
 	margin-top: 0px;
 }
-.t1 {
+.t1 ,.t2 {
 	font-family: "微軟正黑體";
 	font-size: 47px;
 }
+.t2:hover{
+	border: solid 2px #990000;
+	cursor: pointer;
+}
 </style>
+
+<script>
+	var topic=[];
+	topic[0]=["1","「全球資訊網(WWW)」的英文為何？","World Wide Web","Web Wide World","Web World Wide","World Web Wide","無解析",]
+	topic[1]=["2","「超文字傳輸協定」的英文簡稱為何？","HTTP","WWW","URL","TANET","無解析",]
+	topic[2]=["3","「檔案搜尋服務系統」的英文簡稱為何？","Archie","FTP","E-mail","Telnet","無解析",]
+	topic[3]=["4","「內容服務供應商」的英文簡稱為何？","ICP","ISP","ERP","LISP","無解析",]
+	topic[4]=["5","「中央處理單元」的英文簡稱為何？","CPU","I/O","CCD","UPS","無解析",]
+	topic[5]=["6","「全球資源定位法」的英文簡稱為何？","URL","WWW","HTTP","FTP","無解析",]
+	topic[6]=["7","「動態伺服器網頁」的英文簡稱為何？","ASP","CGI","HTML","DHTML","無解析",]
+	topic[7]=["8","「決策支援系統」的英文簡稱為何？","DSS","DBMS","DASD","IMS","無解析",]
+	topic[8]=["9","「個人數位助理」的英文簡稱為何？","PDA","DBMS","DB","DVD","無解析",]
+	topic[9]=["10","「動態主機配置協定」允許IP 位址自動配置，其英文簡稱為何？","DHCP","WWW","TCP/IP","POP","無解析",]
+	topic[10]=["11","「資料庫管理系統」的英文簡稱為何？","DBMS","PDA","DB","DVD","無解析",]
+	topic[11]=["12","「電子郵件」的英文簡稱為何？","E-mail","C-Mail","A-Mail","B-mail","無解析",]
+	topic[12]=["13","「企業內部網路」的英文為何？","Intranet","Telnet","Extranet","Internet","無解析",]
+	topic[13]=["14","「纜線數據機」的英文為何？","Cable Modem","Router","ADSL","Firewall","無解析",]
+	topic[14]=["15","「非對稱數位用戶線路」的英文簡稱為何？","ADSL","AOL","ASP","ATM","無解析",]
+	topic[15]=["16","「網域名稱伺服器」的英文簡稱為何？","DNS","ISDN","ISP","TCP","無解析",]
+	topic[16]=["17","「MIS」為何者的英文簡稱？","管理資訊系統","決策支援系統","資料庫管理系統","辦公室自動化","無解析",]
+	topic[17]=["18","「ISDN」為何者的英文簡稱？","整體服務數位網路","廣域網路","區域網路","加值型網路","無解析",]
+	topic[18]=["19","「LAN」為何者的英文簡稱？","區域網路","廣域網路","整體服務數位網路","加值型網路","無解析",]
+	topic[19]=["20","「MAN」最可能為何者的英文簡稱？","都會網路","廣域網路","區域網路","加值型網路","無解析",]
+
+</script>
+
 </head>
 
 <body>
 <table border="0" align="center" cellpadding="0" cellspacing="0">
   <tr>
-    <td>&nbsp;</td>
+    <td width="720">&nbsp;</td>
   </tr>
   <tr>
-    <td width="700" class="t1"><!--td {border: 1px solid #ccc;}br {mso-data-placement:same-cell;}-->
-    「動態主機配置協定」允許IP 位址自動配置，其英文簡稱為何？</td>
+    <td id="t01" width="720" bgcolor="#FFFF99" class="t1">&nbsp;
+    </td>
+  </tr>
+  <tr>
+    <td width="720" class="t2" id="t02">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="720" class="t2" id="t03">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="720" class="t2" id="t04">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="720" class="t2" id="t05">&nbsp;</td>
   </tr>
 </table>
 </body>
+
+<script>
+
+	for(i=1 ; i<=5 ; i++){
+		var idd = "t0"+i;
+		document.getElementById(idd).innerHTML = topic[0][i];
+	}
+
+</script>
+
 </html>
