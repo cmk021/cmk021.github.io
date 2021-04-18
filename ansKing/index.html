@@ -7,6 +7,8 @@
 body {
 	margin-left: 0px;
 	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
 }
 .t1 ,.t2 {
 	font-family: "微軟正黑體";
@@ -16,9 +18,37 @@ body {
 	border: solid 2px #990000;
 	cursor: pointer;
 }
-#apDiv1 {
+#clockDiv{
 	position: absolute;
-	width: 350px;
+	width: 140px;
+	height: 100px;
+	z-index: 5;
+	font-family: "微軟正黑體";
+	font-size: 48px;
+	font-weight: bold;
+	line-height: 100px;
+	text-align:center;
+	left: 0px;
+	bottom: 0px;
+	color:#00C;
+}
+#RorWDiv{
+	position: absolute;
+	width: 200px;
+	height: 100px;
+	z-index: 5;
+	font-family: "微軟正黑體";
+	font-size: 48px;
+	font-weight: bold;
+	line-height: 100px;
+	text-align:center;
+	left: 150px;
+	bottom: 0px;
+	color:#333;
+}
+#nextTDiv {
+	position: absolute;
+	width: 330px;
 	height: 100px;
 	z-index: 5;
 	font-family: "微軟正黑體";
@@ -31,10 +61,46 @@ body {
 	line-height: 100px;
 	text-align:center;
 	cursor: pointer;
+	visibility:hidden;
+}
+#tb1{
+	visibility:hidden;
+}
+#start{
+	width:100%;
+	height:100%;
+	background-color:#222;
+	z-index:6;
+	position: absolute;
+	text-align:center;
+}
+button{
+  width: 300px;
+  height: 100px;
+  color: #00f;
+  font-size: 70px;
+  font-family: "Arial";
+  border-radius:30px;
+  background-color:#DDD;
+  transition:0.2s;
+}
+button:hover{
+  	width: 320px;
+  	height: 110px;
+	background-color:#aef;
 }
 </style>
 
 <script>
+	function RandomInt(a, b) {
+	  if (a > b) {
+		var c = a;
+		a = b;
+		b = c;
+	  }
+	  return Math.floor(Math.random() * (b - a + 1) + a);
+	}
+
 	var topic=[];
 	topic[0]=["1","「全球資訊網(WWW)」的英文為何？","World Wide Web","Web Wide World","Web World Wide","World Web Wide","無解析",]
 	topic[1]=["2","「超文字傳輸協定」的英文簡稱為何？","HTTP","WWW","URL","TANET","無解析",]
@@ -57,50 +123,110 @@ body {
 	topic[18]=["19","「LAN」為何者的英文簡稱？","區域網路","廣域網路","整體服務數位網路","加值型網路","無解析",]
 	topic[19]=["20","「MAN」最可能為何者的英文簡稱？","都會網路","廣域網路","區域網路","加值型網路","無解析",]
 
+	var clock = 0;			//計時
+	var clock01;
+
+	function clockStart(){				//開始計時
+		clock01 = setInterval(function(){
+			clock++;
+			document.getElementById('clockDiv').innerHTML=Math.floor(clock/10);
+			//showClock();
+			console.log(clock);
+		},100);
+		
+	}
+	
+var ans=[1,1,1,1,1,1,1,1,1,1,
+		1,1,1,1,1,1,1,1,1,1];	
+			
+function start(){
+	for(i=0 ; i<20 ; i++){
+		var tmp = "";
+		ans[i] = RandomInt(1, 4);
+		console.log(ans[i]);			//
+					
+		if(ans[i]!=1){
+			tmp = topic[i][2];
+			topic[i][2] = topic[i][ans[i]+1];
+			topic[i][ans[i]+1] = tmp;
+		}
+	}
+	
+	for(i=1 ; i<=5 ; i++){
+		var idd = "t0"+i;
+		document.getElementById(idd).innerHTML = topic[0][i];
+	}
+	
+	document.getElementById('start').style.visibility = "hidden";
+	document.getElementById('tb1').style.visibility = "visible"
+
+	clockStart();
+}
+
 </script>
 
 </head>
 
 <body>
-<table border="0" align="center" cellpadding="0" cellspacing="0">
+<div id="start">
+	<br /><br /><br /><br /><br /><br /><button onclick="start()">start</button>
+</div>
+
+<table id="tb1" border="0" align="center" cellpadding="0" cellspacing="0">
   <tr>
-    <td width="720">&nbsp;</td>
+    <td width="720" height="10" style="font-size: 9px">&nbsp;</td>
   </tr>
   <tr>
-    <td width="720" height="80" bgcolor="#FFFF99" class="t1" id="t01">&nbsp;
+    <td width="720" height="100" bgcolor="#FFFF99" class="t1" id="t01">&nbsp;
     </td>
   </tr>
   <tr>
-    <td width="720" height="80" class="t2" id="t02">&nbsp;</td>
+    <td onclick="choseAns(1)" width="720" height="100" class="t2" id="t02">&nbsp;</td>
   </tr>
   <tr>
-    <td width="720" height="80" class="t2" id="t03">&nbsp;</td>
+    <td onclick="choseAns(2)" width="720" height="100" class="t2" id="t03">&nbsp;</td>
   </tr>
   <tr>
-    <td width="720" height="80" class="t2" id="t04">&nbsp;</td>
+    <td onclick="choseAns(3)" width="720" height="100" class="t2" id="t04">&nbsp;</td>
   </tr>
   <tr>
-    <td width="720" height="80" class="t2" id="t05">&nbsp;</td>
+    <td onclick="choseAns(4)" width="720" height="100" class="t2" id="t05">&nbsp;</td>
   </tr>
 </table>
-<div id="apDiv1" onclick="next()">下一題</div>
+<div id="clockDiv">0</div>
+<div id="RorWDiv"><span style="color:#0A0" id="spR">0</span> / <span style="color:#D00" id="spW">0</span></div>
+<div id="nextTDiv" onclick="next()">下一題</div>
 </body>
 
 <script>
-	var tNum = 0
-	for(i=1 ; i<=5 ; i++){
-		var idd = "t0"+i;
-		document.getElementById(idd).innerHTML = topic[0][i];
-	}
 
-	function next(){
+var tNum = 0;		//目前題數
+
+	function next(){				//跳到下一題
 		tNum ++;
 		for(i=1 ; i<=5 ; i++){
 		var idd = "t0"+i;
 		document.getElementById(idd).innerHTML = topic[tNum][i];
-	}
+		}
+		clockStart();
+		document.getElementById('nextTDiv').style.visibility="hidden";
 	}
 
+var rightT=0;		//答對題數
+var wrongT=0;		//答錯題數
+
+	function choseAns(num){
+		if( num != ans[tNum]){
+			wrongT++;
+			document.getElementById('spW').innerHTML=wrongT;
+		}else{	
+			rightT++;
+			document.getElementById('spR').innerHTML=rightT;
+		}
+		clearInterval(clock01);
+		
+		document.getElementById('nextTDiv').style.visibility="visible";
+	}
 </script>
 
 </html>
