@@ -50,7 +50,7 @@ body {
 	position: absolute;
 	width: 330px;
 	height: 100px;
-	z-index: 5;
+	z-index: 7;
 	font-family: "微軟正黑體";
 	font-size: 56px;
 	font-weight: bold;
@@ -62,6 +62,17 @@ body {
 	text-align:center;
 	cursor: pointer;
 	background-color:#FFF;
+}
+#explain {
+	z-index: 6;
+	font-family: "微軟正黑體";
+	font-size: 46px;
+	color: #008;
+	/*border: 2px solid #000;*/
+	/*bottom: 100px;*/
+	text-align:left;
+	background-color:#BFF;
+	visibility:hidden;
 }
 #tb1{
 	visibility:hidden;
@@ -114,10 +125,10 @@ button:hover{
 	background-color:#aef;
 }
 .greenmark{
-	background-color:#3F3
+	background-color:#3F3;
 }
 .redmark{
-	background-color:#F33
+	background-color:#F33;
 }
 
 </style>
@@ -142,7 +153,7 @@ var topic=[];
 	topic[6]=["7","「動態伺服器網頁」的英文簡稱為何？","ASP","CGI","HTML","DHTML","無解析",]
 	topic[7]=["8","「決策支援系統」的英文簡稱為何？","DSS","DBMS","DASD","IMS","無解析",]
 	topic[8]=["9","「個人數位助理」的英文簡稱為何？","PDA","DBMS","DB","DVD","無解析",]
-	topic[9]=["10","「動態主機配置協定」允許IP 位址自動配置，其英文簡稱為何？","DHCP","WWW","TCP/IP","POP","無解析",]
+	topic[9]=["10","「動態主機配置協定」允許IP 位址自動配置，其英文簡稱為何？","DHCP","WWW","TCP/IP","POP","這是一段文字解說。這是一段文字解說。",]
 	topic[10]=["11","「資料庫管理系統」的英文簡稱為何？","DBMS","PDA","DB","DVD","無解析",]
 	topic[11]=["12","「電子郵件」的英文簡稱為何？","E-mail","C-Mail","A-Mail","B-mail","無解析",]
 	topic[12]=["13","「企業內部網路」的英文為何？","Intranet","Telnet","Extranet","Internet","無解析",]
@@ -200,7 +211,7 @@ function start(){
 	}
 	
 	document.getElementById('start').style.visibility = "hidden";
-	document.getElementById('tb1').style.visibility = "visible"
+	document.getElementById('tb1').style.visibility = "visible";
 
 	clockStart();
 }
@@ -238,9 +249,15 @@ function start(){
 <div id="clockDiv">0</div>
 <div id="RorWDiv"><span style="color:#0A0" id="spR">0</span> / <span style="color:#D00" id="spW">0</span></div>
 <div id="black01">
-<div id="black00"></div>
-<div id="nextTDiv" onclick="next()">下一題</div>
+    <div id="black00"></div>
+  <div id="nextTDiv" onclick="next()">下一題</div>
 </div>
+<br />
+<table width="720" border="0" align="center" cellpadding="0" cellspacing="0" id="explain">
+  <tr>
+    <td width="720" height="100"><span style="border:2px solid #000;">解析</span></td>
+  </tr>
+</table>
 </body>
 
 <script>
@@ -255,6 +272,7 @@ function next(){				//跳到下一題
 			idd =  "t0"+ (choseN+1);
 			document.getElementById(idd).classList.remove("redmark");
 		}
+		document.getElementById('explain').style.visibility="hidden";
 
 		tNum ++;
 		for(i=1 ; i<=5 ; i++){
@@ -298,6 +316,8 @@ function choseAns(num){				//選取答案後呼叫此函數
 			point = point<0 ? 0 : point;
 		}
 		document.getElementById('black01').style.visibility="visible";
+		document.getElementById('explain').innerHTML='<span style="color:#000; border:2px solid #000;">解析</span> '+topic[tNum][6];
+		document.getElementById('explain').style.visibility="visible";
 		
 }
 </script>
