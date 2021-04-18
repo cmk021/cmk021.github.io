@@ -84,7 +84,7 @@ body {
 	left: 0px;
 	top: 0px;
 	background-color:#222;
-	opacity:0.25;
+	opacity:0.22;
 	z-index:4;
 	position: absolute;
 }
@@ -113,6 +113,13 @@ button:hover{
   	height: 110px;
 	background-color:#aef;
 }
+.greenmark{
+	background-color:#3F3
+}
+.redmark{
+	background-color:#F33
+}
+
 </style>
 
 <script>
@@ -164,10 +171,21 @@ var ans=[1,1,1,1,1,1,1,1,1,1,
 		1,1,1,1,1,1,1,1,1,1];	
 			
 function start(){
-	for(i=0 ; i<20 ; i++){
+	
+	for(j=0 ; j<20 ; j++){			//將題目打散
+		var tmp = [];
+		var r = RandomInt(0, 19);
+		console.log(r);			//
+					
+		tmp = topic[j];
+		topic[j] = topic[r];
+		topic[r] = tmp;
+	}
+		
+	for(i=0 ; i<20 ; i++){				//將答案打散
 		var tmp = "";
 		ans[i] = RandomInt(1, 4);
-		console.log(ans[i]);			//
+		//console.log(ans[i]);	
 					
 		if(ans[i]!=1){
 			tmp = topic[i][2];
@@ -229,7 +247,15 @@ function start(){
 
 var tNum = 0;		//目前題數
 
-	function next(){				//跳到下一題
+function next(){				//跳到下一題
+
+		var idd =  "t0"+ (ans[tNum]+1);
+		document.getElementById(idd).classList.remove("greenmark");
+		if(choseN!=0){
+			idd =  "t0"+ (choseN+1);
+			document.getElementById(idd).classList.remove("redmark");
+		}
+
 		tNum ++;
 		for(i=1 ; i<=5 ; i++){
 		var idd = "t0"+i;
@@ -237,31 +263,43 @@ var tNum = 0;		//目前題數
 		}
 		clockStart();
 		document.getElementById('black01').style.visibility="hidden";
-	}
+}
 
 var rightT=0;		//答對題數
 var wrongT=0;		//答錯題數
+var point = 0;		//得分
+var choseN=0;		//選取的答案
 
-	function choseAns(num){
+function choseAns(num){				//選取答案後呼叫此函數
+		choseN=0;					//歸零
 		if( num != ans[tNum]){
 			wrongT++;
 			document.getElementById('spW').innerHTML=wrongT;
+			var idd =  "t0"+ (num+1);
+			document.getElementById(idd).classList.add("redmark");
+			choseN = num;
 		}else{	
 			rightT++;
 			document.getElementById('spR').innerHTML=rightT;
 		}
 		clearInterval(clock01);
+		var idd =  "t0"+ (ans[tNum]+1);
+		document.getElementById(idd).classList.add("greenmark");
 		
 		if(tNum<(total-1)){
 			
 		}else{
 			document.getElementById('nextTDiv').style.visibility="hidden";
-			var point = Math.floor( 2 * (rightT - wrongT) * ( 150*total/clock ));	//秀出成績
-			console.log(point);
+			
+			clock = clock<(total*30)? total*30 : clock;
+			console.log(clock);	
+			point = Math.floor( 2 * (rightT - wrongT) * ( 150*total/clock ));
+			console.log(point);		//秀出成績
+			point = point<0 ? 0 : point;
 		}
 		document.getElementById('black01').style.visibility="visible";
 		
-	}
+}
 </script>
 
 </html>
