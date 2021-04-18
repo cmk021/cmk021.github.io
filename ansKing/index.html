@@ -146,6 +146,14 @@ button:hover{
 .redmark{
 	background-color:#F33;
 }
+.t2 {
+	padding-top:18px;
+	padding-bottom:18px;
+}
+.small{
+	padding:1px;
+	transition:0.2s;
+}
 
 </style>
 
@@ -254,16 +262,16 @@ function start(){
     </td>
   </tr>
   <tr>
-    <td onclick="choseAns(1)" width="720" height="100" class="t2" id="t02">&nbsp;</td>
+    <td onclick="choseAns(1)" width="720"><div class="t2" id="t02"></div></td>
   </tr>
   <tr>
-    <td onclick="choseAns(2)" width="720" height="100" class="t2" id="t03">&nbsp;</td>
+    <td onclick="choseAns(2)" width="720"><div class="t2" id="t03"></div></td>
   </tr>
   <tr>
-    <td onclick="choseAns(3)" width="720" height="100" class="t2" id="t04">&nbsp;</td>
+    <td onclick="choseAns(3)" width="720"><div class="t2" id="t04"></div></td>
   </tr>
   <tr>
-    <td onclick="choseAns(4)" width="720" height="100" class="t2" id="t05">&nbsp;</td>
+    <td onclick="choseAns(4)" width="720"><div class="t2" id="t05"></div></td>
   </tr>
 </table>
 <div id="clockDiv">0</div>
@@ -291,6 +299,11 @@ function next(){				//跳到下一題
 			return;
 		}
 		
+		for(i=2 ; i<=5 ; i++){
+			var idd2 =  "t0"+i;
+			document.getElementById(idd2).classList.remove("small");			//將高度變大
+		}
+		
 		var idd =  "t0"+ (ans[tNum]+1);
 		document.getElementById(idd).classList.remove("greenmark");
 		if(choseN!=0){
@@ -298,7 +311,7 @@ function next(){				//跳到下一題
 			document.getElementById(idd).classList.remove("redmark");
 		}
 		document.getElementById('explain').style.visibility="hidden";
-
+		
 		tNum ++;
 		for(i=1 ; i<=5 ; i++){
 		var idd = "t0"+i;
@@ -341,6 +354,12 @@ function choseAns(num){				//選取答案後呼叫此函數
 			point = point<0 ? 0 : point;
 			document.getElementById('point01').innerHTML=point;
 		}
+		
+		for(i=2 ; i<=5 ; i++){
+			idd =  "t0"+i;
+			document.getElementById(idd).classList.add("small");			//將高度變小
+		}
+		
 		document.getElementById('black01').style.visibility="visible";
 		document.getElementById('explain').innerHTML='<span style="color:#000; border:2px solid #000;">解析</span> '+topic[tNum][6];
 		document.getElementById('explain').style.visibility="visible";
