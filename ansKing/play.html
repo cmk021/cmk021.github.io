@@ -1,0 +1,370 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>無標題文件</title>
+<style type="text/css">
+body {
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+}
+.t1 ,.t2 {
+	font-family: "微軟正黑體";
+	font-size: 47px;
+}
+.t2:hover{
+	border: solid 2px #990000;
+	cursor: pointer;
+}
+#clockDiv{
+	position: absolute;
+	width: 140px;
+	height: 100px;
+	z-index: 5;
+	font-family: "微軟正黑體";
+	font-size: 48px;
+	font-weight: bold;
+	line-height: 100px;
+	text-align:center;
+	left: 0px;
+	bottom: 0px;
+	color:#00C;
+}
+#RorWDiv{
+	position: absolute;
+	width: 200px;
+	height: 100px;
+	z-index: 5;
+	font-family: "微軟正黑體";
+	font-size: 48px;
+	font-weight: bold;
+	line-height: 100px;
+	text-align:center;
+	left: 150px;
+	bottom: 0px;
+	color:#333;
+}
+#nextTDiv {
+	position: absolute;
+	width: 330px;
+	height: 100px;
+	z-index: 7;
+	font-family: "微軟正黑體";
+	font-size: 56px;
+	font-weight: bold;
+	color: #600;
+	border: 3px solid #000;
+	right: 0px;
+	bottom: 0px;
+	line-height: 100px;
+	text-align:center;
+	cursor: pointer;
+	background-color:#FFF;
+}
+#explain {
+	z-index: 6;
+	font-family: "微軟正黑體";
+	font-size: 46px;
+	color: #008;
+	/*border: 2px solid #000;*/
+	/*bottom: 100px;*/
+	text-align:left;
+	background-color:#BFF;
+	visibility:hidden;
+	line-height: 62px;
+}
+#tb1{
+	visibility:hidden;
+}
+#start{
+	position: absolute;
+	width:100%;
+	height:100%;
+	left: 0px;
+	top: 0px;
+	background-color:#222;
+	z-index:6;
+	position: absolute;
+	text-align:center;
+}
+#score{
+	position: absolute;
+	width:100%;
+	height:100%;
+	left: 0px;
+	top: 0px;
+	z-index:7;
+	background-color:#ddf;
+	position: absolute;
+	text-align:center;
+	visibility:hidden;
+	color: #00f;
+	font-size: 56px;
+	font-family: "Arial";
+}
+#black00{
+	position: absolute;
+	width:100%;
+	height:100%;
+	left: 0px;
+	top: 0px;
+	background-color:#222;
+	opacity:0.22;
+	z-index:4;
+	position: absolute;
+}
+#black01{
+	position: absolute;
+	width:100%;
+	height:100%;
+	left: 0px;
+	top: 0px;
+	z-index:4;
+	position: absolute;
+	visibility:hidden;
+}
+button{
+  width: 300px;
+  height: 100px;
+  color: #00f;
+  font-size: 70px;
+  font-family: "Arial";
+  border-radius:30px;
+  background-color:#DDD;
+  transition:0.2s;
+}
+button:hover{
+  	width: 320px;
+  	height: 110px;
+	background-color:#aef;
+}
+.greenmark{
+	background-color:#3F3;
+}
+.redmark{
+	background-color:#F33;
+}
+.t2 {
+	padding-top:18px;
+	padding-bottom:18px;
+}
+.small{
+	padding:1px;
+	transition:0.2s;
+}
+
+</style>
+
+<script>
+	function RandomInt(a, b) {
+	  if (a > b) {
+		var c = a;
+		a = b;
+		b = c;
+	  }
+	  return Math.floor(Math.random() * (b - a + 1) + a);
+	}
+var total=20;
+var range=20;
+var topic=[];
+	topic[0]=["1","「全球資訊網(WWW)」的英文為何？","World Wide Web","Web Wide World","Web World Wide","World Web Wide","無解析",]
+	topic[1]=["2","「超文字傳輸協定」的英文簡稱為何？","HTTP","WWW","URL","TANET","無解析",]
+	topic[2]=["3","「檔案搜尋服務系統」的英文簡稱為何？","Archie","FTP","E-mail","Telnet","無解析",]
+	topic[3]=["4","「內容服務供應商」的英文簡稱為何？","ICP","ISP","ERP","LISP","無解析",]
+	topic[4]=["5","「中央處理單元」的英文簡稱為何？","CPU","I/O","CCD","UPS","無解析",]
+	topic[5]=["6","「全球資源定位法」的英文簡稱為何？","URL","WWW","HTTP","FTP","無解析",]
+	topic[6]=["7","「動態伺服器網頁」的英文簡稱為何？","ASP","CGI","HTML","DHTML","無解析",]
+	topic[7]=["8","「決策支援系統」的英文簡稱為何？","DSS","DBMS","DASD","IMS","無解析",]
+	topic[8]=["9","「個人數位助理」的英文簡稱為何？","PDA","DBMS","DB","DVD","無解析",]
+	topic[9]=["10","「動態主機配置協定」允許IP 位址自動配置，其英文簡稱為何？","DHCP","WWW","TCP/IP","POP","這是一段文字解說。這是一段文字解說。",]
+	topic[10]=["11","「資料庫管理系統」的英文簡稱為何？","DBMS","PDA","DB","DVD","無解析",]
+	topic[11]=["12","「電子郵件」的英文簡稱為何？","E-mail","C-Mail","A-Mail","B-mail","無解析",]
+	topic[12]=["13","「企業內部網路」的英文為何？","Intranet","Telnet","Extranet","Internet","無解析",]
+	topic[13]=["14","「纜線數據機」的英文為何？","Cable Modem","Router","ADSL","Firewall","無解析",]
+	topic[14]=["15","「非對稱數位用戶線路」的英文簡稱為何？","ADSL","AOL","ASP","ATM","無解析",]
+	topic[15]=["16","「網域名稱伺服器」的英文簡稱為何？","DNS","ISDN","ISP","TCP","無解析",]
+	topic[16]=["17","「MIS」為何者的英文簡稱？","管理資訊系統","決策支援系統","資料庫管理系統","辦公室自動化","無解析",]
+	topic[17]=["18","「ISDN」為何者的英文簡稱？","整體服務數位網路","廣域網路","區域網路","加值型網路","無解析",]
+	topic[18]=["19","「LAN」為何者的英文簡稱？","區域網路","廣域網路","整體服務數位網路","加值型網路","無解析",]
+	topic[19]=["20","「MAN」最可能為何者的英文簡稱？","都會網路","廣域網路","區域網路","加值型網路","無解析",]
+
+	var clock = 0;			//計時
+	var clock01;
+
+	function clockStart(){				//開始計時
+		clock01 = setInterval(function(){
+			clock++;
+			document.getElementById('clockDiv').innerHTML=Math.floor(clock/10);
+			//showClock();
+			console.log(clock);
+		},100);
+		
+	}
+	
+var ans=[1,1,1,1,1,1,1,1,1,1,
+		1,1,1,1,1,1,1,1,1,1];	
+			
+function start(){
+	
+	for(j=0 ; j<20 ; j++){			//將題目打散
+		var tmp = [];
+		var r = RandomInt(0, 19);
+		console.log(r);			//
+					
+		tmp = topic[j];
+		topic[j] = topic[r];
+		topic[r] = tmp;
+	}
+		
+	for(i=0 ; i<20 ; i++){				//將答案打散
+		var tmp = "";
+		ans[i] = RandomInt(1, 4);
+		//console.log(ans[i]);	
+					
+		if(ans[i]!=1){
+			tmp = topic[i][2];
+			topic[i][2] = topic[i][ans[i]+1];
+			topic[i][ans[i]+1] = tmp;
+		}
+	}
+	
+	for(i=1 ; i<=5 ; i++){
+		var idd = "t0"+i;
+		document.getElementById(idd).innerHTML = topic[0][i];
+	}
+	
+	document.getElementById('start').style.visibility = "hidden";
+	document.getElementById('tb1').style.visibility = "visible";
+
+	clockStart();
+}
+
+</script>
+
+</head>
+
+<body>
+<div id="start">
+	<br /><br /><br /><br /><br /><br /><button onclick="start()">start</button>
+</div>
+<div id="score">
+	<br /><br /><br />恭喜你獲得： <span id="point01" style="color:#a30"></span> 分
+</div>
+
+<table id="tb1" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="720" height="10" style="font-size: 9px">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="720" height="100" bgcolor="#FFFF99" class="t1" id="t01">&nbsp;
+    </td>
+  </tr>
+  <tr>
+    <td onclick="choseAns(1)" width="720"><div class="t2" id="t02"></div></td>
+  </tr>
+  <tr>
+    <td onclick="choseAns(2)" width="720"><div class="t2" id="t03"></div></td>
+  </tr>
+  <tr>
+    <td onclick="choseAns(3)" width="720"><div class="t2" id="t04"></div></td>
+  </tr>
+  <tr>
+    <td onclick="choseAns(4)" width="720"><div class="t2" id="t05"></div></td>
+  </tr>
+</table>
+<div id="clockDiv">0</div>
+<div id="RorWDiv"><span style="color:#0A0" id="spR">0</span> / <span style="color:#D00" id="spW">0</span></div>
+<div id="black01">
+    <div id="black00"></div>
+  <div id="nextTDiv" onclick="next()">下一題</div>
+</div>
+<br />
+<table width="720" border="0" align="center" cellpadding="0" cellspacing="0" id="explain">
+  <tr>
+    <td width="720" height="100"><span style="border:2px solid #000;">解析</span></td>
+  </tr>
+</table>
+</body>
+
+<script>
+
+var tNum = 0;		//目前題數
+
+function next(){				//跳到下一題
+		
+		if(tNum ==19){
+			document.getElementById('score').style.visibility="visible";
+			return;
+		}
+		
+		for(i=2 ; i<=5 ; i++){
+			var idd2 =  "t0"+i;
+			document.getElementById(idd2).classList.remove("small");			//將高度變大
+		}
+		
+		var idd =  "t0"+ (ans[tNum]+1);
+		document.getElementById(idd).classList.remove("greenmark");
+		if(choseN!=0){
+			idd =  "t0"+ (choseN+1);
+			document.getElementById(idd).classList.remove("redmark");
+		}
+		document.getElementById('explain').style.visibility="hidden";
+		
+		tNum ++;
+		for(i=1 ; i<=5 ; i++){
+		var idd = "t0"+i;
+		document.getElementById(idd).innerHTML = topic[tNum][i];
+		}
+		clockStart();
+		document.getElementById('black01').style.visibility="hidden";
+}
+
+var rightT=0;		//答對題數
+var wrongT=0;		//答錯題數
+var point = 0;		//得分
+var choseN=0;		//選取的答案
+
+function choseAns(num){				//選取答案後呼叫此函數
+		choseN=0;					//歸零
+		if( num != ans[tNum]){
+			wrongT++;
+			document.getElementById('spW').innerHTML=wrongT;
+			var idd =  "t0"+ (num+1);
+			document.getElementById(idd).classList.add("redmark");
+			choseN = num;
+		}else{	
+			rightT++;
+			document.getElementById('spR').innerHTML=rightT;
+		}
+		clearInterval(clock01);
+		var idd =  "t0"+ (ans[tNum]+1);
+		document.getElementById(idd).classList.add("greenmark");
+		
+		if(tNum<(total-1)){
+			
+		}else{
+			document.getElementById('nextTDiv').innerHTML="結束";
+			
+			clock = clock<(total*30)? total*30 : clock;
+			console.log(clock);									//計算分數
+			point = Math.floor( 2 * (rightT - wrongT) * ( 150 * range / clock ) );
+			console.log(point);		//秀出成績
+			point = point<0 ? 0 : point;
+			document.getElementById('point01').innerHTML=point;
+		}
+		
+		for(i=2 ; i<=5 ; i++){
+			idd =  "t0"+i;
+			document.getElementById(idd).classList.add("small");			//將高度變小
+		}
+		
+		document.getElementById('black01').style.visibility="visible";
+		document.getElementById('explain').innerHTML='<span style="color:#000; border:2px solid #000;">解析</span> '+topic[tNum][6];
+		document.getElementById('explain').style.visibility="visible";
+		
+}
+</script>
+
+</html>
