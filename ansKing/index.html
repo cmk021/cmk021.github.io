@@ -61,18 +61,42 @@ body {
 	line-height: 100px;
 	text-align:center;
 	cursor: pointer;
-	visibility:hidden;
+	background-color:#FFF;
 }
 #tb1{
 	visibility:hidden;
 }
 #start{
+	position: absolute;
 	width:100%;
 	height:100%;
+	left: 0px;
+	top: 0px;
 	background-color:#222;
 	z-index:6;
 	position: absolute;
 	text-align:center;
+}
+#black00{
+	position: absolute;
+	width:100%;
+	height:100%;
+	left: 0px;
+	top: 0px;
+	background-color:#222;
+	opacity:0.25;
+	z-index:4;
+	position: absolute;
+}
+#black01{
+	position: absolute;
+	width:100%;
+	height:100%;
+	left: 0px;
+	top: 0px;
+	z-index:4;
+	position: absolute;
+	visibility:hidden;
 }
 button{
   width: 300px;
@@ -100,8 +124,8 @@ button:hover{
 	  }
 	  return Math.floor(Math.random() * (b - a + 1) + a);
 	}
-
-	var topic=[];
+var total=20;
+var topic=[];
 	topic[0]=["1","「全球資訊網(WWW)」的英文為何？","World Wide Web","Web Wide World","Web World Wide","World Web Wide","無解析",]
 	topic[1]=["2","「超文字傳輸協定」的英文簡稱為何？","HTTP","WWW","URL","TANET","無解析",]
 	topic[2]=["3","「檔案搜尋服務系統」的英文簡稱為何？","Archie","FTP","E-mail","Telnet","無解析",]
@@ -195,7 +219,10 @@ function start(){
 </table>
 <div id="clockDiv">0</div>
 <div id="RorWDiv"><span style="color:#0A0" id="spR">0</span> / <span style="color:#D00" id="spW">0</span></div>
+<div id="black01">
+<div id="black00"></div>
 <div id="nextTDiv" onclick="next()">下一題</div>
+</div>
 </body>
 
 <script>
@@ -209,7 +236,7 @@ var tNum = 0;		//目前題數
 		document.getElementById(idd).innerHTML = topic[tNum][i];
 		}
 		clockStart();
-		document.getElementById('nextTDiv').style.visibility="hidden";
+		document.getElementById('black01').style.visibility="hidden";
 	}
 
 var rightT=0;		//答對題數
@@ -225,7 +252,15 @@ var wrongT=0;		//答錯題數
 		}
 		clearInterval(clock01);
 		
-		document.getElementById('nextTDiv').style.visibility="visible";
+		if(tNum<(total-1)){
+			
+		}else{
+			document.getElementById('nextTDiv').style.visibility="hidden";
+			var point = Math.floor( 2 * (rightT - wrongT) * ( 150*total/clock ));	//秀出成績
+			console.log(point);
+		}
+		document.getElementById('black01').style.visibility="visible";
+		
 	}
 </script>
 
