@@ -3,7 +3,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>阿谷網丙學科線上測驗</title>
-<script src ="jquery-3.6.0.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <style type="text/css">
 body {
 	background-color: #333;
@@ -186,10 +187,11 @@ body {
 			choT[r] = tmp;
 		}
 		
-		var sendT=[];
-		for(k=0; k<20 ;k++ ){
-			sendT[k] = choT[k];
+		var sendT="";
+		for(k=0; k<19 ;k++ ){
+			sendT+= choT[k] +",";
 		}
+		sendT+= choT[19];
 		
 		console.log(sendT);
 		
@@ -201,13 +203,17 @@ body {
                 mode: 2         //送出選題資料
             };
 		
-		$.get('https://script.google.com/macros/s/AKfycbwXuZkVV-kddVDZh4R7I7cl_M_wLhNmwi51vGlY7Toc2uS_xmJ-/exec', aa, function(data){
+		$.get('https://script.google.com/macros/s/AKfycbwXuZkVV-kddVDZh4R7I7cl_M_wLhNmwi51vGlY7Toc2uS_xmJ-/exec', aa, function(data0){
 			
-			if(data =='error'){
+			if(data0 =='error'){
 			
 			}
-			console.log(data);
-        //window.location.href = "play.html";
+			console.log(data0);
+			setTimeout(function(){
+				
+					window.location.href = "play.html";
+				},2500);
+        	
 		});
     }
 </script>

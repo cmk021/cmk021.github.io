@@ -3,6 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>阿谷網丙學科線上測驗</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <style type="text/css">
 body {
 	margin-left: 0px;
@@ -19,7 +20,7 @@ body {
 	cursor: pointer;
 }
 #clockDiv{
-	position: absolute;
+	position:fixed;
 	width: 140px;
 	height: 100px;
 	z-index: 5;
@@ -33,7 +34,7 @@ body {
 	color:#00C;
 }
 #RorWDiv{
-	position: absolute;
+	position:fixed;
 	width: 200px;
 	height: 100px;
 	z-index: 5;
@@ -168,7 +169,7 @@ button:hover{
 	}
 var total=20;
 var range=20;
-var topic=[];
+var topic=[];			/*
 	topic[0]=["1","「全球資訊網(WWW)」的英文為何？","World Wide Web","Web Wide World","Web World Wide","World Web Wide","無解析",]
 	topic[1]=["2","「超文字傳輸協定」的英文簡稱為何？","HTTP","WWW","URL","TANET","無解析",]
 	topic[2]=["3","「檔案搜尋服務系統」的英文簡稱為何？","Archie","FTP","E-mail","Telnet","無解析",]
@@ -189,7 +190,7 @@ var topic=[];
 	topic[17]=["18","「ISDN」為何者的英文簡稱？","整體服務數位網路","廣域網路","區域網路","加值型網路","無解析",]
 	topic[18]=["19","「LAN」為何者的英文簡稱？","區域網路","廣域網路","整體服務數位網路","加值型網路","無解析",]
 	topic[19]=["20","「MAN」最可能為何者的英文簡稱？","都會網路","廣域網路","區域網路","加值型網路","無解析",]
-
+		*/
 	var clock = 0;			//計時
 	var clock01;
 
@@ -208,7 +209,9 @@ var ans=[1,1,1,1,1,1,1,1,1,1,
 			
 function start(){
 	
-	for(j=0 ; j<20 ; j++){			//將題目打散
+	
+	
+	/*  for(j=0 ; j<20 ; j++){			//將題目打散
 		var tmp = [];
 		var r = RandomInt(0, 19);
 		console.log(r);			//
@@ -216,7 +219,7 @@ function start(){
 		tmp = topic[j];
 		topic[j] = topic[r];
 		topic[r] = tmp;
-	}
+	}  */
 		
 	for(i=0 ; i<20 ; i++){				//將答案打散
 		var tmp = "";
@@ -287,6 +290,44 @@ function start(){
   </tr>
 </table>
 </body>
+
+<script>
+	window.onload=readSheet();                    //網頁載入後，即執行讀取試算表資料
+
+	function readSheet(){				//讀取試算表題庫
+		//overlay
+	
+		aa = {
+                data: "id",           //???
+                //uID: userID,
+                sheetUrl: '',
+                sheetTag: '',	//userID.substr(0,1),
+                mode: 1         //送出選題資料
+            };
+		
+		$.get('https://script.google.com/macros/s/AKfycbwXuZkVV-kddVDZh4R7I7cl_M_wLhNmwi51vGlY7Toc2uS_xmJ-/exec', aa, function(dataM1){
+			
+			if(dataM1 =='error'){
+			
+			}
+			console.log(dataM1);
+			
+			var dataTT = dataM1.split(',');
+			
+			for(i=0 ; i<20 ; i++){						//將所取得的資料分割為20道題目
+				topic[i] = dataTT.slice(i*7,7*(i+1));
+				console.log(topic[i]);
+			}
+			//setTimeout(function(){
+				
+			//		window.location.href = "play.html";
+			//	},2500);
+        	
+		});
+    
+	}
+
+</script>
 
 <script>
 
