@@ -3,6 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>阿谷網丙學科線上測驗</title>
+<script src ="jquery-3.6.0.js"></script>
 <style type="text/css">
 body {
 	background-color: #333;
@@ -191,7 +192,74 @@ body {
 		}
 		
 		console.log(sendT);
+		
+		 aa = {
+                data: sendT,           //???
+                //uID: userID,
+                sheetUrl: '',
+                sheetTag: '',	//userID.substr(0,1),
+                mode: 2         //送出選題資料
+            };
+		
+		$.get('https://script.google.com/macros/s/AKfycbwXuZkVV-kddVDZh4R7I7cl_M_wLhNmwi51vGlY7Toc2uS_xmJ-/exec', aa, function(data){
+			
+			if(data =='error'){
+			
+			}
+			console.log(data);
         //window.location.href = "play.html";
+		});
     }
 </script>
+<script>
+
+        //var data_1 = [];            //存放關卡資訊
+        
+        //window.onload=readSheet();                    //網頁載入後，即執行讀取試算表資料
+        function readSheet(){
+            a = {
+                data: userID.substr(1,2),           //???
+                uID: userID,
+                sheetUrl: '',
+                sheetTag: userID.substr(0,1),
+                mode: 1         //讀取模式
+            };
+            //document.getElementById('overlay').style.display="";
+            $('#overlay').show();
+            //console.log(a);
+            $.get('https://script.google.com/macros/s/AKfycby_1_F9fcOzOB3qFFuFTlNRVfbT5-VKd4d5_wGKB8GFbD843W9F/exec', a,function(data){
+                
+                if(data =='idError'){   
+                    alert("帳號資料有誤！\n請重新登入");
+                    window.location.href = "/login.html";  
+                }
+                
+                    data_1 = data.split(',');
+                    console.log(data_1);                    //檢驗狀況，共20筆
+                    
+                    for( i=0 ; i<10 ; i++ ){
+                        var idi = "#t0" + (i+1) ;       //組合id名稱
+                        if(i==9){    idi="#t10"; }
+                        console.log(idi);
+                        
+                        if( data_1[i]==0 ){          //未檢驗通過
+                            $(idi).addClass('pass0');
+                        }
+                        else if( data_1[i]==1 ){          //已檢驗通過
+                            $(idi).addClass('pass1');
+                        }
+                        else if( data_1[i]==-1 ){          //未開啟
+                            $(idi).hide();
+                        }                        
+                    }
+                    
+                    $('#overlay').html('<br>讀取完成<br>請按一下滑鼠');       //alert(0);
+                    $('#overlay').click(  function(){                   //這麼做是為了避免自動播放音樂會產生錯誤
+                        $('#overlay').hide(); 
+                    } ); 
+                   
+                }
+            );
+        }
+    </script>
 </html>
