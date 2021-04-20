@@ -416,7 +416,7 @@
 					document.getElementById("t64").classList.remove("mark");
 				}
             
-                if(player.getPlayerState()==1){           //播放狀態
+                if((player.getPlayerState()==1) && (scrollID !="")){           //播放狀態
                     document.getElementById(scrollID).scrollIntoView();     //捲軸滾動
                 }                    
             
@@ -440,6 +440,7 @@
 		function close_tips(n){	
 			document.getElementById(n).style.visibility = "hidden";
 		}	
+		
     </script>
 </head>
 <body>
@@ -725,6 +726,7 @@
 		      <a href="#" onClick="gotoTime(2260)" class="last_a">(六)album5電子相簿</a>
 		</li>
         </ul>
+        
     </div>
     
         <div id="overlay3"><br>接下來是用Photoshop製作0508.gif動畫，<br>請問是否要跳過這一段影片？<br>
@@ -738,4 +740,18 @@
             <button onClick="document.getElementById('overlay4').style.visibility='hidden'; window.open('https://youtu.be/ehGvbpUF-Nk','_blank');">暫停播放，並前往教學影片「影像合成圖，使用PhotoImpact製作」</button>
         </div>
     </body>
+    
+    <script>
+    	//var test = document.getElementById('apDiv1');
+		
+		document.addEventListener('mousedown',function(event){
+		  
+		  	//console.log(event.pageX);
+			console.log(event.pageY);
+			
+			if( (event.pageX>302)&&(event.pageX<320)&&(event.pageY>=0)&&(event.pageY<620)){
+				player.pauseVideo();
+			}
+		} );
+    </script>
 </html>
