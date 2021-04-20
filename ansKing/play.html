@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -208,10 +208,9 @@ var ans=[1,1,1,1,1,1,1,1,1,1,
 		1,1,1,1,1,1,1,1,1,1];	
 			
 function start(){
+
 	
-	
-	
-	/*  for(j=0 ; j<20 ; j++){			//將題目打散
+	  for(j=0 ; j<20 ; j++){			//將題目隨機重排
 		var tmp = [];
 		var r = RandomInt(0, 19);
 		console.log(r);			//
@@ -219,17 +218,17 @@ function start(){
 		tmp = topic[j];
 		topic[j] = topic[r];
 		topic[r] = tmp;
-	}  */
+	}  
 		
-	for(i=0 ; i<20 ; i++){				//將答案打散
-		var tmp = "";
+	for(i=0 ; i<20 ; i++){				//將答案選項隨機重排
+		var tmp2 = 0;
 		ans[i] = RandomInt(1, 4);
 		//console.log(ans[i]);	
 					
 		if(ans[i]!=1){
-			tmp = topic[i][2];
+			tmp2 = topic[i][2];
 			topic[i][2] = topic[i][ans[i]+1];
-			topic[i][ans[i]+1] = tmp;
+			topic[i][ans[i]+1] = tmp2;
 		}
 	}
 	

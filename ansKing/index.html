@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -6,12 +6,12 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <style type="text/css">
-body {
-	background-color: #333;
-	margin-left: 0px;
-	margin-top: 0px;
-}
-#codebox {
+	body {
+		background-color: #333;
+		margin-left: 0px;
+		margin-top: 0px;
+	}
+	#codebox {
             padding-top: 10px;
             padding-left: 9px;
             text-align: left;
@@ -31,7 +31,7 @@ body {
             top: 15px;
         }
         
-		 button{
+		button{
             font-size: 40px;
             line-height: 45px;
             font-weight: bold;
@@ -69,6 +69,22 @@ body {
             font-weight: bold;
             text-align: center;
         }
+	#uploadDiv{
+		position:absolute;
+		top: 0px;
+		left:0px;
+		width: 100%;
+        height: 100%;
+        color: white;
+		z-index:8;
+		font-size:70px;
+        font-family: '微軟正黑體';
+		text-align:center;  
+		font-weight: bold;
+		background-color:#000;
+		opacity:0.8; 
+		visibility:hidden;	
+	}
 </style>
 </head>
 
@@ -112,7 +128,7 @@ body {
         
     	<button onclick="send();" id="verifi">送 出</button>
     </div>
-    
+    <div id="uploadDiv"> <br/> <br/> <br/>資料上傳中……</div>
     
     </td>
   </tr>
@@ -192,10 +208,13 @@ body {
 			sendT+= choT[k] +",";
 		}
 		sendT+= choT[19];
-		
+		document.getElementById('verifi').disabled = false;		//送出按鈕失效
 		console.log(sendT);
 		
-		 aa = {
+		//顯示資料上傳中
+		document.getElementById('uploadDiv').style.visibility = "visible";
+		
+		aa = {
                 data: sendT,           //???
                 //uID: userID,
                 sheetUrl: '',
