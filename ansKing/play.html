@@ -155,7 +155,22 @@ button:hover{
 	padding:1px;
 	transition:0.2s;
 }
-
+#downloadDiv{
+		position:absolute;
+		top: 0px;
+		left:0px;
+		width: 100%;
+        height: 100%;
+        color: white;
+		z-index:10;
+		font-size:70px;
+        font-family: '微軟正黑體';
+		text-align:center;  
+		font-weight: bold;
+		background-color:#000;
+		opacity:0.9; 
+		/*visibility:visible;	*/
+	}
 </style>
 
 <script>
@@ -252,7 +267,9 @@ function start(){
 	<br /><br /><br /><br /><br /><br /><button onclick="start()">start</button>
 </div>
 <div id="score">
-	<br /><br /><br />恭喜你獲得： <span id="point01" style="color:#a30"></span> 分
+	<br /><br />恭喜你獲得： <span id="point01" style="color:#a30"></span> 分
+    <br /><br /><button onclick="window.location.href = 'index.html'">回選單</button>
+    <br /><br /><button onclick="window.location.reload()">重來</button>
 </div>
 
 <table id="tb1" border="0" align="center" cellpadding="0" cellspacing="0">
@@ -288,13 +305,15 @@ function start(){
     <td width="720" height="100"><span style="border:2px solid #000;">解析</span></td>
   </tr>
 </table>
+<div id="downloadDiv"> <br/> <br/> <br/>資料下載中……</div>
 </body>
 
 <script>
 	window.onload=readSheet();                    //網頁載入後，即執行讀取試算表資料
 
 	function readSheet(){				//讀取試算表題庫
-		//overlay
+		//
+		//document.getElementById('downloadDiv').style.visibility = "visible";		//下載中...
 	
 		aa = {
                 data: "id",           //???
@@ -317,6 +336,8 @@ function start(){
 				topic[i] = dataTT.slice(i*7,7*(i+1));
 				console.log(topic[i]);
 			}
+			
+			document.getElementById('downloadDiv').style.visibility = "hidden";
 			//setTimeout(function(){
 				
 			//		window.location.href = "play.html";
