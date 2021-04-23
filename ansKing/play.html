@@ -155,6 +155,12 @@ button:hover{
 	padding:1px;
 	transition:0.2s;
 }
+.bigger{
+	padding-top:25px;
+	padding-bottom:25px;
+	font-size: 80px;
+	width:990px;
+}
 #downloadDiv{
 		position:absolute;
 		top: 0px;
@@ -171,6 +177,23 @@ button:hover{
 		opacity:0.9; 
 		/*visibility:visible;	*/
 	}
+	#uploadDiv{
+		position:absolute;
+		top: 0px;
+		left:0px;
+		width: 100%;
+        height: 100%;
+        color: white;
+		z-index:10;
+		font-size:70px;
+        font-family: '微軟正黑體';
+		text-align:center;  
+		font-weight: bold;
+		background-color:#000;
+		opacity:0.9; 
+		visibility:hidden;
+	}
+
 </style>
 
 <script>
@@ -252,6 +275,11 @@ function start(){
 		document.getElementById(idd).innerHTML = topic[0][i];
 	}
 	
+		for(i=2 ; i<=5 ; i++){
+				idd =  "t0"+i;
+				//document.getElementById(idd).classList.add("bigger");			//將高度變大，字變大
+		}
+	
 	document.getElementById('start').style.visibility = "hidden";
 	document.getElementById('tb1').style.visibility = "visible";
 
@@ -264,13 +292,13 @@ function start(){
 
 <body>
 <div id="start">
-	<br /><br /><br /><br /><br /><br /><button onclick="start()">start</button>
+	<br /><br /><br /><br /><br /><br /><button id="startB" onclick="start()">start</button>
 </div>
 <div id="score">
 	<br />恭喜你獲得： <span id="point01" style="color:#a30"></span> 分
     <br />正確率： <span id="Rrate" style="color:#a30"></span> ％
-    <br /><br /><button onclick="window.location.href = 'index.html'">回選單</button>
-    <br /><br /><button onclick="window.location.reload()">重來</button>
+    <br /><br /><button id="backB" onclick="window.location.href = 'index.html'">回選單</button>
+    <br /><br /><button id="againB" onclick="again()">重來</button>
 </div>
 
 <table id="tb1" border="0" align="center" cellpadding="0" cellspacing="0">
@@ -307,13 +335,17 @@ function start(){
   </tr>
 </table>
 <div id="downloadDiv"> <br/> <br/> <br/>資料下載中……</div>
+<div id="uploadDiv"> <br/> <br/> <br/>資料上傳中……</div>
 </body>
 
 <script>
 	window.onload=readSheet();                    //網頁載入後，即執行讀取試算表資料
 
 	function readSheet(){				//讀取試算表題庫
-		//
+		
+		console.log(document.body.clientWidth);
+		console.log(document.body.clientHeight);
+		document.getElementById('downloadDiv').innerHTML += document.body.clientWidth +","+document.body.clientHeight;
 		//document.getElementById('downloadDiv').style.visibility = "visible";		//下載中...
 		var area = location.href.substr(-1);
 		console.log("area "+area);
@@ -378,8 +410,8 @@ function next(){				//跳到下一題
 		
 		tNum ++;
 		for(i=1 ; i<=5 ; i++){
-		var idd = "t0"+i;
-		document.getElementById(idd).innerHTML = topic[tNum][i];
+			var idd = "t0"+i;
+			document.getElementById(idd).innerHTML = topic[tNum][i];
 		}
 		clockStart();
 		document.getElementById('black01').style.visibility="hidden";
@@ -413,7 +445,7 @@ function choseAns(num){				//選取答案後呼叫此函數
 			
 			clock = clock<(total*30)? total*30 : clock;
 			console.log(clock);									//計算分數
-			point = Math.floor( 2 * (rightT - wrongT) * ( 150 * range / clock ) );
+			point = Math.floor( 2 * (rightT - wrongT) * ( (150 * range +600) / (clock +600) ) );    	//成績計算再研究
 			console.log(point);		//秀出成績
 			point = point<0 ? 0 : point;
 			document.getElementById('point01').innerHTML = point;
@@ -429,6 +461,51 @@ function choseAns(num){				//選取答案後呼叫此函數
 		document.getElementById('explain').innerHTML='<span style="color:#000; border:2px solid #000;">解析</span> '+topic[tNum][6];
 		document.getElementById('explain').style.visibility="visible";
 		
+}
+
+function again(){           //按重來
+	
+	document.getElementById('uploadDiv').style.visibility = "visible";
+	
+	var sendT="";
+	
+		for(k=0; k<19 ;k++ ){
+			sendT+= topic[k][0] +",";
+		}
+		sendT+= topic[19][0];
+		//document.getElementById('againB').disabled = false;		//重來按鈕失效
+		console.log(sendT);
+		
+		//顯示資料上傳中
+		document.getElementById('uploadDiv').style.visibility = "visible";
+		
+		aa = {
+                data: sendT,           //???
+                //uID: userID,
+                sheetUrl: '',
+                sheetTag: '',	//userID.substr(0,1),
+                mode: 2         //送出重來的題號資料
+            };
+		
+		$.get('https://script.google.com/macros/s/AKfycbwXuZkVV-kddVDZh4R7I7cl_M_wLhNmwi51vGlY7Toc2uS_xmJ-/exec', aa, function(data0){
+			console.log(data0);
+			if(data0 =='佔用中'){
+				document.getElementById('uploadDiv').innerHTML = " <br/> <br/>雲端空間佔滿中<br/>請稍等一會兒再按「重來」";
+				setTimeout(function(){
+				
+					document.getElementById('uploadDiv').style.visibility = "hiedden";
+					document.getElementById('uploadDiv').innerHTML = " <br/> <br/> <br/>資料上傳中……";
+				},3000);
+			}
+			else{
+				setTimeout(function(){
+				
+					window.location.href = "play.html?"+data0;
+				},2000);
+			}
+		});
+	
+	//window.location.href = "play.html?ag" + "";
 }
 </script>
 
