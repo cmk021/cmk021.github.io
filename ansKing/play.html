@@ -171,6 +171,23 @@ button:hover{
 		opacity:0.9; 
 		/*visibility:visible;	*/
 	}
+	#uploadDiv{
+		position:absolute;
+		top: 0px;
+		left:0px;
+		width: 100%;
+        height: 100%;
+        color: white;
+		z-index:10;
+		font-size:70px;
+        font-family: '微軟正黑體';
+		text-align:center;  
+		font-weight: bold;
+		background-color:#000;
+		opacity:0.9; 
+		visibility:hidden;
+	}
+
 </style>
 
 <script>
@@ -269,8 +286,8 @@ function start(){
 <div id="score">
 	<br />恭喜你獲得： <span id="point01" style="color:#a30"></span> 分
     <br />正確率： <span id="Rrate" style="color:#a30"></span> ％
-    <br /><br /><button onclick="window.location.href = 'index.html'">回選單</button>
-    <br /><br /><button onclick="window.location.reload()">重來</button>
+    <br /><br /><button id="backB" onclick="window.location.href = 'index.html'">回選單</button>
+    <br /><br /><button id="againB" onclick="again()">重來</button>
 </div>
 
 <table id="tb1" border="0" align="center" cellpadding="0" cellspacing="0">
@@ -307,6 +324,7 @@ function start(){
   </tr>
 </table>
 <div id="downloadDiv"> <br/> <br/> <br/>資料下載中……</div>
+<div id="uploadDiv"> <br/> <br/> <br/>資料上傳中……</div>
 </body>
 
 <script>
@@ -378,8 +396,8 @@ function next(){				//跳到下一題
 		
 		tNum ++;
 		for(i=1 ; i<=5 ; i++){
-		var idd = "t0"+i;
-		document.getElementById(idd).innerHTML = topic[tNum][i];
+			var idd = "t0"+i;
+			document.getElementById(idd).innerHTML = topic[tNum][i];
 		}
 		clockStart();
 		document.getElementById('black01').style.visibility="hidden";
@@ -429,6 +447,46 @@ function choseAns(num){				//選取答案後呼叫此函數
 		document.getElementById('explain').innerHTML='<span style="color:#000; border:2px solid #000;">解析</span> '+topic[tNum][6];
 		document.getElementById('explain').style.visibility="visible";
 		
+}
+
+function again(){           //按重來
+	
+	document.getElementById('uploadDiv').style.visibility = "visible";
+	
+	var sendT="";
+	
+		for(k=0; k<19 ;k++ ){
+			sendT+= topic[k][0] +",";
+		}
+		sendT+= topic[19][0];
+		document.getElementById('againB').disabled = false;		//重來按鈕失效
+		console.log(sendT);
+		
+		//顯示資料上傳中
+		document.getElementById('uploadDiv').style.visibility = "visible";
+		
+		aa = {
+                data: sendT,           //???
+                //uID: userID,
+                sheetUrl: '',
+                sheetTag: '',	//userID.substr(0,1),
+                mode: 3         //送出重來的題號資料
+            };
+		
+		$.get('https://script.google.com/macros/s/AKfycbwXuZkVV-kddVDZh4R7I7cl_M_wLhNmwi51vGlY7Toc2uS_xmJ-/exec', aa, function(data0){
+			
+			if(data0 =='error'){
+			
+			}
+			console.log(data0);
+			setTimeout(function(){
+				
+					//window.location.href = "play.html?ag"+data0;
+				},2000);
+        	
+		});
+	
+	//window.location.href = "play.html?ag" + "";
 }
 </script>
 
