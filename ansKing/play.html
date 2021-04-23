@@ -470,7 +470,7 @@ function again(){           //按重來
                 //uID: userID,
                 sheetUrl: '',
                 sheetTag: '',	//userID.substr(0,1),
-                mode: 3         //送出重來的題號資料
+                mode: 2         //送出重來的題號資料
             };
 		
 		$.get('https://script.google.com/macros/s/AKfycbwXuZkVV-kddVDZh4R7I7cl_M_wLhNmwi51vGlY7Toc2uS_xmJ-/exec', aa, function(data0){
@@ -481,7 +481,7 @@ function again(){           //按重來
 			console.log(data0);
 			setTimeout(function(){
 				
-					//window.location.href = "play.html?ag"+data0;
+					window.location.href = "play.html?"+data0;
 				},2000);
         	
 		});
