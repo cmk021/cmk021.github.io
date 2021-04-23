@@ -459,7 +459,7 @@ function again(){           //按重來
 			sendT+= topic[k][0] +",";
 		}
 		sendT+= topic[19][0];
-		document.getElementById('againB').disabled = false;		//重來按鈕失效
+		//document.getElementById('againB').disabled = false;		//重來按鈕失效
 		console.log(sendT);
 		
 		//顯示資料上傳中
@@ -474,16 +474,21 @@ function again(){           //按重來
             };
 		
 		$.get('https://script.google.com/macros/s/AKfycbwXuZkVV-kddVDZh4R7I7cl_M_wLhNmwi51vGlY7Toc2uS_xmJ-/exec', aa, function(data0){
-			
-			if(data0 =='error'){
-			
-			}
 			console.log(data0);
-			setTimeout(function(){
+			if(data0 =='佔用中'){
+				document.getElementById('uploadDiv').innerHTML = " <br/> <br/> <br/>請稍等一會兒再按「重來」";
+				setTimeout(function(){
+				
+					document.getElementById('uploadDiv').style.visibility = "hiedden";
+					document.getElementById('uploadDiv').innerHTML = " <br/> <br/> <br/>資料上傳中……";
+				},3000);
+			}
+			else{
+				setTimeout(function(){
 				
 					window.location.href = "play.html?"+data0;
 				},2000);
-        	
+			}
 		});
 	
 	//window.location.href = "play.html?ag" + "";
