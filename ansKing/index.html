@@ -188,7 +188,13 @@
 	function send(){
 		var choT=[];
 		var begin = Number(document.getElementById('vercode').textContent);
-		//var end = begin + Number(rg.value-1);
+		var end = begin + Number(rg.value-1);
+		
+		document.getElementById('sp').textContent = end;
+		
+		if ( confirm("測驗範圍從第 "+begin+" 到第 "+end+" 題，挑選20題。") == false ){
+			return;
+		}
 		
 		for(i=0; i<Number(rg.value) ;i++ ){
 			choT[i] = i+ begin;
