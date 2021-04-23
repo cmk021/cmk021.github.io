@@ -345,8 +345,8 @@ function start(){
 	function readSheet(){				//讀取試算表題庫
 		
 		console.log(document.body.clientWidth);
-		console.log(document.body.clientHeight);
-		document.getElementById('downloadDiv').innerHTML += document.body.clientWidth +","+document.body.clientHeight;
+		console.log(window.screen.width);
+		document.getElementById('downloadDiv').innerHTML += window.screen.height;   //document.body.clientWidth +","+
 		//document.getElementById('downloadDiv').style.visibility = "visible";		//下載中...
 		var area = location.href.substr(-1);
 		console.log("area "+area);
