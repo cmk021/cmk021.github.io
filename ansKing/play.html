@@ -13,8 +13,10 @@ body {
 }
 .t1 ,.t2 {
 	font-family: "微軟正黑體";
-	font-size: 47px;
+	width:99%;
+	/*font-size: 47px;*/
 }
+.t1 { background-color:#FF9; }
 .t2:hover{
 	border: solid 2px #990000;
 	cursor: pointer;
@@ -77,7 +79,11 @@ body {
 	line-height: 62px;
 }
 #tb1{
+	font-size: 47px;
+	width:720px;
 	visibility:hidden;
+	margin-left:auto;
+	margin-right:auto;
 }
 #start{
 	position: absolute;
@@ -150,16 +156,18 @@ button:hover{
 .t2 {
 	padding-top:18px;
 	padding-bottom:18px;
+	
 }
 .small{
 	padding:1px;
 	transition:0.2s;
 }
 .bigger{
-	padding-top:25px;
+	/*padding-top:25px;
 	padding-bottom:25px;
-	font-size: 80px;
-	width:990px;
+	font-size: 80px;*/
+	width:100%;
+	transition:0.2s;
 }
 #downloadDiv{
 		position:absolute;
@@ -302,27 +310,17 @@ function start(){
     <br /><br /><button id="againB" onclick="again()">重來</button>
 </div>
 
-<table id="tb1" border="0" align="center" cellpadding="0" cellspacing="0">
-  <tr>
-    <td width="720" height="10" style="font-size: 9px">&nbsp;</td>
-  </tr>
-  <tr>
-    <td width="720" height="100" bgcolor="#FFFF99" class="t1" id="t01">&nbsp;
-    </td>
-  </tr>
-  <tr>
-    <td onclick="choseAns(1)" width="720"><div class="t2" id="t02"></div></td>
-  </tr>
-  <tr>
-    <td onclick="choseAns(2)" width="720"><div class="t2" id="t03"></div></td>
-  </tr>
-  <tr>
-    <td onclick="choseAns(3)" width="720"><div class="t2" id="t04"></div></td>
-  </tr>
-  <tr>
-    <td onclick="choseAns(4)" width="720"><div class="t2" id="t05"></div></td>
-  </tr>
-</table>
+<div id="tb1">
+	<div style="height:10px;">&nbsp;</div>
+	<div class="t1" id="t01"></div>
+    	<div onclick="choseAns(1)" class="t2" id="t02"></div>
+  		<div onclick="choseAns(2)" class="t2" id="t03"></div>
+      	<div onclick="choseAns(3)" class="t2" id="t04"></div>
+  		<div onclick="choseAns(4)" class="t2" id="t05"></div>
+    <div style="height:10px;">&nbsp;</div>
+    	<div class="t2" id="explain"><span style="border:2px solid #000;">解析</span><</div>        
+        
+</div>
 <div id="clockDiv">0</div>
 <div id="RorWDiv"><span style="color:#0A0" id="spR">0</span> / <span style="color:#D00" id="spW">0</span></div>
 <div id="black01">
@@ -330,11 +328,6 @@ function start(){
   <div id="nextTDiv" onclick="next()">下一題</div>
 </div>
 <br />
-<table width="720" border="0" align="center" cellpadding="0" cellspacing="0" id="explain">
-  <tr>
-    <td width="720" height="100"><span style="border:2px solid #000;">解析</span></td>
-  </tr>
-</table>
 <div id="downloadDiv"> <br/> <br/> <br/>資料下載中……</div>
 <div id="uploadDiv"> <br/> <br/> <br/>資料上傳中……</div>
 </body>
@@ -346,8 +339,16 @@ function start(){
 		
 		console.log(document.body.clientWidth);
 		console.log(window.screen.width);
-		document.getElementById('downloadDiv').innerHTML += window.screen.width;   //document.body.clientWidth +","+
+		//document.getElementById('downloadDiv').innerHTML += window.screen.width;   //document.body.clientWidth +","+
 		//document.getElementById('downloadDiv').style.visibility = "visible";		//下載中...
+		if(window.screen.width < window.screen.height){
+			document.getElementById('tb1').style.width = "100%"; 
+			for(i=1 ; i<=5 ; i++){
+				var idd2 =  "t0"+i;
+				document.getElementById(idd2).style.fontSize = Math.floor((window.screen.width/18)+"px";			//將寬度變大
+			}
+		}
+		
 		var area = location.href.substr(-1);
 		console.log("area "+area);
 		
