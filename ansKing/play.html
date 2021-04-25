@@ -285,10 +285,10 @@ function start(){
 		document.getElementById(idd).innerHTML = topic[0][i];
 	}
 	
-		for(i=2 ; i<=5 ; i++){
-				idd =  "t0"+i;
+		//for(i=2 ; i<=5 ; i++){
+		//		idd =  "t0"+i;
 				//document.getElementById(idd).classList.add("bigger");			//將高度變大，字變大
-		}
+		//}
 	
 	document.getElementById('start').style.visibility = "hidden";
 	document.getElementById('tb1').style.visibility = "visible";
@@ -348,7 +348,7 @@ function start(){
 			for(i=1 ; i<=6 ; i++){
 				var idd2 =  "t0"+i;
 				document.getElementById(idd2).style.fontSize = Math.floor(window.screen.width/7)+"px";		//將字體變大
-				document.getElementById(bigger).classList.add('bigger');		//padding 加大
+				document.getElementById(idd2).classList.add('bigger');		//padding 加大
 			}
 		}
 		
