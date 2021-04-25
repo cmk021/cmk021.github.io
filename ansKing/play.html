@@ -154,9 +154,9 @@ button:hover{
 	background-color:#F33;
 }
 .t2 {
-	padding-top:28px;
-	padding-bottom:28px;
-	padding-left:10px;
+	padding-top:18px;
+	padding-bottom:18px;
+	padding-left:0px;
 }
 .small{
 	padding:1px;
@@ -166,7 +166,9 @@ button:hover{
 	/*padding-top:25px;
 	padding-bottom:25px;
 	font-size: 80px;*/
-	width:100%;
+	padding-top:28px;
+	padding-bottom:28px
+	padding-left:10px;
 	transition:0.2s;
 }
 #downloadDiv{
@@ -346,6 +348,7 @@ function start(){
 			for(i=1 ; i<=6 ; i++){
 				var idd2 =  "t0"+i;
 				document.getElementById(idd2).style.fontSize = Math.floor(window.screen.width/7)+"px";		//將字體變大
+				document.getElementById(bigger).classList.add('bigger');		//padding 加大
 			}
 		}
 		
