@@ -66,17 +66,17 @@ body {
 	cursor: pointer;
 	background-color:#FFF;
 }
-#explain {
+#t06 {
 	z-index: 6;
 	font-family: "微軟正黑體";
-	font-size: 46px;
+	/*font-size: 46px;*/
 	color: #008;
 	/*border: 2px solid #000;*/
 	/*bottom: 100px;*/
 	text-align:left;
 	background-color:#BFF;
 	visibility:hidden;
-	line-height: 62px;
+	/*line-height: 62px;*/
 }
 #tb1{
 	font-size: 47px;
@@ -318,7 +318,7 @@ function start(){
       	<div onclick="choseAns(3)" class="t2" id="t04"></div>
   		<div onclick="choseAns(4)" class="t2" id="t05"></div>
     <div style="height:10px;">&nbsp;</div>
-    	<div class="t2" id="explain"><span style="border:2px solid #000;">解析</span><</div>        
+    	<div class="t2" id="t06"><span style="border:2px solid #000;">解析</span><</div>        
         
 </div>
 <div id="clockDiv">0</div>
@@ -342,10 +342,10 @@ function start(){
 		//document.getElementById('downloadDiv').innerHTML += window.screen.width;   //document.body.clientWidth +","+
 		//document.getElementById('downloadDiv').style.visibility = "visible";		//下載中...
 		if(window.screen.width < window.screen.height){
-			document.getElementById('tb1').style.width = "100%"; 
+			document.getElementById('tb1').style.width = "100%"; 		//將寬度變大
 			for(i=1 ; i<=5 ; i++){
 				var idd2 =  "t0"+i;
-				document.getElementById(idd2).style.fontSize = Math.floor(window.screen.width/18)+"px";			//將寬度變大
+				document.getElementById(idd2).style.fontSize = Math.floor(window.screen.width/18)+"px";		//將字體變大
 			}
 		}
 		
@@ -408,7 +408,7 @@ function next(){				//跳到下一題
 			idd =  "t0"+ (choseN+1);
 			document.getElementById(idd).classList.remove("redmark");
 		}
-		document.getElementById('explain').style.visibility="hidden";
+		document.getElementById('t06').style.visibility="hidden";
 		
 		tNum ++;
 		for(i=1 ; i<=5 ; i++){
@@ -461,8 +461,8 @@ function choseAns(num){				//選取答案後呼叫此函數
 		}
 		
 		document.getElementById('black01').style.visibility="visible";
-		document.getElementById('explain').innerHTML='<span style="color:#000; border:2px solid #000;">解析</span> '+topic[tNum][6];
-		document.getElementById('explain').style.visibility="visible";
+		document.getElementById('t06').innerHTML='<span style="color:#000; border:2px solid #000;">解析</span> '+topic[tNum][6];
+		document.getElementById('t06').style.visibility="visible";
 		
 }
 
