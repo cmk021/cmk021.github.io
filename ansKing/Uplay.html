@@ -309,7 +309,7 @@ function start(){
 	<br />正確率： <span id="Rrate" style="color:#a30"></span> ％
     <br />平均每題 <span id="SecPT" style="color:#a30"></span> 秒以內
     <br />獲得： <span id="point01" style="color:#a30"></span> 分
-    <br /><br /><button id="backB" onclick="window.location.href = 'index.html'">回選單</button>
+    <br /><br /><button id="backB" onclick="back()">回選單</button>    <!--新版 -->
     <br /><br /><button id="againB" onclick="again()">重來</button>
 </div>
 
@@ -336,6 +336,9 @@ function start(){
 </body>
 
 <script>
+
+var userID = "";
+
 	window.onload=readSheet();                    //網頁載入後，即執行讀取試算表資料
 
 	function readSheet(){				//讀取試算表題庫
@@ -359,27 +362,34 @@ function start(){
 		
 		var area = location.href.substr(-1);
 		console.log("area "+area);
+		var addr = location.href.split('?');
+		console.log(addr[1]);
+		userID = addr[1];
 		
 		aa = {
-                data: area,           //要讀取題庫的區域
-                //uID: userID,
+                area: area,           //要讀取題庫的區域
+                uID: userID,
                 sheetUrl: '',
                 sheetTag: '',	//userID.substr(0,1),
                 mode: 1         //送出選題資料
             };
 		
-		$.get('https://script.google.com/macros/s/AKfycbwXuZkVV-kddVDZh4R7I7cl_M_wLhNmwi51vGlY7Toc2uS_xmJ-/exec', aa, function(dataM1){
-			
-			if(dataM1 =='error'){
-			
-			}
+		$.get('https://script.google.com/a/ntut.org.tw/macros/s/AKfycbxLDkeqxIWVedzRUAan7vOZQsJ2n6mgMFNuMwtG/exec', aa, function(dataM1){
 			console.log(dataM1);
+			if(dataM1 =='ID Error'){
+				document.getElementById('downloadDiv').innerHTML = "帳號資訊有誤！<br/>請重新登入";
+				/*setTimeout(function(){
+					window.location.href = "register.html;			//新版
+				},2000);*/
+				return;
+			}
 			
 			var dataTT = dataM1.split(',');
-			
-			for(i=0 ; i<20 ; i++){						//將所取得的資料分割為20道題目
-				topic[i] = dataTT.slice(i*7,7*(i+1));
-				console.log(topic[i]);
+			range = Number(dataTT[1]);			//題目範圍
+			console.log(range); 
+			for(i=1 ; i<21 ; i++){						//將所取得的資料分割為20道題目
+				topic[i-1] = dataTT.slice(i*7,7*(i+1));
+				console.log(topic[i-1]);
 			}
 			
 			document.getElementById('downloadDiv').style.visibility = "hidden";
@@ -389,10 +399,10 @@ function start(){
 			//	},2500);
         	
 		});
-		
+    	
 		var addr = window.location.href.split("?");
-		range = Number(addr[1]);
-		console.log(range);    
+		//range = Number(addr[1]);
+		//console.log(range);    
 	}
 
 </script>
@@ -403,10 +413,57 @@ var tNum = 0;		//目前題數
 
 function next(){				//跳到下一題
 		
-		if(tNum ==19){
+		if(tNum ==19){							//按了「結束」之後，出現成績畫面
 			document.getElementById('score').style.visibility="visible";
-			return;
+			
+			var pokeN = -1;				//-1表示沒得到牌卡
+			if(rightT>=16){
+				pokeN = poke(range,rightT,clock,topic[0][0]);		//得牌分析
+			}
+			if(pokeN > -1){
+				console.log(pokeArr[pokeN]);
+			}
+			
+			if(point>0){
+				document.getElementById('uploadDiv').innerHTML = " <br/> <br/> <br/>資料上傳中……";
+				document.getElementById('uploadDiv').style.opacity = 0.75;
+				document.getElementById('uploadDiv').style.visibility = "visible";
+				//整理組合一下要上傳的資料……????
+				var aa = {
+					point: point,           //??????
+					uID: userID,
+					//wrongT: "",	//答錯的題號
+					//saveT: "",	//收藏的題號
+					poke: pokeN,
+					sheetUrl: '',
+					sheetTag: '',	//userID.substr(0,1),
+					mode: 3         //上傳成績
+				};
+		
+			//換存到另一個試算表和 appscript 比較好
+				$.get('https://script.google.com/a/ntut.org.tw/macros/s/AKfycbwDRzz240x22Ed_5AB97LVfQO2BxeRBElsldWAcpw/exec', aa, function(data3){
+					console.log(data3);
+					if(data3 =='error'){
+						
+					}
+					else{
+						document.getElementById('uploadDiv').innerHTML = " <br/><br/>資料上傳完成";
+							//document.getElementById('uploadDiv').style.opacity = 0.7;
+						if(data3 == 0){
+								//console.log("獲得新牌，加1000分！");
+							document.getElementById('uploadDiv').innerHTML += "<br/><span style='color:red'>獲得新卡牌 "+pokeArr[pokeN]+"<br/>加1000分！</span>";
+						}
+						setTimeout(function(){
+							document.getElementById('uploadDiv').style.visibility = "hidden";
+							document.getElementById('uploadDiv').innerHTML = " <br/> <br/> <br/>資料上傳中……";
+						},2700);
+					}
+				});
+			}	
+				
+			return;			
 		}
+		
 		
 		for(i=1 ; i<=5 ; i++){
 			var idd2 =  "t0"+i;
@@ -457,14 +514,14 @@ function choseAns(num){				//選取答案後呼叫此函數
 		}else{
 			document.getElementById('nextTDiv').innerHTML="結束";
 			
-			clock = clock<(total*30)? total*30 : clock;
-			console.log(clock);									//計算分數
-			point = Math.floor( 0.1*range * (rightT - wrongT) * ( 3600 / (clock +600) ) );    	//成績計算再研究
+			var clockE = clock<(total*30)? total*30 : clock;
+			console.log(clockE +"＆range="+ range);									//計算分數
+			point = Math.floor( 0.1*range * (rightT - wrongT) * ( 3600 / (clockE +600) ) );    	//成績計算再研究
 			console.log(point);		//秀出成績
 			point = point<0 ? 0 : point;
 			document.getElementById('point01').innerHTML = point;		//分數
 			document.getElementById('Rrate').innerHTML = rightT*5;		//正確率
-			document.getElementById('SecPT').innerHTML = Math.floor(clock/20)/10;			//平均答題時間
+			document.getElementById('SecPT').innerHTML = Math.floor(clockE/20)/10;			//平均答題時間			
 		}
 		
 		for(i=1 ; i<=5 ; i++){
@@ -496,13 +553,14 @@ function again(){           //按重來
 		
 		aa = {
                 data: sendT,           //???
-                //uID: userID,
+                uID: userID,
+				range: range,
                 sheetUrl: '',
                 sheetTag: '',	//userID.substr(0,1),
                 mode: 2         //送出重來的題號資料
             };
 		
-		$.get('https://script.google.com/macros/s/AKfycbwXuZkVV-kddVDZh4R7I7cl_M_wLhNmwi51vGlY7Toc2uS_xmJ-/exec', aa, function(data0){
+		$.get('https://script.google.com/a/ntut.org.tw/macros/s/AKfycbxLDkeqxIWVedzRUAan7vOZQsJ2n6mgMFNuMwtG/exec', aa, function(data0){
 			console.log(data0);
 			if(data0 =='佔用中'){
 				document.getElementById('uploadDiv').innerHTML = " <br/> <br/>雲端空間佔滿中<br/>請稍等一會兒再按「重來」";
@@ -515,13 +573,121 @@ function again(){           //按重來
 			else{
 				setTimeout(function(){
 				
-					window.location.href = "play.html?"+range+"?"+data0;
+					window.location.href = "Uplay.html?"+userID+"?"+data0;			//新版
 				},2000);
 			}
 		});
-	
 	//window.location.href = "play.html?ag" + "";
 }
+function back(){
+	window.location.href = 'Tmenu.html?'+ userID;
+}
 </script>
+<script>
+var pokeArr = ["♣A","◆A","♥A","♠A","♣2","◆2","♥2","♠2","♣3","◆3","♥3","♠3","♣4","◆4","♥4","♠4",
+	"♣5","◆5","♥5","♠5","♣6","◆6","♥6","♠6","♣7","◆7","♥7","♠7","♣8","◆8","♥8","♠8","♣9","◆9","♥9","♠9",
+	"♣10","◆10","♥10","♠10","♣J","◆J","♥J","♠J","♣Q","◆Q","♥Q","♠Q","♣K","◆K","♥K","♠K","黑白joker","彩色joker"];
 
+	function poke(Prange,Pright,Pclock,Ptopic){
+		
+		if(Prange<=25){
+			if( (Pright + RandomInt(0, 9)) >=22 ){		//滿分有8成績率獲得卡牌，機率依得分遞減
+				if(Ptopic<151){
+					return Math.floor((Ptopic-1)/50); 
+				}else{
+					return Math.floor((Ptopic-1)/50)+1;
+				}
+			}
+		}
+		if(Prange==50){
+			if( (Pright + RandomInt(0, 9)) >=22 ){		//滿分有8成績率獲得卡牌，機率依得分遞減
+				return Math.floor((Ptopic-1)/100)+16; 	
+			}
+		}
+		if(Prange==100){
+			if( (Pright + RandomInt(0, 9)) >=21 ){		//滿分有9成績率獲得卡牌，機率依得分遞減
+				return Math.floor((Ptopic-1)/100)+24; 	
+			}
+		}
+		if(Prange==200){
+			if( (Pright + RandomInt(0, 9)) >=21 ){		//滿分有9成績率獲得卡牌，機率依得分遞減
+				return Math.floor((Ptopic-1)/100)+32; 	
+			}
+		}
+		if(Prange==350){
+			if( (Pright + RandomInt(0, 9)) >=21 ){		//滿分有9成績率獲得卡牌，機率依得分遞減
+				if(Ptopic<301){
+					return Math.floor((Ptopic-1)/100)+40; 
+				}else if(Ptopic<501){
+					return Math.floor((Ptopic-1)/100)+44;
+				}else{
+					return 46;
+				}
+			}
+		}
+		if(Prange==700){
+			if( (Pright + RandomInt(0, 9)) >=20 ){		//滿分有10成績率獲得卡牌，機率依得分遞減
+				return Math.floor((Ptopic-1)/150)+47; 	
+			}
+		}
+		
+		/*
+				取得條件	取得機率
+0	♣1	1-50題開始，範圍25以內，答對16題以上。	0.8
+1	◆1	51-100題開始，範圍25以內，答對16題以上。	0.8
+2	♥1	101-150題開始，範圍25以內，答對16題以上。	0.8
+3	♠1	範圍25題以內得100分120秒內	1
+4	♣2	151-200題開始，範圍25以內，答對16題以上。	0.8
+5	◆2	201-250題開始，範圍25以內，答對16題以上。	0.8
+6	♥2	251-300題開始，範圍25以內，答對16題以上。	0.8
+7	♠2	301-350題開始，範圍25以內，答對16題以上。	0.8
+8	♣3	351-400題開始，範圍25以內，答對16題以上。	0.8
+9	◆3	401-450題開始，範圍25以內，答對16題以上。	0.8
+10	♥3	451-500題開始，範圍25以內，答對16題以上。	0.8
+11	♠3	501-550題開始，範圍25以內，答對16題以上。	0.8
+12	♣4	551-600題開始，範圍25以內，答對16題以上。	0.8
+13	◆4	601-650題開始，範圍25以內，答對16題以上。	0.8
+14	♥4	651-700題開始，範圍25以內，答對16題以上。	0.8
+15	♠4	0-14全拿到，範圍25題以內得100分120秒內	1
+16	♣5	1-100題開始，範圍50，答對16題以上。	0.8
+17	◆5	101-200題開始，範圍50，答對16題以上。	0.8
+18	♥5	201-300題開始，範圍50，答對16題以上。	0.8
+19	♠5	301-400題開始，範圍50，答對16題以上。	0.8
+20	♣6	401-500題開始，範圍50，答對16題以上。	0.8
+21	◆6	501-600題開始，範圍50，答對16題以上。	0.8
+22	♥6	601-700題開始，範圍50，答對16題以上。	0.8
+23	♠6	範圍50題得100分160秒內		1
+24	♣7	1-100題開始，範圍100，答對16題以上。	0.9
+25	◆7	101-200題開始，範圍100，答對16題以上。	0.9
+26	♥7	201-300題開始，範圍100，答對16題以上。	0.9
+27	♠7	301-400題開始，範圍100，答對16題以上。	0.9
+28	♣8	401-500題開始，範圍100，答對16題以上。	0.9
+29	◆8	501-600題開始，範圍100，答對16題以上。	0.9
+30	♥8	601-700題開始，範圍100，答對16題以上。	0.9
+31	♠8	範圍100題得100分200秒內	1
+32	♣9	1-100題開始，範圍200，答對16題以上。	0.9
+33	◆9	101-200題開始，範圍200，答對16題以上。	0.9
+34	♥9	201-300題開始，範圍200，答對16題以上。	0.9
+35	♠9	301-400題開始，範圍200，答對16題以上。	0.9
+36	♣10	401-500題開始，範圍200，答對16題以上。	0.9
+37	◆10	501-600題開始，範圍200，答對16題以上。	0.9
+38	♥10	601-700題開始，範圍200，答對16題以上。	0.9
+39	♠10	範圍200題得100分220秒內	1
+40	♣11	1-100題開始，範圍350，答對16題以上。	0.9
+41	◆11	101-200題開始，範圍350，答對16題以上。	0.9
+42	♥11	201-300題開始，範圍350，答對16題以上。	0.9
+43	♠11	範圍350題得100分240秒內	1
+44	♣12	301-400題開始，範圍350，答對16題以上。	0.9
+45	◆12	401-500題開始，範圍350，答對16題以上。	0.9
+46	♥12	501-700題開始，範圍350，答對16題以上。	0.9
+47	♠12	1-150題開始，範圍700，答對16題以上。	1
+48	♣13	151-300題開始，範圍700，答對16題以上。	1
+49	◆13	301-450題開始，範圍700，答對16題以上。	1
+50	♥13	451-600題開始，範圍700，答對16題以上。	1
+51	♠13	601-700題開始，範圍700，答對16題以上。	1
+52	黑白joker	範圍700題得100分240秒內	0.5
+53	彩色joker	0-51都拿到，範圍700題得100分300秒內	0.5
+		*/
+	}
+</script>
 </html>

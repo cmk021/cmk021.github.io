@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>阿谷網丙學科練習網</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css" />
+    <style>
+        #uploadDiv ,#downloadDiv{
+		position:absolute;
+		top: 0px;
+		left:0px;
+		width: 100%;
+        height: 100%;
+        color: white;
+		z-index:8;
+		font-size:70px;
+        font-family: '微軟正黑體';
+		text-align:center;  
+		font-weight: bold;
+		background-color:#000;
+		opacity:0.8; 
+		visibility:hidden;	
+		}
+		
+		body{ background-image: url(''); background-size:cover ;}
+        a{text-decoration: none;}
+        .normal, .normal2{
+            color: white;
+            height: 110px;
+            width: 210px;
+            margin: 0px 20px 0px 20px;
+            /*float: left;*/
+            border: 3px #363 solid;
+            border-radius: 8px;
+            font-size: 42px;
+            text-align: center;
+            font-family: 'Comic Sans MS', sans-serif, '微軟正黑體';
+            line-height: 110px;
+        }        
+        .normal:hover, .normal2:hover{
+            border:white solid;
+            cursor: pointer;
+            background: #353;
+        }
+        .normal2{
+            margin: 0px;
+            height: 64px;
+            width: 200px;
+            position: fixed;
+            bottom: 50px;
+            right: 20px;
+        }
+        
+        span{color: aqua;}
+        #divTitle{
+            color: white;
+            font-size: 46px;
+            text-align: center;
+            font-family: 'Comic Sans MS', sans-serif, '微軟正黑體';
+            line-height: 50px;
+            /*position: fixed;
+            top: 60px;
+            left: 350px;*/
+        }
+        
+       /* #divTable{
+            position: fixed;
+            top: 180px;
+            left: 170px;           
+        }*/
+        
+        #anim, #invent{
+            font-family: 'Comic Sans MS', sans-serif, '微軟正黑體'; 
+            position: fixed;
+			bottom: 30px; 
+            right: 70px;
+            color: blanchedalmond;
+            font-size: 32px;
+/*            --animate-repeat: 5;*/
+        }
+        #invent{    bottom: 80px;    }
+    </style>
+</head>
+<script src ="jquery-3.6.0.js"></script>
+    
+<body bgcolor="#333">
+    <br/>
+    <div id="divTitle">阿谷網丙學科練功網</div><br/><br/>
+    
+    <div id="divTable">
+    <table border="0" align="center" cellpadding="0" cellspacing="0">
+        <tr>
+            <td height="130" align="center" valign="middle">
+                <div onClick="linkto('Tmenu.html')" class="normal">開始練習</div>
+            </td>
+            <td height="130" align="center" valign="middle">
+                <a href="">
+                <div onClick="linkto('saveT.html')" class="normal">收藏題庫</div></a>
+            </td>
+            <td height="130" align="center" valign="middle">
+                <a href="">
+                <div onClick="linkto('wrongT.html')" class="normal">錯誤題庫</div></a>
+            </td>
+        </tr>
+    </table> </div>
+    <div id="divTable">
+    <table border="0" align="center" cellpadding="0" cellspacing="0">
+        <tr>
+            <td height="130" align="center" valign="middle">
+                <div onClick="linkto('card.html')" class="normal">卡牌收集</div>
+            </td>
+            <td height="130" align="center" valign="middle">
+                <a href="">
+                <div onClick="linkto('Defense.html')" class="normal">防禦工事</div></a>
+            </td>
+            <td height="130" align="center" valign="middle">
+                <a href="">
+                <div onClick="linkto('Attack.html')" class="normal">攻打城池</div></a>
+            </td>
+        </tr>
+    </table> </div>
+    
+    <div id="userData">
+      <table width="750" border="0" align="center" cellpadding="0" cellspacing="0">
+        <tr>
+          <td width="20%" height="90" valign="bottom" style="color: #FFF; font-size: 32px; font-family: 'sans-serif', '微軟正黑體';"><span id="nickname" style="color:#9FF"> </span><br />
+        等級：<span id="level" style="color:#C9F"> </span></td>
+          <td width="40%" valign="bottom" style="color: #FFF; font-size: 32px; font-family: 'sans-serif', '微軟正黑體';">總分：<span id="score" style="color:#CF9"> </span><br>
+            今日得分：<span id="today" style="color:#CF9"> </span></td>
+          <td width="40%" valign="bottom" style="color: #FFF; font-size: 32px; font-family: 'sans-serif', '微軟正黑體';">&nbsp;</td>
+        </tr>
+      </table>
+</div>
+    
+<div id="anim">瀏覽器建議使用Google Chrome</div>
+    <div id="invent">作者：陳鳴谷 </div>
+    
+<!--
+    <a href="login.html">帳號登入</a>
+    <br><br>
+    <a href="register.html">註冊新帳號</a>
+    <br><br>
+    <a href="menu.html?USER?USER">以訪客身份開始</a>
+    <br><br>
+-->
+<div id="uploadDiv"> <br/> <br/> <br/>資料上傳中……</div>
+<div id="downloadDiv"> <br/> <br/> <br/>資料下載中……</div>
+</body>
+<script>
+	var addm = window.location.href.split('?');
+	
+var newlevel;
+var NickName="";
+
+	window.onload = function(){	
+	
+		userID = addm[1];		//	//從網址截取????
+		
+		document.getElementById('downloadDiv').style.visibility = "visible";
+
+		var aa = {
+                //data: userID.substr(1,2),           //???
+                uID: userID,
+				writeRow: Number(userID.substr(1,2))*5+6,               //計算要寫入成績資料試算
+                sheetUrl: '',
+                sheetTag: '',//userID.substr(0,1),
+                mode: 6         //檢驗 id 模式
+        };
+		
+//(level +','+ newlevel +','+ nickname +','+ score +','+ today)
+		$.get('https://script.google.com/macros/s/AKfycbygCTPucdv0WS2cwjxfbgDcbr8_fwK3pxamzRZHoHnl2NY2Y-ND/exec', aa,function(data6){
+			console.log(data6);
+			if(data6 =='idError'){   
+                alert("帳號資料有誤！\n請重新登入");
+                window.location.href = "login.html";  
+            }
+			
+			var ddata = data6.split(',');
+			
+			newlevel = ddata[1];		//第2碼放等級
+			document.getElementById('level').textContent = newlevel;
+			
+			NickName = ddata[2];
+			document.getElementById('nickname').textContent = NickName;
+			
+			var score = ddata[3];		//第2碼放等級
+			document.getElementById('score').textContent = score;
+			
+			var today = ddata[4];
+			document.getElementById('today').textContent = today;
+			
+			if(newlevel>ddata[0]){
+				document.getElementById('downloadDiv').innerHTML = " <br/> <br/> <br/><span style='color:red'>等級提升了！！</span>";
+			}
+			
+			setTimeout(function(){
+				document.getElementById('downloadDiv').style.visibility = "hidden";
+				document.getElementById('uploadDiv').innerHTML = " <br/> <br/> <br/>資料下載中……";
+			},2500);
+		});
+		
+	}
+
+
+	function linkto(pageName){
+		window.location.href = pageName +"?"+ userID ;
+	}
+
+</script>
+</html>
