@@ -204,7 +204,16 @@ button:hover{
 		opacity:0.9; 
 		visibility:hidden;
 	}
-
+	#heart{
+		position:fixed;
+		right: 10px;
+		bottom: 110px;
+		width: 150px;
+        height: 150px;
+		z-index:5;
+		background-image:url(pic/heart0.png);
+		background-size: 150px;
+	}
 </style>
 
 <script>
@@ -329,6 +338,7 @@ function start(){
 <div id="black01">
     <div id="black00"></div>
   <div id="nextTDiv" onclick="next()">下一題</div>
+  <div id="heart" onclick="saveT()"></div>
 </div>
 <br />
 <div id="downloadDiv"> <br/> <br/> <br/>資料下載中……</div>
@@ -424,7 +434,7 @@ function next(){				//跳到下一題
 				console.log(pokeArr[pokeN]);
 			}
 			
-			if(point>0){
+			if(point>-1000){
 				document.getElementById('uploadDiv').innerHTML = " <br/> <br/> <br/>資料上傳中……";
 				document.getElementById('uploadDiv').style.opacity = 0.75;
 				document.getElementById('uploadDiv').style.visibility = "visible";
@@ -434,7 +444,7 @@ function next(){				//跳到下一題
 					uID: userID,
 					writeRow: Number(userID.substr(1,2))*5+6,               //計算要將成績資料寫入第幾列
 					//wrongT: "",	//答錯的題號
-					//saveT: "",	//收藏的題號
+					saveArr: saveArr.join(','),	//收藏的題號陣列
 					poke: pokeN,
 					sheetUrl: '',
 					sheetTag: '',	//userID.substr(0,1),
@@ -495,6 +505,8 @@ var choseN=0;		//選取的答案
 //var range =0;		//範圍題數
 
 function choseAns(num){				//選取答案後呼叫此函數
+		document.getElementById('heart').textContent = "";		//愛心div內容文字
+		document.getElementById('heart').style.backgroundImage = "url(pic/heart0.png)";	//愛心div 背景圖
 		choseN=0;					//歸零
 		if( num != ans[tNum]){
 			wrongT++;
@@ -589,7 +601,7 @@ var pokeArr = ["♣A","◆A","♥A","♠A","♣2","◆2","♥2","♠2","♣3","�
 	"♣5","◆5","♥5","♠5","♣6","◆6","♥6","♠6","♣7","◆7","♥7","♠7","♣8","◆8","♥8","♠8","♣9","◆9","♥9","♠9",
 	"♣10","◆10","♥10","♠10","♣J","◆J","♥J","♠J","♣Q","◆Q","♥Q","♠Q","♣K","◆K","♥K","♠K","黑白joker","彩色joker"];
 
-	function poke(Prange,Pright,Pclock,Ptopic){
+	function poke(Prange,Pright,Pclock,Ptopic){					//計算是否獲得卡牌的函數
 		
 		if(Prange<=25){
 			if( (Pright + RandomInt(0, 9)) >=22 ){		//滿分有8成績率獲得卡牌，機率依得分遞減
@@ -690,5 +702,21 @@ var pokeArr = ["♣A","◆A","♥A","♠A","♣2","◆2","♥2","♠2","♣3","�
 53	彩色joker	0-51都拿到，範圍700題得100分300秒內	0.5
 		*/
 	}
+	
+	var saveArr=[];
+	function saveT(){			//加入收藏
+		//console.log(String(document.getElementById('heart').style.background));
+		if(document.getElementById('heart').textContent == ""){
+			document.getElementById('heart').style.backgroundImage = "url(pic/heart1.png)";
+			document.getElementById('heart').textContent = " ";
+			saveArr.push(topic[tNum][0]);
+		}else{
+			document.getElementById('heart').style.backgroundImage = "url(pic/heart0.png)";
+			document.getElementById('heart').textContent = "";
+			saveArr.pop();
+		}
+		console.log(saveArr);
+	}
+	
 </script>
 </html>
