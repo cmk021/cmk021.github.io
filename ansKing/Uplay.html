@@ -432,6 +432,7 @@ function next(){				//跳到下一題
 				var aa = {
 					point: point,           //??????
 					uID: userID,
+					writeRow: Number(userID.substr(1,2))*5+6,               //計算要將成績資料寫入第幾列
 					//wrongT: "",	//答錯的題號
 					//saveT: "",	//收藏的題號
 					poke: pokeN,

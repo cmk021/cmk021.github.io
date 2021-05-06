@@ -224,6 +224,7 @@
                     if(reData == 'notFound'){
                         $('#overlay').html('抱歉！<br>您所輸入的資料有誤！<br>網頁將重新整理…<br>請重新登入，或註冊一個新帳號');       //alert(0);
                         setTimeout( function(){ location.reload(); } , 3500 );   
+						return;
                     }
 					
 					if(getdata[1] == "0"){
@@ -403,6 +404,10 @@ var firstK = 1;
     var inputs = document.getElementById('userid');
     inputs.addEventListener('input', function(){
         console.log(inputs.checkValidity());
+		if(firstK == 1){
+			firstK=0;
+			//document.getElementById('userid').value = "";	
+		}
         if(inputs.checkValidity()) {                            //檢查輸入的資料是否合乎規則
             if(inputs.value!=""){
                 document.getElementById('regist').disabled =false;
