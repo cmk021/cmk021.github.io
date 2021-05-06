@@ -371,7 +371,7 @@ var userID = "";
                 uID: userID,
                 sheetUrl: '',
                 sheetTag: '',	//userID.substr(0,1),
-                mode: 1         //送出選題資料
+                mode: 1         //讀取題目資料
             };
 		
 		$.get('https://script.google.com/a/ntut.org.tw/macros/s/AKfycbxLDkeqxIWVedzRUAan7vOZQsJ2n6mgMFNuMwtG/exec', aa, function(dataM1){
@@ -438,11 +438,11 @@ function next(){				//跳到下一題
 					poke: pokeN,
 					sheetUrl: '',
 					sheetTag: '',	//userID.substr(0,1),
-					mode: 3         //上傳成績
+					mode: 5         //上傳成績
 				};
-		
+				console.log(aa);
 			//換存到另一個試算表和 appscript 比較好
-				$.get('https://script.google.com/a/ntut.org.tw/macros/s/AKfycbwDRzz240x22Ed_5AB97LVfQO2BxeRBElsldWAcpw/exec', aa, function(data3){
+				$.get('https://script.google.com/macros/s/AKfycbygCTPucdv0WS2cwjxfbgDcbr8_fwK3pxamzRZHoHnl2NY2Y-ND/exec', aa, function(data3){
 					console.log(data3);
 					if(data3 =='error'){
 						
