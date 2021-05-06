@@ -193,8 +193,12 @@
             $('#overlay2').hide(); 
             bgmusic.play();     
             bgmusic.volume=0.3;
+			var Umail = String(getCookieByName('usermail'));					//讀取cookie
+			console.log(Umail);
+			if(Umail != "undefined"){
+				document.getElementById('userid').value = Umail;
+			}
         } );
-
     }
     
     function log_in(){                           //按下 登入
@@ -249,6 +253,9 @@
 					
 					
                     $('#overlay').html('<br>登入成功！<br>將自動進入遊戲選單<br>祝您遊戲愉快！');
+					document.cookie = 'usermail='+userID+'; max-age=2592000; path=/';			//寫入cookie
+					console.log('寫入cookie');
+					
                     setTimeout( function(){
                             location.href = "menu.html?" + getdata[0];// + userName + "?" + reData;
                     } , 3000 );
@@ -428,6 +435,31 @@ var firstK = 1;
 //            inputs.classList.remove('valid');
         } 
     } );
+	
+	
+function parseCookie() {
+    var cookieObj = {};
+    var cookieAry = document.cookie.split(';');
+    var cookie;
+    
+    for (var i=0, l=cookieAry.length; i<l; ++i) {
+        cookie = jQuery.trim(cookieAry[i]);
+        cookie = cookie.split('=');
+        cookieObj[cookie[0]] = cookie[1];
+    }
+    
+    return cookieObj;
+}
+
+
+function getCookieByName(name) {
+    var value = parseCookie()[name];
+    if (value) {
+        value = decodeURIComponent(value);
+    }
+
+    return value;
+}
 </script>    
     
     
