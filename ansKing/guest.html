@@ -99,8 +99,8 @@
     <option value="100">100</option>
     <option value="150">150</option>
     <option value="200">200</option>
-    <option value="300">300</option>
-    <option value="600">600</option>
+    <option value="350">350</option>
+    <option value="700">700</option>
     </select> 題
   </label>
 </div>
@@ -165,8 +165,8 @@
 			var verCODE = text2.textContent ;
 			console.log(verCODE);
 			console.log(rg.value);
-			if (verCODE > 601 - Number(rg.value) ){					//避免範圍超過600題
-				text2.textContent = 601 - Number(rg.value) ;
+			if (verCODE > 701 - Number(rg.value) ){					//避免範圍超過700題
+				text2.textContent = 701 - Number(rg.value) ;
 			}
 			document.getElementById('sp').textContent = Number(text2.textContent) + Number(rg.value-1);
 			document.getElementById('verifi').disabled = false;
@@ -177,8 +177,8 @@
 
 	rg.addEventListener('change', function(){
 		var verCODE = document.getElementById('vercode').textContent ;
-			if (verCODE > 601 - Number(rg.value) ){					//避免範圍超過600題
-				document.getElementById('vercode').textContent = 601 - Number(rg.value) ;
+			if (verCODE > 701 - Number(rg.value) ){					//避免範圍超過700題
+				document.getElementById('vercode').textContent = 701 - Number(rg.value) ;
 			}
 			document.getElementById('sp').textContent = Number(document.getElementById('vercode').textContent) + Number(rg.value-1);
 		
