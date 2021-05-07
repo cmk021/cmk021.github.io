@@ -242,6 +242,7 @@
 						
 						var aee = {
 							writeRow: Number(getdata[0].substr(1,2))*5+6,
+							writeRowRg: Number(getdata[0].substr(1,2))+11,				//計算寫入暱稱到註冊表的第幾列
 							name: name,
 							sheetUrl: '',
 							//sheetTag: 'ACC',
@@ -252,6 +253,9 @@
 						$.get('https://script.google.com/macros/s/AKfycbygCTPucdv0WS2cwjxfbgDcbr8_fwK3pxamzRZHoHnl2NY2Y-ND/exec', aee, function(data11){
 							console.log(data11);
 						});
+						
+						//寫入網丙註冊表
+						
 					}
 					
 					
