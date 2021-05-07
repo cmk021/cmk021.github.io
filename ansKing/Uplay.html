@@ -213,6 +213,7 @@ button:hover{
 		z-index:5;
 		background-image:url(pic/heart0.png);
 		background-size: 150px;
+		line-height:140px;
 	}
 </style>
 
@@ -708,7 +709,7 @@ var pokeArr = ["♣A","◆A","♥A","♠A","♣2","◆2","♥2","♠2","♣3","�
 		//console.log(String(document.getElementById('heart').style.background));
 		if(document.getElementById('heart').textContent == ""){
 			document.getElementById('heart').style.backgroundImage = "url(pic/heart1.png)";
-			document.getElementById('heart').textContent = " ";
+			document.getElementById('heart').textContent = "已收藏";
 			saveArr.push(topic[tNum][0]);
 		}else{
 			document.getElementById('heart').style.backgroundImage = "url(pic/heart0.png)";
