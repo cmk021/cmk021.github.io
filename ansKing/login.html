@@ -234,6 +234,9 @@
 					if(getdata[1] == "0"){
 						do{
 							var name = prompt("歡迎初次登入本網站。\r請輸入您的大名，最多五個字。", "路人甲");
+							name = name.replace(/,/g,"");
+							name = name.replace(/&/g,"");
+							name = name.replace(/@/g,"");			//替換掉所有的 @
 							name = name.substr(0,5);
 						}while( false == (confirm("您的大名是 "+name+ "\r\r按下確定以後就不能再更改了！")) )
 						

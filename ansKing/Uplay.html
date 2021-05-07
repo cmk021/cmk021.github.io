@@ -434,7 +434,7 @@ function next(){				//跳到下一題
 				console.log(pokeArr[pokeN]);
 			}
 			
-			if(point>-1000){
+			if((point>0) || (saveArr.length>0)){												//有收藏題目
 				document.getElementById('uploadDiv').innerHTML = " <br/> <br/> <br/>資料上傳中……";
 				document.getElementById('uploadDiv').style.opacity = 0.75;
 				document.getElementById('uploadDiv').style.visibility = "visible";
