@@ -207,7 +207,7 @@ button:hover{
 	#heart{
 		position:fixed;
 		right: 10px;
-		bottom: 110px;
+		bottom: 130px;
 		width: 150px;
         height: 150px;
 		z-index:5;
@@ -435,18 +435,24 @@ function next(){				//跳到下一題
 			if(pokeN > -1){
 				console.log(pokeArr[pokeN]);
 			}
+
+			if(wrongArr.length>0){
+				if(confirm("要記錄答錯的題目嗎？\r　　若按「取消」則不會記錄答錯的題目") ){
+					wrongArr=[];		
+			}}					console.log(wrongArr.length);
 			
-			if((point>0) || (saveArr.length>0)){												//有收藏題目
+			if((point>0) || (saveArr.length>0) || (wrongArr.length>0) ){			//有收藏題目
 				document.getElementById('uploadDiv').innerHTML = " <br/> <br/> <br/>資料上傳中……";
 				document.getElementById('uploadDiv').style.opacity = 0.75;
 				document.getElementById('uploadDiv').style.visibility = "visible";
 				//整理組合一下要上傳的資料……????
 				var aa = {
-					point: point,           //??????
+					point: (point>0 ? point : 0 ),           //??????
 					uID: userID,
 					writeRow: Number(userID.substr(1,2))*5+6,               //計算要將成績資料寫入第幾列
 					//wrongT: "",	//答錯的題號
 					saveArr: saveArr.join(','),	//收藏的題號陣列
+					wrongArr: wrongArr.join(','),	//答錯的題號陣列
 					poke: pokeN,
 					sheetUrl: '',
 					sheetTag: '',	//userID.substr(0,1),
@@ -505,6 +511,7 @@ var wrongT=0;		//答錯題數
 var point = 0;		//得分
 var choseN=0;		//選取的答案
 //var range =0;		//範圍題數
+var wrongArr=[];
 
 function choseAns(num){				//選取答案後呼叫此函數
 		document.getElementById('heart').textContent = "";		//愛心div內容文字
@@ -512,6 +519,8 @@ function choseAns(num){				//選取答案後呼叫此函數
 		choseN=0;					//歸零
 		if( num != ans[tNum]){
 			wrongT++;
+			wrongArr.push(topic[tNum][0]);
+			console.log(wrongArr);							//////
 			document.getElementById('spW').innerHTML=wrongT;
 			var idd =  "t0"+ (num+1);
 			document.getElementById(idd).classList.add("redmark");
