@@ -437,7 +437,7 @@ function next(){				//跳到下一題
 			}
 
 			if(wrongArr.length>0){
-				if(confirm("要記錄答錯的題目嗎？\r　　若按「取消」則不會記錄答錯的題目") ){
+				if(confirm("要記錄答錯的題目嗎？\r　　若按「取消」則不會記錄答錯的題目") == false){
 					wrongArr=[];		
 			}}					console.log(wrongArr.length);
 			
