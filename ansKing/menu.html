@@ -95,12 +95,12 @@
                 <div onClick="linkto('Tmenu.html')" class="normal">開始練習</div>
             </td>
             <td height="130" align="center" valign="middle">
-                <a href="">
-                <div onClick="linkto('saveT.html')" class="normal">收藏題庫</div></a>
+                
+                <div onClick="linkto('saveTplay.html')" class="normal">收藏題庫</div>
             </td>
             <td height="130" align="center" valign="middle">
-                <a href="">
-                <div onClick="linkto('wrongT.html')" class="normal">答錯題庫</div></a>
+                
+                <div onClick="linkto('wrongTplay.html')" class="normal">答錯題庫</div>
             </td>
         </tr>
     </table> </div>
@@ -111,12 +111,12 @@
                 <div onClick="linkto('card.html')" class="normal">卡牌收集</div>
             </td>
             <td height="130" align="center" valign="middle">
-                <a href="">
-                <div onClick="linkto('Defense.html')" class="normal">防禦工事</div></a>
+                
+                <div onClick="linkto('Defense.html')" class="normal">防禦工事</div>
             </td>
             <td height="130" align="center" valign="middle">
-                <a href="">
-                <div onClick="linkto('Attack.html')" class="normal">攻打城池</div></a>
+                
+                <div onClick="linkto('Attack.html')" class="normal">攻打城池</div>
             </td>
         </tr>
     </table> </div>
@@ -204,6 +204,7 @@ var NickName="";
 
 
 	function linkto(pageName){
+		console.log(pageName);
 		window.location.href = pageName +"?"+ userID ;
 	}
 
