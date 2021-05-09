@@ -208,7 +208,7 @@ var wrongTnum=0;
 			
 			setTimeout(function(){
 				document.getElementById('downloadDiv').style.visibility = "hidden";
-				document.getElementById('uploadDiv').innerHTML = " <br/> <br/> <br/>資料下載中……";
+				//document.getElementById('uploadDiv').innerHTML = " <br/> <br/> <br/>資料下載中……";
 			},2000);
 		});
 		
@@ -229,6 +229,10 @@ var wrongTnum=0;
 				alert("您目前沒有答錯的題目記錄");
 				return;
 			}
+		}
+		if(pageName == 'card.html'){
+			window.open( pageName +"?"+ userID );
+			return;
 		}
 		
 		window.location.href = pageName +"?"+ userID ;

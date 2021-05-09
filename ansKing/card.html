@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+<title>阿谷網丙學科練功網--卡牌收集</title>
+<style type="text/css">
+body {
+	margin-left: 0px;
+	margin-top: 0px;
+	background-color: #222;
+}
+
+.card{
+	float: left;
+	height: 150px;
+	width: 100px;
+	border: thin solid #000;
+	margin: 4px;
+	background-color:#cFF;
+	font-size:52px;
+	line-height:140px;
+	text-align:center;
+	font-family:"Comic Sans MS", cursive, "標楷體";
+}
+
+#uploadDiv ,#downloadDiv{
+		position:absolute;
+		top: 0px;
+		left:0px;
+		width: 100%;
+        height: 100%;
+        color: white;
+		z-index:8;
+		font-size:70px;
+        font-family: '微軟正黑體';
+		text-align:center;  
+		font-weight: bold;
+		background-color:#000;
+		opacity:0.8; 
+		visibility:hidden;	
+}
+</style>
+</head>
+<script src ="jquery-3.6.0.js"></script>
+<body>
+	<div id="downloadDiv"> <br/> <br/> <br/>資料下載中……</div>
+    
+<div style="text-align:center; float:left; width:100%; height:40px; color: #FFF; font-size: 32px; font-family: 'sans-serif', '微軟正黑體';"><span id="nickname" style="color:#9FF"> </span>
+        等級：<span id="level" style="color:#C9F"> </span>　已獲得 <span id="getN" style="color:#9F9">0</span>張卡牌
+</div>
+  <div class="card" id="c0"></div>
+  <div class="card" id="c1"></div>
+  <div class="card" id="c2"></div>
+  <div class="card" id="c3"></div>
+  <div class="card" id="c4"></div>
+  <div class="card" id="c5"></div>
+  <div class="card" id="c6"></div>
+  <div class="card" id="c7"></div>
+  <div class="card" id="c8"></div>
+  <div class="card" id="c9"></div>
+  <div class="card" id="c10"></div>
+  <div class="card" id="c11"></div>
+  <div class="card" id="c12"></div>
+  <div class="card" id="c13"></div>
+  <div class="card" id="c14"></div>
+  <div class="card" id="c15"></div>
+  <div class="card" id="c16"></div>
+  <div class="card" id="c17"></div>
+  <div class="card" id="c18"></div>
+  <div class="card" id="c19"></div>
+  <div class="card" id="c20"></div>
+  <div class="card" id="c21"></div>
+  <div class="card" id="c22"></div>
+  <div class="card" id="c23"></div>
+  <div class="card" id="c24"></div>
+  <div class="card" id="c25"></div>
+  <div class="card" id="c26"></div>
+  <div class="card" id="c27"></div>
+  <div class="card" id="c28"></div>
+  <div class="card" id="c29"></div>
+  <div class="card" id="c30"></div>
+  <div class="card" id="c31"></div>
+  <div class="card" id="c32"></div>
+  <div class="card" id="c33"></div>
+  <div class="card" id="c34"></div>
+  <div class="card" id="c35"></div>
+  <div class="card" id="c36"></div>
+  <div class="card" id="c37"></div>
+  <div class="card" id="c38"></div>
+  <div class="card" id="c39"></div>
+  <div class="card" id="c40"></div>
+  <div class="card" id="c41"></div>
+  <div class="card" id="c42"></div>
+  <div class="card" id="c43"></div>
+  <div class="card" id="c44"></div>
+  <div class="card" id="c45"></div>
+  <div class="card" id="c46"></div>
+  <div class="card" id="c47"></div>
+  <div class="card" id="c48"></div>
+  <div class="card" id="c49"></div>
+  <div class="card" id="c50"></div>
+  <div class="card" id="c51"></div>
+  <div class="card" id="c52"></div>
+  <div class="card" id="c53"></div>
+  
+
+</body>
+
+<script>
+var pokeArr = ["♣A","♦A","♥A","♠A","♣2","♦2","♥2","♠2","♣3","♦3","♥3","♠3","♣4","♦4","♥4","♠4",
+	"♣5","♦5","♥5","♠5","♣6","♦6","♥6","♠6","♣7","♦7","♥7","♠7","♣8","♦8","♥8","♠8","♣9","♦9","♥9","♠9",
+	"♣10","♦10","♥10","♠10","♣J","♦J","♥J","♠J","♣Q","♦Q","♥Q","♠Q","♣K","♦K","♥K","♠K","黑白joker","彩色joker"];
+	
+var pokeGet=[];
+
+var addm = window.location.href.split('?');	
+var NickName="";
+userID = addm[1];		//	//從網址截取
+
+	window.onload = function(){	
+
+		document.getElementById('downloadDiv').style.visibility = "visible";
+
+		var aa = {
+                //data: userID.substr(1,2),           //???
+                uID: userID,
+				writeRow: Number(userID.substr(1,2))*5+6,               //計算要讀取使用者資料在哪一列
+                sheetUrl: '',
+                sheetTag: '',//userID.substr(0,1),
+                mode: 'card'         //讀取卡牌
+        };
+		
+//(level +','+ newlevel +','+ nickname +','+ score +','+ today)
+		$.get('https://script.google.com/macros/s/AKfycbygCTPucdv0WS2cwjxfbgDcbr8_fwK3pxamzRZHoHnl2NY2Y-ND/exec', aa,function(data6){
+			console.log(data6);
+			if(data6 =='idError'){   
+                alert("帳號資料有誤！\n請重新登入");
+                window.location.href = "login.html";  
+            }
+			
+			var ddata = data6.split(',');
+			
+			var level = ddata[54];		//第2碼放等級
+			document.getElementById('level').textContent = level;
+			
+			NickName = ddata[55];
+			document.getElementById('nickname').textContent = NickName;
+			
+			var getNum=0;
+			for(i=0;i<54;i++){
+				var idd = "c"+i;
+				if(ddata[i]>0){
+					getNum++;
+					document.getElementById(idd).textContent =	pokeArr[i];
+				}
+			}
+			document.getElementById('getN').textContent = getNum;
+			
+			setTimeout(function(){
+				document.getElementById('downloadDiv').style.visibility = "hidden";
+				//document.getElementById('uploadDiv').innerHTML = " <br/> <br/> <br/>資料下載中……";
+			},2000);
+		});
+		
+	}
+
+
+</script>
+</html>
