@@ -1,0 +1,653 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>阿谷網丙學科線上測驗 - 收藏題庫</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<style type="text/css">
+body {
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+}
+.t1 ,.t2 {
+	font-family: "微軟正黑體";
+	width:99%;
+	/*font-size: 47px;*/
+}
+.t1 { background-color:#FF9; }
+.t2:hover{
+	border: solid 2px #990000;
+	cursor: pointer;
+}
+#clockDiv{
+	position:fixed;
+	width: 140px;
+	height: 100px;
+	z-index: 5;
+	font-family: "微軟正黑體";
+	font-size: 48px;
+	font-weight: bold;
+	line-height: 100px;
+	text-align:center;
+	left: 0px;
+	bottom: 0px;
+	color:#00C;
+	visibility:hidden;			/*/???*/
+}
+#RorWDiv{						/*答對答錯題數*/
+	position:fixed;
+	width: 200px;
+	height: 100px;
+	z-index: 5;
+	font-family: "微軟正黑體";
+	font-size: 48px;
+	font-weight: bold;
+	line-height: 100px;
+	text-align:center;
+	left: 20px;
+	bottom: 0px;
+	color:#333;
+}
+#nextTDiv {
+	position: absolute;
+	width: 330px;
+	height: 100px;
+	z-index: 7;
+	font-family: "微軟正黑體";
+	font-size: 56px;
+	font-weight: bold;
+	color: #600;
+	border: 3px solid #000;
+	right: 0px;
+	bottom: 0px;
+	line-height: 100px;
+	text-align:center;
+	cursor: pointer;
+	background-color:#FFF;
+}
+#t06 {
+	z-index: 6;
+	font-family: "微軟正黑體";
+	/*font-size: 46px;*/
+	color: #008;
+	/*border: 2px solid #000;*/
+	/*bottom: 100px;*/
+	text-align:left;
+	background-color:#BFF;
+	visibility:hidden;
+	/*line-height: 62px;*/
+}
+#tb1{
+	font-size: 47px;
+	width:720px;
+	visibility:hidden;
+	margin-left:auto;
+	margin-right:auto;
+}
+#start{
+	position: absolute;
+	width:100%;
+	height:100%;
+	left: 0px;
+	top: 0px;
+	background-color:#222;
+	z-index:6;
+	position: absolute;
+	text-align:center;
+}
+#score{
+	position: absolute;
+	width:100%;
+	height:100%;
+	left: 0px;
+	top: 0px;
+	z-index:7;
+	background-color:#ddf;
+	position: absolute;
+	text-align:center;
+	visibility:hidden;
+	color: #00f;
+	font-size: 56px;
+	font-family: "Arial";
+}
+#black00{
+	position: absolute;
+	width:100%;
+	height:100%;
+	left: 0px;
+	top: 0px;
+	background-color:#222;
+	opacity:0.22;
+	z-index:4;
+	position: absolute;
+}
+#black01{
+	position: absolute;
+	width:100%;
+	height:100%;
+	left: 0px;
+	top: 0px;
+	z-index:4;
+	position: absolute;
+	visibility:hidden;
+}
+button{
+  width: 300px;
+  height: 100px;
+  color: #00f;
+  font-size: 70px;
+  font-family: "Arial";
+  border-radius:30px;
+  background-color:#DDD;
+  transition:0.2s;
+}
+button:hover{
+  	width: 320px;
+  	height: 110px;
+	background-color:#aef;
+}
+.greenmark{
+	background-color:#3F3;
+}
+.redmark{
+	background-color:#F33;
+}
+.t2 {
+	padding-top:18px;
+	padding-bottom:18px;
+	padding-left:0px;
+}
+
+.bigger{
+	/*padding-top:25px;
+	padding-bottom:25px;
+	font-size: 80px;*/
+	padding-top:28px;
+	padding-bottom:28px
+	padding-left:10px;
+	/*transition:0.2s;*/
+}
+.small{
+	padding:1px;
+	transition:0.2s;
+}
+#downloadDiv{
+		position:absolute;
+		top: 0px;
+		left:0px;
+		width: 100%;
+        height: 100%;
+        color: white;
+		z-index:10;
+		font-size:70px;
+        font-family: '微軟正黑體';
+		text-align:center;  
+		font-weight: bold;
+		background-color:#000;
+		opacity:0.9; 
+		/*visibility:visible;	*/
+	}
+	#uploadDiv{
+		position:absolute;
+		top: 0px;
+		left:0px;
+		width: 100%;
+        height: 100%;
+        color: white;
+		z-index:10;
+		font-size:70px;
+        font-family: '微軟正黑體';
+		text-align:center;  
+		font-weight: bold;
+		background-color:#000;
+		opacity:0.9; 
+		visibility:hidden;
+	}
+	#heart{
+		position:fixed;
+		right: 10px;
+		bottom: 130px;
+		width: 150px;
+        height: 150px;
+		z-index:5;
+		background-image:url(pic/heart0.png);
+		background-size: 150px;
+		line-height:140px;
+		text-align:center;
+	}
+</style>
+
+<script>
+	function RandomInt(a, b) {
+	  if (a > b) {
+		var c = a;
+		a = b;
+		b = c;
+	  }
+	  return Math.floor(Math.random() * (b - a + 1) + a);
+	}
+var total=20;
+var range=20;
+var topic=[];			/*
+	topic[0]=["1","「全球資訊網(WWW)」的英文為何？","World Wide Web","Web Wide World","Web World Wide","World Web Wide","無解析",]
+	topic[1]=["2","「超文字傳輸協定」的英文簡稱為何？","HTTP","WWW","URL","TANET","無解析",]
+	topic[2]=["3","「檔案搜尋服務系統」的英文簡稱為何？","Archie","FTP","E-mail","Telnet","無解析",]
+	topic[3]=["4","「內容服務供應商」的英文簡稱為何？","ICP","ISP","ERP","LISP","無解析",]
+	topic[4]=["5","「中央處理單元」的英文簡稱為何？","CPU","I/O","CCD","UPS","無解析",]
+	topic[5]=["6","「全球資源定位法」的英文簡稱為何？","URL","WWW","HTTP","FTP","無解析",]
+	topic[6]=["7","「動態伺服器網頁」的英文簡稱為何？","ASP","CGI","HTML","DHTML","無解析",]
+	topic[7]=["8","「決策支援系統」的英文簡稱為何？","DSS","DBMS","DASD","IMS","無解析",]
+	topic[8]=["9","「個人數位助理」的英文簡稱為何？","PDA","DBMS","DB","DVD","無解析",]
+	topic[9]=["10","「動態主機配置協定」允許IP 位址自動配置，其英文簡稱為何？","DHCP","WWW","TCP/IP","POP","這是一段文字解說。這是一段文字解說。",]
+	topic[10]=["11","「資料庫管理系統」的英文簡稱為何？","DBMS","PDA","DB","DVD","無解析",]
+	topic[11]=["12","「電子郵件」的英文簡稱為何？","E-mail","C-Mail","A-Mail","B-mail","無解析",]
+	topic[12]=["13","「企業內部網路」的英文為何？","Intranet","Telnet","Extranet","Internet","無解析",]
+	topic[13]=["14","「纜線數據機」的英文為何？","Cable Modem","Router","ADSL","Firewall","無解析",]
+	topic[14]=["15","「非對稱數位用戶線路」的英文簡稱為何？","ADSL","AOL","ASP","ATM","無解析",]
+	topic[15]=["16","「網域名稱伺服器」的英文簡稱為何？","DNS","ISDN","ISP","TCP","無解析",]
+	topic[16]=["17","「MIS」為何者的英文簡稱？","管理資訊系統","決策支援系統","資料庫管理系統","辦公室自動化","無解析",]
+	topic[17]=["18","「ISDN」為何者的英文簡稱？","整體服務數位網路","廣域網路","區域網路","加值型網路","無解析",]
+	topic[18]=["19","「LAN」為何者的英文簡稱？","區域網路","廣域網路","整體服務數位網路","加值型網路","無解析",]
+	topic[19]=["20","「MAN」最可能為何者的英文簡稱？","都會網路","廣域網路","區域網路","加值型網路","無解析",]
+		*/
+	//var clock = 0;			//計時
+	//var clock01;
+/*
+	function clockStart(){				//開始計時
+		clock01 = setInterval(function(){
+			clock++;
+			document.getElementById('clockDiv').innerHTML=Math.floor(clock/10);
+			//showClock();
+			console.log(clock);
+		},100);
+		
+	}*/
+	
+var ans=[];	
+for(n=0;n<700;n++){
+	ans[n]=1;	
+}
+			
+function start(){
+
+	/*
+	  for(j=0 ; j<20 ; j++){			//將題目隨機重排
+		var tmp = [];
+		var r = RandomInt(0, 19);
+		console.log(r);			//
+					
+		tmp = topic[j];
+		topic[j] = topic[r];
+		topic[r] = tmp;
+	} */ 
+		
+	for(i=0 ; i<700 ; i++){				//將答案選項隨機重排
+		var tmp2 = 0;
+		ans[i] = RandomInt(1, 4);
+		//console.log(ans[i]);	
+					
+		if(ans[i]!=1){
+			tmp2 = topic[i][2];
+			topic[i][2] = topic[i][ans[i]+1];
+			topic[i][ans[i]+1] = tmp2;
+		}
+	}
+	
+	for(i=1 ; i<=5 ; i++){
+		var idd = "t0"+i;
+		document.getElementById(idd).innerHTML = topic[ savT[0]-1 ][i];
+	}
+	
+		//for(i=2 ; i<=5 ; i++){
+		//		idd =  "t0"+i;
+				//document.getElementById(idd).classList.add("bigger");			//將高度變大，字變大
+		//}
+	
+	document.getElementById('start').style.visibility = "hidden";
+	document.getElementById('tb1').style.visibility = "visible";
+
+	//clockStart();
+}
+
+</script>
+
+</head>
+
+<body>
+<div id="start">
+	<br /><br /><br /><br /><br /><br /><button id="startB" onclick="start()">start</button>
+</div>
+<div id="score">
+	<br />正確率： <span id="Rrate" style="color:#a30"></span> ％
+    <!--<br />平均每題 <span id="SecPT" style="color:#a30"></span> 秒以內
+    <br />獲得： <span id="point01" style="color:#a30"></span> 分 -->
+    <br /><br /><button id="backB" onclick="back()">回選單</button>    <!--新版 -->
+    <br /><br /><button id="againB" onclick="again()">重來</button>
+</div>
+
+<div id="tb1">
+	<div style="height:10px;">&nbsp;</div>
+	<div class="t1" id="t01"></div>
+    	<div onclick="choseAns(1)" class="t2" id="t02"></div>
+  		<div onclick="choseAns(2)" class="t2" id="t03"></div>
+      	<div onclick="choseAns(3)" class="t2" id="t04"></div>
+  		<div onclick="choseAns(4)" class="t2" id="t05"></div>
+    <div style="height:10px;">&nbsp;</div>
+    	<div class="t2" id="t06"><span style="border:2px solid #000;">解析</span><</div>        
+        
+</div>
+<div id="clockDiv">0</div>
+<div id="RorWDiv"><span style="color:#0A0" id="spR">0</span> / <span style="color:#D00" id="spW">0</span></div>
+<div id="black01">
+    <div id="black00"></div>
+  <div id="nextTDiv" onclick="next()">下一題</div>
+  <div id="heart" onclick="saveT()"></div>
+</div>
+<br />
+<div id="downloadDiv"> <br/> <br/> <br/>資料下載中……</div>
+<div id="uploadDiv"> <br/> <br/> <br/>資料上傳中……</div>
+</body>
+
+<script>
+
+var userID = "";
+var savT = [];
+var savString="";
+
+	window.onload=readSheet();                    //網頁載入後，即執行讀取試算表資料
+
+	function readSheet(){				//讀取試算表題庫
+		
+		console.log(document.body.clientWidth);
+		console.log(window.screen.width);
+		//document.getElementById('downloadDiv').innerHTML += window.screen.width;   //document.body.clientWidth +","+
+		//document.getElementById('downloadDiv').style.visibility = "visible";		//下載中...
+		if(window.screen.width < window.screen.height){
+			document.getElementById('tb1').style.width = "97%"; 		//將寬度變大
+			for(i=1 ; i<=6 ; i++){
+				var idd2 =  "t0"+i;
+				document.getElementById(idd2).style.fontSize = Math.floor(window.screen.width/7)+"px";		//將字體變大
+				//document.getElementById(idd2).classList.remove('t2');		//padding 加大
+				//document.getElementById(idd2).classList.add('bigger');		//padding 加大
+				document.getElementById(idd2).style.paddingTop = "28px";
+				document.getElementById(idd2).style.paddingBottom = "28px";
+				//document.getElementById(idd2).style.paddingLeft = "8px";
+			}
+		}
+		
+		//var area = location.href.substr(-1);
+		//console.log("area "+area);
+		var addr = location.href.split('?');
+		console.log(addr[1]);
+		userID = addr[1];
+		
+		aa = {
+               // area: area,           //要讀取題庫的區域
+                uID: userID,
+                sheetUrl: '',
+                sheetTag: '',	//userID.substr(0,1),
+                mode: 'save1'         //讀取全部題目資料
+            };
+		
+		$.get('https://script.google.com/a/ntut.org.tw/macros/s/AKfycbxLDkeqxIWVedzRUAan7vOZQsJ2n6mgMFNuMwtG/exec', aa, function(dataM1){
+			//console.log(dataM1);
+			if(dataM1 =='ID Error'){
+				document.getElementById('downloadDiv').innerHTML = "帳號資訊有誤！<br/>請重新登入";
+				setTimeout(function(){
+					window.location.href = "login.html";			
+				},1500);
+				return;
+			}
+			
+			var dataTT = dataM1.split(',');
+			//range = Number(dataTT[1]);			//題目範圍
+			//console.log(range); 
+			for(i=0 ; i<700 ; i++){						//將所取得的資料分割為700道題目
+				topic[i] = dataTT.slice(i*7,7*(i+1));
+				//console.log(topic[i]);
+			}
+						
+			//document.getElementById('downloadDiv').style.visibility = "hidden";
+		}); 
+		
+		bb = {
+                readRow: Number(userID.substr(1,2))*5+6,           //要讀取題庫的列
+                uID: userID,
+                sheetUrl: '',
+                sheetTag: '',	//userID.substr(0,1),
+                mode: 'wrong2'         //讀取題目資料
+            };
+		
+		$.get('https://script.google.com/macros/s/AKfycbygCTPucdv0WS2cwjxfbgDcbr8_fwK3pxamzRZHoHnl2NY2Y-ND/exec', bb, function(dataST){
+			console.log(dataST);
+			if(dataST =='idError'){
+				document.getElementById('downloadDiv').innerHTML = "<br/>帳號資訊有誤！<br/>請重新登入";
+				setTimeout(function(){
+					window.location.href = "login.html";			
+				},1500);
+				return;
+			}
+			
+			savString = dataST;
+			savT = dataST.split(',');			//讀取到的 收藏題號
+			total = savT.length;
+			//for(i=0 ; i<700 ; i++){						//將所取得的資料分割為700道題目
+				//topic[i] = dataTT.slice(i*7,7*(i+1));
+			//	console.log(topic[i]);
+			//}
+						
+			document.getElementById('downloadDiv').style.visibility = "hidden";
+		}); 
+	}
+
+</script>
+
+<script>
+
+var tNum = 0;		//目前題數
+
+function next(){				//跳到下一題
+		
+		if(tNum == (savT.length-1) ){							//按了「結束」之後，出現成績畫面
+			document.getElementById('score').style.visibility="visible";
+			/*
+			var pokeN = -1;				//-1表示沒得到牌卡
+			if(rightT>=16){
+				pokeN = poke(range,rightT,clock,topic[0][0]);		//得牌分析
+			}
+			if(pokeN > -1){
+				console.log(pokeArr[pokeN]);
+			}
+
+			if(wrongArr.length>0){
+				if(confirm("要記錄答錯的題目嗎？\r　　若按「取消」則不會記錄答錯的題目") == false){
+					wrongArr=[];		
+			}}					console.log(wrongArr.length);*/
+			
+			if(saveArr.length>0 ){			//有取消收藏題目
+				document.getElementById('uploadDiv').innerHTML = " <br/> <br/> <br/>資料上傳中……";
+				document.getElementById('uploadDiv').style.opacity = 0.75;
+				document.getElementById('uploadDiv').style.visibility = "visible";
+				//整理組合一下要上傳的資料……????
+				
+				
+				var cc = {
+					point: 0 ,           //??????
+					uID: userID,
+					writeRow: Number(userID.substr(1,2))*5+6,               //計算要將成績資料寫入第幾列
+					saveArr: saveArr.join(','),	//收藏的題號陣列
+					wrongArr: '',	//答錯的題號陣列
+					sheetUrl: '',
+					sheetTag: '',	//userID.substr(0,1),
+					mode: 'wrong3'         //上傳取消收藏的題號
+				};
+				console.log(cc);
+			//   
+
+				$.get('https://script.google.com/macros/s/AKfycbygCTPucdv0WS2cwjxfbgDcbr8_fwK3pxamzRZHoHnl2NY2Y-ND/exec', cc, function(data3){
+					console.log(data3);
+					if(data3 =='error'){
+						
+					}
+					else{
+						document.getElementById('uploadDiv').innerHTML = " <br/><br/>資料上傳完成";
+							//document.getElementById('uploadDiv').style.opacity = 0.7;
+						setTimeout(function(){
+							//back();		//回主選單
+							document.getElementById('uploadDiv').style.visibility = "hidden";
+							//document.getElementById('uploadDiv').innerHTML = " <br/> <br/> <br/>資料上傳中……";
+						},1500);
+					}
+				});
+			}	
+				
+			return;			
+		}
+		
+		
+		for(i=1 ; i<=5 ; i++){
+			var idd2 =  "t0"+i;
+			document.getElementById(idd2).classList.remove("small");			//將高度變大
+		}
+		
+		var idd =  "t0"+ (ans[savT[tNum]-1]+1);
+		document.getElementById(idd).classList.remove("greenmark");
+		if(choseN!=0){
+			idd =  "t0"+ (choseN+1);
+			document.getElementById(idd).classList.remove("redmark");
+		}
+		document.getElementById('t06').style.visibility="hidden";
+		
+		tNum ++;						//秀出下一題的內容
+		for(i=1 ; i<=5 ; i++){
+			var idd = "t0"+i;
+			document.getElementById(idd).innerHTML = topic[ savT[tNum]-1 ][i];
+		}
+		//clockStart();
+		document.getElementById('black01').style.visibility="hidden";
+}
+
+var rightT=0;		//答對題數
+var wrongT=0;		//答錯題數
+var point = 0;		//得分
+var choseN=0;		//選取的答案
+//var range =0;		//範圍題數
+var wrongArr=[];
+
+function choseAns(num){				//選取答案後呼叫此函數
+		document.getElementById('heart').textContent = "";		//愛心div內容文字
+		document.getElementById('heart').style.backgroundImage = "url(pic/heart0.png)";	//愛心div 背景圖
+		choseN=0;					//歸零
+		if( num != ans[ savT[tNum]-1 ]){
+			wrongT++;
+			wrongArr.push(savT[tNum]);//topic[tNum][0]);
+			console.log(wrongArr);							//////
+			document.getElementById('spW').innerHTML=wrongT;
+			var idd =  "t0"+ (num+1);
+			document.getElementById(idd).classList.add("redmark");
+			choseN = num;
+		}else{	
+			rightT++;
+			document.getElementById('spR').innerHTML=rightT;
+		}
+		//clearInterval(clock01);
+		var idd =  "t0"+ (ans[savT[tNum]-1]+1);
+		document.getElementById(idd).classList.add("greenmark");
+		
+		if(tNum<(total-1)){
+			
+		}else{
+			document.getElementById('nextTDiv').innerHTML="結束";
+			
+			//var clockE = clock<(total*30)? total*30 : clock;
+			//console.log(clockE +"＆range="+ range);									//計算分數
+			//point = Math.floor( 0.1*range * (rightT - wrongT) * ( 3600 / (clockE +600) ) );    	//成績計算再研究
+			//console.log(point);		//秀出成績
+			//point = point<0 ? 0 : point;
+			//document.getElementById('point01').innerHTML = point;		//分數
+			document.getElementById('Rrate').innerHTML = Math.floor( rightT/total*1000 )/10;		//正確率
+			//document.getElementById('SecPT').innerHTML = Math.floor(clockE/20)/10;			//平均答題時間			
+		}
+		
+		for(i=1 ; i<=5 ; i++){
+			idd =  "t0"+i;
+			document.getElementById(idd).classList.add("small");			//將高度變小
+		}
+		
+		document.getElementById('black01').style.visibility="visible";
+		document.getElementById('t06').innerHTML='<span style="color:#000; border:2px solid #000;">解析</span> '+topic[savT[tNum]-1][6];
+		document.getElementById('t06').style.visibility="visible";
+		
+}
+
+function again(){           //按
+	location.reload(); 
+	
+	/*document.getElementById('uploadDiv').style.visibility = "visible";
+	
+	var sendT="";
+	
+		for(k=0; k<19 ;k++ ){
+			sendT+= topic[k][0] +",";
+		}
+		sendT+= topic[19][0];
+		//document.getElementById('againB').disabled = false;		//重來按鈕失效
+		console.log(sendT);
+		
+		//顯示資料上傳中
+		document.getElementById('uploadDiv').style.visibility = "visible";
+		
+		aa = {
+                data: sendT,           //???
+                uID: userID,
+				range: range,
+                sheetUrl: '',
+                sheetTag: '',	//userID.substr(0,1),
+                mode: 2         //送出重來的題號資料
+            };
+		
+		$.get('https://script.google.com/a/ntut.org.tw/macros/s/AKfycbxLDkeqxIWVedzRUAan7vOZQsJ2n6mgMFNuMwtG/exec', aa, function(data0){
+			console.log(data0);
+			if(data0 =='佔用中'){
+				document.getElementById('uploadDiv').innerHTML = " <br/> <br/>雲端空間佔滿中<br/>請稍等一會兒再按「重來」";
+				setTimeout(function(){
+				
+					document.getElementById('uploadDiv').style.visibility = "hiedden";
+					document.getElementById('uploadDiv').innerHTML = " <br/> <br/> <br/>資料上傳中……";
+				},3000);
+			}
+			else{
+				setTimeout(function(){
+				
+					window.location.href = "Uplay.html?"+userID+"?"+data0;			//新版
+				},2000);
+			}
+		});*/
+	//window.location.href = "play.html?ag" + "";
+}
+function back(){
+	window.location.href = 'menu.html?'+ userID;				//回主選單
+}
+</script>
+
+<script>
+	//var deleteArr =[];
+	var saveArr=[];
+	function saveT(){			//加入收藏
+		//console.log(String(document.getElementById('heart').style.background));
+		if(document.getElementById('heart').textContent == ""){
+			document.getElementById('heart').style.backgroundImage = "url(pic/heart1.png)";
+			document.getElementById('heart').textContent = "已收藏";
+			saveArr.push(savT[tNum]);//topic[tNum][0]);
+		}else{
+			document.getElementById('heart').style.backgroundImage = "url(pic/heart0.png)";
+			document.getElementById('heart').textContent = "";
+			saveArr.pop();
+		}
+		console.log(saveArr);
+	}
+	
+</script>
+</html>
