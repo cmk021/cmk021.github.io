@@ -422,8 +422,8 @@ var savString="";
 		
 		$.get('https://script.google.com/macros/s/AKfycbygCTPucdv0WS2cwjxfbgDcbr8_fwK3pxamzRZHoHnl2NY2Y-ND/exec', bb, function(dataST){
 			console.log(dataST);
-			if(dataST =='ID Error'){
-				document.getElementById('downloadDiv').innerHTML = "帳號資訊有誤！<br/>請重新登入";
+			if(dataST =='idError'){
+				document.getElementById('downloadDiv').innerHTML = "<br/>帳號資訊有誤！<br/>請重新登入";
 				setTimeout(function(){
 					window.location.href = "login.html";			
 				},1500);
