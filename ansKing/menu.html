@@ -69,7 +69,11 @@
             top: 180px;
             left: 170px;           
         }*/
-        
+        #divHome{
+            position: fixed;
+			left: 10px; 
+            top: 10px;
+        }
         #anim, #invent{
             font-family: 'Comic Sans MS', sans-serif, '微軟正黑體'; 
             position: fixed;
@@ -80,13 +84,16 @@
 /*            --animate-repeat: 5;*/
         }
         #invent{    bottom: 80px;    }
+		a img{ border: 2px solid #fff;  border-radius: 6px;}
+        a img:hover{  border: 2px solid #0ff;  background-color: white;}
     </style>
 </head>
 <script src ="jquery-3.6.0.js"></script>
     
 <body bgcolor="#333">
+	<div id="divHome"><a href="index.html"><img title="回首頁" style="width: 60px; height:60px" src="pic/home2.png" /></a></div>
     <br/>
-    <div id="divTitle">阿谷網丙學科練功網</div><br/><br/>
+    <div id="divTitle">阿谷網丙學科練功網</div>  <br/><br/>
     
     <div id="divTable">
     <table border="0" align="center" cellpadding="0" cellspacing="0">
@@ -152,6 +159,8 @@
 	
 var newlevel;
 var NickName="";
+var savTnum=0;
+var wrongTnum=0;
 
 	window.onload = function(){	
 	
@@ -190,6 +199,9 @@ var NickName="";
 			var today = ddata[4];
 			document.getElementById('today').textContent = today;
 			
+			savTnum = ddata[5];
+			wrongTnum = ddata[6];
+			
 			if(newlevel>ddata[0]){
 				document.getElementById('downloadDiv').innerHTML = " <br/> <br/> <br/><span style='color:red'>等級提升了！！</span>";
 			}
@@ -205,6 +217,20 @@ var NickName="";
 
 	function linkto(pageName){
 		console.log(pageName);
+		
+		if(pageName == 'saveTplay.html'){
+			if(savTnum ==0){
+				alert("您目前沒有收藏的題目");
+				return;
+			}
+		}
+		if(pageName == 'wrongTplay.html'){
+			if(wrongTnum ==0){
+				alert("您目前沒有答錯的題目記錄");
+				return;
+			}
+		}
+		
 		window.location.href = pageName +"?"+ userID ;
 	}
 

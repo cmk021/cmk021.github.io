@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>阿谷網丙學科線上測驗</title>
+<title>阿谷網丙學科線上測驗 - 收藏題庫</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <style type="text/css">
 body {
@@ -500,10 +500,10 @@ function next(){				//跳到下一題
 						document.getElementById('uploadDiv').innerHTML = " <br/><br/>資料上傳完成";
 							//document.getElementById('uploadDiv').style.opacity = 0.7;
 						setTimeout(function(){
-							back();		//回主選單
+							//back();		//回主選單
 							document.getElementById('uploadDiv').style.visibility = "hidden";
 							//document.getElementById('uploadDiv').innerHTML = " <br/> <br/> <br/>資料上傳中……";
-						},2000);
+						},1500);
 					}
 				});
 			}	
@@ -572,7 +572,7 @@ function choseAns(num){				//選取答案後呼叫此函數
 			//console.log(point);		//秀出成績
 			//point = point<0 ? 0 : point;
 			//document.getElementById('point01').innerHTML = point;		//分數
-			document.getElementById('Rrate').innerHTML = rightT*5;		//正確率
+			document.getElementById('Rrate').innerHTML = Math.floor( rightT/total*1000 )/10;		//正確率
 			//document.getElementById('SecPT').innerHTML = Math.floor(clockE/20)/10;			//平均答題時間			
 		}
 		
