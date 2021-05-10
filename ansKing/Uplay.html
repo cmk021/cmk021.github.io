@@ -372,11 +372,12 @@ var userID = "";
 			}
 		}
 		
-		var area = location.href.substr(-1);
-		console.log("area "+area);
+		//var area = location.href.substr(-1);
+		//console.log("area "+area);
 		var addr = location.href.split('?');
 		console.log(addr[1]);
 		userID = addr[1];
+		var area = addr[2];
 		
 		aa = {
                 area: area,           //要讀取題庫的區域

@@ -273,7 +273,7 @@ var NickName="";
 				writeRow: Number(userID.substr(1,2))*5+6,               //計算要將成績資料寫入第幾列
                 sheetUrl: '',
                 sheetTag: '',//userID.substr(0,1),
-                mode: 4         //檢驗 id 模式???
+                mode: 4         //讀取暱稱和等級……資料
         };
 
 		$.get('https://script.google.com/macros/s/AKfycbygCTPucdv0WS2cwjxfbgDcbr8_fwK3pxamzRZHoHnl2NY2Y-ND/exec', aa,function(data4){
@@ -302,53 +302,4 @@ var NickName="";
 	
 </script>
 
-<script>
-        //var data_1 = [];            //存放關卡資訊
-        //window.onload=readSheet();                    //網頁載入後，即執行讀取試算表資料
-        function readSheet(){
-            var a = {
-                data: userID.substr(1,2),           //???
-                uID: userID,
-                sheetUrl: '',
-                sheetTag: userID.substr(0,1),
-                mode: 1         //讀取模式
-            };
-            //document.getElementById('overlay').style.display="";
-            $('#overlay').show();
-            //console.log(a);
-            $.get('https://script.google.com/macros/s/AKfycby_1_F9fcOzOB3qFFuFTlNRVfbT5-VKd4d5_wGKB8GFbD843W9F/exec', a,function(data){
-                
-                if(data =='idError'){   
-                    alert("帳號資料有誤！\n請重新登入");
-                    window.location.href = "/login.html";  
-                }
-                
-                    data_1 = data.split(',');
-                    console.log(data_1);                    //檢驗狀況，共20筆
-                    
-                    for( i=0 ; i<10 ; i++ ){
-                        var idi = "#t0" + (i+1) ;       //組合id名稱
-                        if(i==9){    idi="#t10"; }
-                        console.log(idi);
-                        
-                        if( data_1[i]==0 ){          //未檢驗通過
-                            $(idi).addClass('pass0');
-                        }
-                        else if( data_1[i]==1 ){          //已檢驗通過
-                            $(idi).addClass('pass1');
-                        }
-                        else if( data_1[i]==-1 ){          //未開啟
-                            $(idi).hide();
-                        }                        
-                    }
-                    
-                    $('#overlay').html('<br>讀取完成<br>請按一下滑鼠');       //alert(0);
-                    $('#overlay').click(  function(){                   //這麼做是為了避免自動播放音樂會產生錯誤
-                        $('#overlay').hide(); 
-                    } ); 
-                   
-                }
-            );
-        }
-    </script>
 </html>
