@@ -611,7 +611,11 @@ var pokeArr = ["♣A","◆A","♥A","♠A","♣2","◆2","♥2","♠2","♣3","�
 
 	function poke(Prange,Pright,Pclock,Ptopic){					//計算是否獲得卡牌的函數
 		
+		
 		if(Prange<=25){
+			if((Pright==20)&&(Pclock<=120)){
+				return 3;						//黑桃A
+			}
 			if( (Pright + RandomInt(0, 9)) >=22 ){		//滿分有8成績率獲得卡牌，機率依得分遞減
 				if(Ptopic<151){
 					return Math.floor((Ptopic-1)/50); 
@@ -621,21 +625,33 @@ var pokeArr = ["♣A","◆A","♥A","♠A","♣2","◆2","♥2","♠2","♣3","�
 			}
 		}
 		if(Prange==50){
+			if((Pright==20)&&(Pclock<=160)){
+				return 23;						//黑桃6
+			}
 			if( (Pright + RandomInt(0, 9)) >=22 ){		//滿分有8成績率獲得卡牌，機率依得分遞減
 				return Math.floor((Ptopic-1)/100)+16; 	
 			}
 		}
 		if(Prange==100){
+			if((Pright==20)&&(Pclock<=200)){
+				return 31;						//黑桃8
+			}
 			if( (Pright + RandomInt(0, 9)) >=21 ){		//滿分有9成績率獲得卡牌，機率依得分遞減
 				return Math.floor((Ptopic-1)/100)+24; 	
 			}
 		}
 		if(Prange==200){
+			if((Pright==20)&&(Pclock<=220)){
+				return 39;						//黑桃10
+			}
 			if( (Pright + RandomInt(0, 9)) >=21 ){		//滿分有9成績率獲得卡牌，機率依得分遞減
 				return Math.floor((Ptopic-1)/100)+32; 	
 			}
 		}
 		if(Prange==350){
+			if((Pright==20)&&(Pclock<=235)){
+				return 43;						//黑桃J
+			}
 			if( (Pright + RandomInt(0, 9)) >=21 ){		//滿分有9成績率獲得卡牌，機率依得分遞減
 				if(Ptopic<301){
 					return Math.floor((Ptopic-1)/100)+40; 
@@ -647,6 +663,9 @@ var pokeArr = ["♣A","◆A","♥A","♠A","♣2","◆2","♥2","♠2","♣3","�
 			}
 		}
 		if(Prange==700){
+			if((Pright==20)&&(Pclock<=250)){
+				return 52;						//黑鬼牌
+			}
 			if( (Pright + RandomInt(0, 9)) >=20 ){		//滿分有10成績率獲得卡牌，機率依得分遞減
 				return Math.floor((Ptopic-1)/150)+47; 	
 			}
