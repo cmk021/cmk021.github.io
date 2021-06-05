@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>阿谷網丙學科線上測驗</title>
+<title>訪客練習</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <style type="text/css">
 body {
@@ -207,6 +207,7 @@ button:hover{
 
 </style>
 
+<script src="TQ700.js"></script>
 <script>
 	function RandomInt(a, b) {
 	  if (a > b) {
@@ -217,8 +218,9 @@ button:hover{
 	  return Math.floor(Math.random() * (b - a + 1) + a);
 	}
 var total=20;
-var range=20;
-var topic=[];			/*
+var range=0;
+var Etopic=[];			//Etopic  要被用來練習的題庫
+/*
 	topic[0]=["1","「全球資訊網(WWW)」的英文為何？","World Wide Web","Web Wide World","Web World Wide","World Web Wide","無解析",]
 	topic[1]=["2","「超文字傳輸協定」的英文簡稱為何？","HTTP","WWW","URL","TANET","無解析",]
 	topic[2]=["3","「檔案搜尋服務系統」的英文簡稱為何？","Archie","FTP","E-mail","Telnet","無解析",]
@@ -264,9 +266,9 @@ function start(){
 		var r = RandomInt(0, 19);
 		console.log(r);			//
 					
-		tmp = topic[j];
-		topic[j] = topic[r];
-		topic[r] = tmp;
+		tmp = Etopic[j];
+		Etopic[j] = Etopic[r];
+		Etopic[r] = tmp;
 	}  
 		
 	for(i=0 ; i<20 ; i++){				//將答案選項隨機重排
@@ -275,15 +277,15 @@ function start(){
 		//console.log(ans[i]);	
 					
 		if(ans[i]!=1){
-			tmp2 = topic[i][2];
-			topic[i][2] = topic[i][ans[i]+1];
-			topic[i][ans[i]+1] = tmp2;
+			tmp2 = Etopic[i][2];
+			Etopic[i][2] = Etopic[i][ans[i]+1];
+			Etopic[i][ans[i]+1] = tmp2;
 		}
 	}
 	
 	for(i=1 ; i<=5 ; i++){
 		var idd = "t0"+i;
-		document.getElementById(idd).innerHTML = topic[0][i];
+		document.getElementById(idd).innerHTML = Etopic[0][i];
 	}
 	
 		//for(i=2 ; i<=5 ; i++){
@@ -337,6 +339,7 @@ function start(){
 
 <script>
 	window.onload=readSheet();                    //網頁載入後，即執行讀取試算表資料
+	var TID="";
 
 	function readSheet(){				//讀取試算表題庫
 		
@@ -357,7 +360,37 @@ function start(){
 			}
 		}
 		
-		var area = location.href.substr(-1);
+		TID = location.href.substr(-4);
+		console.log("ID: "+ TID);
+		
+		aa = {
+                tID: TID,           //要讀取題庫的區域
+                //uID: userID,
+                sheetUrl: '',
+                sheetTag: '',	//userID.substr(0,1),
+                mode: 2.6         //讀取選題資料
+            };
+			
+		$.get('https://script.google.com/macros/s/AKfycbwXuZkVV-kddVDZh4R7I7cl_M_wLhNmwi51vGlY7Toc2uS_xmJ-/exec', aa, function(dataT){
+			console.log(dataT);
+			if(dataT =='error'){
+			
+			}else{
+			
+				var dataTT = dataT.split(',');
+				range = Number(dataTT[2]);
+				
+				for(i=0 ; i<20 ; i++){						//將所取得的資料分割為20道題目
+					Etopic[i] = TQ700[ Number(dataTT[i+3]) ];		//Etopic  要被用來練習的題庫  !!!i+1
+					console.log(Etopic[i]);
+				}				
+			}
+			
+			document.getElementById('downloadDiv').style.visibility = "hidden";
+        	
+		});
+			
+	/*	var area = location.href.substr(-1);
 		console.log("area "+area);
 		
 		aa = {
@@ -365,7 +398,7 @@ function start(){
                 //uID: userID,
                 sheetUrl: '',
                 sheetTag: '',	//userID.substr(0,1),
-                mode: 1         //送出選題資料
+                mode: 1         //讀取選題資料
             };
 		
 		$.get('https://script.google.com/macros/s/AKfycbwXuZkVV-kddVDZh4R7I7cl_M_wLhNmwi51vGlY7Toc2uS_xmJ-/exec', aa, function(dataM1){
@@ -393,6 +426,7 @@ function start(){
 		var addr = window.location.href.split("?");
 		range = Number(addr[1]);
 		console.log(range);    
+		*/
 	}
 
 </script>
@@ -404,7 +438,29 @@ var tNum = 0;		//目前題數
 function next(){				//跳到下一題
 		
 		if(tNum ==19){
-			document.getElementById('score').style.visibility="visible";
+			TID = location.href.substr(-4);			//????
+			//上傳成績
+			var aaa = {
+				//uID: userID,
+				tID: TID,
+				clock: clock,
+				score: point,
+                sheetUrl: '',
+                sheetTag: '',	//
+                mode: 2.7         //送得分資料
+			};
+			console.log(aaa);
+			$.get('https://script.google.com/macros/s/AKfycbwXuZkVV-kddVDZh4R7I7cl_M_wLhNmwi51vGlY7Toc2uS_xmJ-/exec', aaa, function(dataW){
+				console.log(dataW);
+				if(dataW =='error'){
+				
+				}else{
+							
+				}
+				//document.getElementById('downloadDiv').style.visibility = "hidden";
+			});
+			document.getElementById('score').style.visibility="visible";		//假如按下結束，則顯示結算畫面
+			
 			return;
 		}
 		
@@ -424,7 +480,7 @@ function next(){				//跳到下一題
 		tNum ++;
 		for(i=1 ; i<=5 ; i++){
 			var idd = "t0"+i;
-			document.getElementById(idd).innerHTML = topic[tNum][i];
+			document.getElementById(idd).innerHTML = Etopic[tNum][i];
 		}
 		clockStart();
 		document.getElementById('black01').style.visibility="hidden";
@@ -473,21 +529,23 @@ function choseAns(num){				//選取答案後呼叫此函數
 		}
 		
 		document.getElementById('black01').style.visibility="visible";
-		document.getElementById('t06').innerHTML='<span style="color:#000; border:2px solid #000;">解析</span> '+topic[tNum][6];
+		document.getElementById('t06').innerHTML='<span style="color:#000; border:2px solid #000;">解析</span> '+Etopic[tNum][6];
 		document.getElementById('t06').style.visibility="visible";
 		
 }
 
 function again(){           //按重來
 	
+	window.location.reload()
+	/*
 	document.getElementById('uploadDiv').style.visibility = "visible";
 	
 	var sendT="";
 	
 		for(k=0; k<19 ;k++ ){
-			sendT+= topic[k][0] +",";
+			sendT+= Etopic[k][0] +",";
 		}
-		sendT+= topic[19][0];
+		sendT+= Etopic[19][0];
 		//document.getElementById('againB').disabled = false;		//重來按鈕失效
 		console.log(sendT);
 		
@@ -519,7 +577,7 @@ function again(){           //按重來
 				},2000);
 			}
 		});
-	
+	*/
 	//window.location.href = "play.html?ag" + "";
 }
 </script>

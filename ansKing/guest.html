@@ -220,7 +220,26 @@
 		//顯示資料上傳中
 		document.getElementById('uploadDiv').style.visibility = "visible";
 		
+		
 		aa = {
+                data: sendT,           //???
+                range: rg.value,//uID: userID,
+                sheetUrl: '',
+                sheetTag: '',	//userID.substr(0,1),
+                mode: 2.5         //送出選題資料
+            };
+			
+		$.get('https://script.google.com/macros/s/AKfycbwXuZkVV-kddVDZh4R7I7cl_M_wLhNmwi51vGlY7Toc2uS_xmJ-/exec', aa, function(data0){
+			console.log(data0);
+			if(data0 =='error'){
+			}else{
+				setTimeout(function(){
+				
+					window.location.href = "play.html?" + rg.value + "?" + data0;
+				},1000);	
+			}			
+		});
+	/*	aa = {
                 data: sendT,           //???
                 //uID: userID,
                 sheetUrl: '',
@@ -249,6 +268,7 @@
 	
 	window.onload = function(){
 		document.getElementById('sp').textContent = rg.value;
+		*/
 	}
 	
 </script>

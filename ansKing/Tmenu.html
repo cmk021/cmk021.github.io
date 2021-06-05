@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>阿谷網丙學科線上測驗</title>
+<title>題庫範圍選擇</title>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <style type="text/css">
@@ -229,6 +229,27 @@
 		document.getElementById('uploadDiv').style.visibility = "visible";
 		
 		aa = {
+                data: sendT,           //???
+                range: rg.value,//uID: userID,
+				uID: userID,
+                sheetUrl: '',
+                sheetTag: '',	//userID.substr(0,1),
+                mode: 2.5         //送出選題資料
+            };
+			
+		$.get('https://script.google.com/macros/s/AKfycbzZGDp_1uBZDkDZ_NDFkd3WxoKICKugncyrra2aqj-9qCgbnoE/exec', aa, function(data0){
+			console.log(data0);				//題庫ID
+			if(data0 =='error'){
+			}else{
+				setTimeout(function(){
+				
+					window.location.href = "Uplay.html?"+userID+"?"+data0;
+				},1000);	
+			}			
+		});
+		
+		/*
+		aa = {
                 data: sendT,           //
 				range: rg.value,
                 uID: userID,		//userID,			//????
@@ -254,6 +275,7 @@
 				},2000);
 			}
 		});
+		*/
     }
 	
 var userID = "";

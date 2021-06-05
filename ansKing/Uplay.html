@@ -4,6 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>阿谷網丙學科線上測驗</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
 <style type="text/css">
 body {
 	margin-left: 0px;
@@ -217,7 +218,7 @@ button:hover{
 		text-align:center;
 	}
 </style>
-
+<script src="TQ700.js"></script>
 <script>
 	function RandomInt(a, b) {
 	  if (a > b) {
@@ -228,7 +229,7 @@ button:hover{
 	  return Math.floor(Math.random() * (b - a + 1) + a);
 	}
 var total=20;
-var range=20;
+var range=0;
 var topic=[];			/*
 	topic[0]=["1","「全球資訊網(WWW)」的英文為何？","World Wide Web","Web Wide World","Web World Wide","World Web Wide","無解析",]
 	topic[1]=["2","「超文字傳輸協定」的英文簡稱為何？","HTTP","WWW","URL","TANET","無解析",]
@@ -350,7 +351,7 @@ function start(){
 <script>
 
 var userID = "";
-
+var TID="";
 	window.onload=readSheet();                    //網頁載入後，即執行讀取試算表資料
 
 	function readSheet(){				//讀取試算表題庫
@@ -377,6 +378,42 @@ var userID = "";
 		var addr = location.href.split('?');
 		console.log(addr[1]);
 		userID = addr[1];
+		
+		TID = location.href.substr(-4);
+		console.log("tID: "+ TID);
+		
+		aa = {
+                tID: TID,           //要讀取題庫的區域
+                uID: userID,
+                sheetUrl: '',
+                sheetTag: '',	//userID.substr(0,1),
+                mode: 2.6         //讀取選題資料
+            };
+			
+		$.get('https://script.google.com/macros/s/AKfycbzZGDp_1uBZDkDZ_NDFkd3WxoKICKugncyrra2aqj-9qCgbnoE/exec', aa, function(dataT){
+			console.log(dataT);
+			if(dataT =='id error'){
+				document.getElementById('downloadDiv').innerHTML = "<br/>帳號資料有誤！<br/>請重新登入";
+				setTimeout(function(){
+					window.location.href = "index.html";			
+				},1500);
+				return;
+			}else{
+			
+				var dataTT = dataT.split(',');
+				range = Number(dataTT[2]);
+				
+				for(i=0 ; i<20 ; i++){						//將所取得的資料分割為20道題目
+					topic[i] = TQ700[ Number(dataTT[i+3]) ];		//Etopic  要被用來練習的題庫  !!!i+1
+					console.log(topic[i]);
+				}				
+			}
+			
+			document.getElementById('downloadDiv').style.visibility = "hidden";
+        	
+		});
+		
+		/*
 		var area = addr[2];
 		
 		aa = {
@@ -412,6 +449,7 @@ var userID = "";
 			//	},2500);
         	
 		}); 
+		*/
 	}
 
 </script>
@@ -423,6 +461,28 @@ var tNum = 0;		//目前題數
 function next(){				//跳到下一題
 		
 		if(tNum ==19){							//按了「結束」之後，出現成績畫面
+			TID = location.href.substr(-4);			//????
+			//上傳成績
+			var aaa = {
+				//uID: userID,
+				tID: TID,
+				clock: clock,
+				score: point,
+                sheetUrl: '',
+                sheetTag: '',	//
+                mode: 2.7         //送得分資料
+			};
+			console.log(aaa);
+			$.get('https://script.google.com/macros/s/AKfycbzZGDp_1uBZDkDZ_NDFkd3WxoKICKugncyrra2aqj-9qCgbnoE/exec', aaa, function(dataW){
+				console.log(dataW);
+				if(dataW =='error'){
+				
+				}else{
+							
+				}
+				//document.getElementById('downloadDiv').style.visibility = "hidden";
+			});
+			
 			document.getElementById('score').style.visibility="visible";
 			
 			var pokeN = -1;				//-1表示沒得到牌卡
