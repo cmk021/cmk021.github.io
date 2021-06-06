@@ -266,7 +266,7 @@ var topic=[];			/*
 	}*/
 	
 var ans=[];	
-for(n=0;n<700;n++){
+for(n=0;n<701;n++){
 	ans[n]=1;	
 }
 			
@@ -283,21 +283,21 @@ function start(){
 		topic[r] = tmp;
 	} */ 
 		
-	for(i=0 ; i<700 ; i++){				//將答案選項隨機重排
+	for(i=1 ; i<=700 ; i++){				//將答案選項隨機重排
 		var tmp2 = 0;
 		ans[i] = RandomInt(1, 4);
 		//console.log(ans[i]);	
 					
 		if(ans[i]!=1){
-			tmp2 = topic[i][2];
-			topic[i][2] = topic[i][ans[i]+1];
-			topic[i][ans[i]+1] = tmp2;
+			tmp2 = TQ700[i][2];
+			TQ700[i][2] = TQ700[i][ans[i]+1];
+			TQ700[i][ans[i]+1] = tmp2;
 		}
 	}
 	
 	for(i=1 ; i<=5 ; i++){
 		var idd = "t0"+i;
-		document.getElementById(idd).innerHTML = topic[ savT[0]-1 ][i];
+		document.getElementById(idd).innerHTML = TQ700[ savT[0] ][i];
 	}
 	
 		//for(i=2 ; i<=5 ; i++){
@@ -350,6 +350,7 @@ function start(){
 <div id="uploadDiv"> <br/> <br/> <br/>資料上傳中……</div>
 </body>
 
+<script src="TQ700.js"></script>
 <script>
 
 var userID = "";
@@ -382,7 +383,8 @@ var savString="";
 		var addr = location.href.split('?');
 		console.log(addr[1]);
 		userID = addr[1];
-		
+
+	/*	
 		aa = {
                // area: area,           //要讀取題庫的區域
                 uID: userID,
@@ -407,10 +409,10 @@ var savString="";
 			for(i=0 ; i<700 ; i++){						//將所取得的資料分割為700道題目
 				topic[i] = dataTT.slice(i*7,7*(i+1));
 				//console.log(topic[i]);
-			}
-						
+			}						
 			//document.getElementById('downloadDiv').style.visibility = "hidden";
 		}); 
+	*/
 		
 		bb = {
                 readRow: Number(userID.substr(1,2))*5+6,           //要讀取題庫的列
@@ -425,7 +427,7 @@ var savString="";
 			if(dataST =='idError'){
 				document.getElementById('downloadDiv').innerHTML = "<br/>帳號資訊有誤！<br/>請重新登入";
 				setTimeout(function(){
-					window.location.href = "login.html";			
+					window.location.href = "index.html";			
 				},1500);
 				return;
 			}
@@ -481,7 +483,7 @@ function next(){				//跳到下一題
 					wrongArr: '',	//答錯的題號陣列
 					sheetUrl: '',
 					sheetTag: '',	//userID.substr(0,1),
-					mode: 'wrong3'         //上傳取消收藏的題號
+					mode: 'wrong3'         //???
 				};
 				console.log(cc);
 			//   
@@ -512,7 +514,7 @@ function next(){				//跳到下一題
 			document.getElementById(idd2).classList.remove("small");			//將高度變大
 		}
 		
-		var idd =  "t0"+ (ans[savT[tNum]-1]+1);
+		var idd =  "t0"+ (ans[savT[tNum]]+1);				//????
 		document.getElementById(idd).classList.remove("greenmark");
 		if(choseN!=0){
 			idd =  "t0"+ (choseN+1);
@@ -523,7 +525,7 @@ function next(){				//跳到下一題
 		tNum ++;						//秀出下一題的內容
 		for(i=1 ; i<=5 ; i++){
 			var idd = "t0"+i;
-			document.getElementById(idd).innerHTML = topic[ savT[tNum]-1 ][i];
+			document.getElementById(idd).innerHTML = TQ700[ savT[tNum] ][i];			//?????
 		}
 		//clockStart();
 		document.getElementById('black01').style.visibility="hidden";
@@ -540,7 +542,7 @@ function choseAns(num){				//選取答案後呼叫此函數
 		document.getElementById('heart').textContent = "";		//愛心div內容文字
 		document.getElementById('heart').style.backgroundImage = "url(pic/heart0.png)";	//愛心div 背景圖
 		choseN=0;					//歸零
-		if( num != ans[ savT[tNum]-1 ]){
+		if( num != ans[ savT[tNum] ]){			//????
 			wrongT++;
 			wrongArr.push(savT[tNum]);//topic[tNum][0]);
 			console.log(wrongArr);							//////
@@ -553,7 +555,7 @@ function choseAns(num){				//選取答案後呼叫此函數
 			document.getElementById('spR').innerHTML=rightT;
 		}
 		//clearInterval(clock01);
-		var idd =  "t0"+ (ans[savT[tNum]-1]+1);
+		var idd =  "t0"+ (ans[savT[tNum]]+1);		//????
 		document.getElementById(idd).classList.add("greenmark");
 		
 		if(tNum<(total-1)){
@@ -577,7 +579,7 @@ function choseAns(num){				//選取答案後呼叫此函數
 		}
 		
 		document.getElementById('black01').style.visibility="visible";
-		document.getElementById('t06').innerHTML='<span style="color:#000; border:2px solid #000;">解析</span> '+topic[savT[tNum]-1][6];
+		document.getElementById('t06').innerHTML='<span style="color:#000; border:2px solid #000;">解析</span> '+TQ700[savT[tNum]][6];				//??????
 		document.getElementById('t06').style.visibility="visible";
 		
 }
