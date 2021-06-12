@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
-  <title>基於blockly的遊戲-登入</title>
+  <title>網丙學科練功網-登入</title>
     
     <style>
         button{
@@ -109,8 +109,8 @@
             color: #fff;
             opacity: 0.95;
 /*            display: none;*/
-            height: 656px;
-            width: 1280px;
+            height: 100%;
+            width: 100%;
             position: absolute;
             top: 0px;
             left: 0px;
@@ -127,8 +127,8 @@
             width:120px;
             font-family: '微軟正黑體';
             position: fixed;
-            left: 690px;
-            top: 490px;
+            left: 240px;
+            top: 565px;
             display: block;
             font-size: 35px;
             font-weight: bold;
@@ -148,11 +148,11 @@
     </style>
 </head>
 
-<script src ="jquery-3.4.1.js"></script>
-    
+<script src ="jquery-3.6.0.js"></script>
+   
 <script>
-    let userName ='USER';           //預設名稱
-    let userNum = 10;               //選取的角色的代號
+ /*    var userName ='USER';           //預設名稱
+    var userNum = 10;               //選取的角色的代號
     
     $(document).ready(function(){
         $('.selec').click(function(){
@@ -176,61 +176,99 @@
         userNum = n;
         console.log(userName);
     }
-    
+    */
 </script>
     
 <script>
-    let accUsed =[];
+    var accUsed =[];
     
-    bgmusic = new Audio('/sound/login_use.mp3');
-    selectsound = new Audio('/sound/MenuSelect1_use.wav');
-    click1 = new Audio('/sound/Click.1.use.wav');
-    confirm1 = new Audio('/sound/59_confirm.wav');
+    bgmusic = new Audio('sound/login_use.mp3');
+    //selectsound = new Audio('/sound/MenuSelect1_use.wav');
+    click1 = new Audio('sound/Click.1.use.wav');
+    confirm1 = new Audio('sound/59_confirm.wav');
     
     window.onload=readSheet;                    //網頁載入後，即執行讀取試算表資料
     function readSheet(){
         $('#overlay2').click(  function(){                   //這麼做是為了避免自動播放音樂會產生錯誤
             $('#overlay2').hide(); 
-            bgmusic.play();     
-            bgmusic.volume=0.3;
+            //bgmusic.play();     
+            //bgmusic.volume=0.3;
+			var Umail = String(getCookieByName('usermail'));					//讀取cookie
+			console.log(Umail);
+			if(Umail != "undefined"){
+				document.getElementById('userid').value = Umail;
+				firstK = 0;										//以免輸入的email被清空
+				document.getElementById('regist').disabled =false;
+			}
         } );
-
     }
     
     function log_in(){                           //按下 登入
-        //let getdata;                            //此行多餘…
-        let userID = document.getElementById('userid').value ;
+        //var getdata;                            //此行多餘…
+        var userID = document.getElementById('userid').value ;
         
         confirm1.play();
         
         if (userID.length <6){
             alert("抱歉！帳號至少要 6個字！\n請更改你的Email");
-        }else if(userNum==10){                  //表示尚未選取角色
-            alert("您還沒選擇角色。");
+        //}else if(userNum==10){                  //表示尚未選取角色
+        //    alert("您還沒選擇角色。");
         }else{
                                         
-            let data5 = userID;         //(userNum + 1) + "," + userID;       console.log(data5);
-            a = {
-                data: data5,           //從第 userNum + 1 欄讀取
+            //var data5 = userID;         //(userNum + 1) + "," + userID;       console.log(data5);
+            var a10 = {
+                data: userID,           //email
                 sheetUrl: '',
-                sheetTag: 'ACC',
+                //sheetTag: 'ACC',
                 mode: 10   //登入模式
             };
             $('#overlay').html('<br>登入帳號中<br>請稍候……<div id="gifdiv"><img src="pic/user16.gif" /></div>');
             $('#overlay').show();
-            $.get('https://script.google.com/macros/s/AKfycbxwHMUuQTA4uWU54Tj3S7Ia3ZySAL_T48cuGhsWT1vwwt0tvthX/exec', a, function(reData){
-                    //getdata = data;
+            $.get('https://script.google.com/macros/s/AKfycbwBZLlryS5MIfj__92xwlLYsjTp0GLH4ck9FHaFEzWWo6eNafA/exec', a10, function(reData){
+                    var getdata = reData.split(",");	//第2元素會是 登入次數-1
                     
                     if(reData == 'notFound'){
                         $('#overlay').html('抱歉！<br>您所輸入的資料有誤！<br>網頁將重新整理…<br>請重新登入，或註冊一個新帳號');       //alert(0);
-                        setTimeout( function(){ location.reload(); } , 3500 );
-                        
-                    }else{
-                        $('#overlay').html('<br>登入成功！<br>將自動進入遊戲選單<br>祝您遊戲愉快！');
-                        setTimeout( function(){
-                            location.href = "train/trainMenu.html" + "?" + userName + "?" + reData;
-                        } , 3000 );
+                        setTimeout( function(){ location.reload(); } , 3500 );   
+						return;
                     }
+					
+					if(getdata[1] == "0"){
+						do{
+							var name = prompt("歡迎初次登入本網站。\r請輸入您的大名，最多五個字。", "路人甲");
+							name = name.replace(/,/g,"");
+							name = name.replace(/&/g,"");
+							name = name.replace(/@/g,"");			//替換掉所有的 @
+							name = name.substr(0,5);
+						}while( false == (confirm("您的大名是 "+name+ "\r\r按下確定以後就不能再更改了！")) )
+						
+						var aee = {
+							writeRow: Number(getdata[0].substr(1,2))*5+6,
+							writeRowRg: Number(getdata[0].substr(1,2))+11,				//計算寫入暱稱到註冊表的第幾列
+							name: name,
+							sheetUrl: '',
+							//sheetTag: 'ACC',
+							mode: 11   //初次登入取名字
+						};
+						console.log(aee);
+						$('#overlay').html('<br>正在上傳您的大名……<br>');
+						$.get('https://script.google.com/macros/s/AKfycbygCTPucdv0WS2cwjxfbgDcbr8_fwK3pxamzRZHoHnl2NY2Y-ND/exec', aee, function(data11){
+							console.log(data11);
+						});
+						
+						//寫入網丙註冊表
+						
+					}
+					
+					
+                    $('#overlay').html('<br>登入成功！<br>將自動進入遊戲選單<br>祝您遊戲愉快！');
+					document.cookie = 'usermail='+userID+'; max-age=2592000; path=/';			//寫入cookie
+					console.log('寫入cookie');
+					
+                    setTimeout( function(){
+                            location.href = "menu.html?" + getdata[0];// + userName + "?" + reData;
+                    } , 3000 );
+                    
                 }
             );            
             
@@ -242,12 +280,12 @@
     
 <body bgcolor="#333">
     &nbsp;<a href="index.html"><img title="回首頁" style="width: 60px; height:60px" src="pic/home2.png" /></a> 
-    <div id="overlay2"><br>請輸入已註冊通過的Email<br>並選用一個頭像<br><br>請按一下滑鼠
+    <div id="overlay2"><br>請輸入已註冊通過的Email<br><br>請按一下滑鼠
         <div id="gifdiv"><img src="pic/user16.gif" /></div>
     </div>
     <div id="overlay"> </div>
     
-<!--    <button onclick="log_in();" id="regist">登 入</button>-->
+<!--    <button onclick="log_in();" id="regist">登 入</button>
     
     <div id="rolebox"><br>
     <div class="selec" onclick="setName(0,'YANG');"><img src="Character/YANG.png"/><span id="u0"></span></div>
@@ -260,7 +298,7 @@
     <div class="selec" onclick="setName(7,'LUWAN');"><img src="Character/LUWAN.png"/><span id="u7"></span></div>
     <div class="selec" onclick="setName(8,'ADIDA');"><img src="Character/ADIDA.png"/><span id="u8"></span></div>
     <div class="selec" onclick="setName(9,'DISNY');"><img src="Character/DISNY.png"/><span id="u9"></span></div> 
-    </div>
+    </div>>-->
     
     <div id="idbox">
     <button onclick="showText('0');">0</button>
@@ -342,10 +380,15 @@
 </body>
     
 <script>
-    
+var firstK = 1;
     function showText(char){
+		
         click1.play();
-        let text0 = document.getElementById('userid').value;            //???
+		if(firstK == 1){
+			firstK=0;
+			document.getElementById('userid').value = "";	
+		}
+        var text0 = document.getElementById('userid').value;            //???
         
         if (char=="back"){
             document.getElementById('userid').value = text0.substr(0, text0.length-1 );
@@ -377,6 +420,10 @@
     var inputs = document.getElementById('userid');
     inputs.addEventListener('input', function(){
         console.log(inputs.checkValidity());
+		if(firstK == 1){
+			firstK=0;
+			//document.getElementById('userid').value = "";	
+		}
         if(inputs.checkValidity()) {                            //檢查輸入的資料是否合乎規則
             if(inputs.value!=""){
                 document.getElementById('regist').disabled =false;
@@ -397,6 +444,31 @@
 //            inputs.classList.remove('valid');
         } 
     } );
+	
+	
+function parseCookie() {
+    var cookieObj = {};
+    var cookieAry = document.cookie.split(';');
+    var cookie;
+    
+    for (var i=0, l=cookieAry.length; i<l; ++i) {
+        cookie = jQuery.trim(cookieAry[i]);
+        cookie = cookie.split('=');
+        cookieObj[cookie[0]] = cookie[1];
+    }
+    
+    return cookieObj;
+}
+
+
+function getCookieByName(name) {
+    var value = parseCookie()[name];
+    if (value) {
+        value = decodeURIComponent(value);
+    }
+
+    return value;
+}
 </script>    
     
     
