@@ -351,7 +351,12 @@ function create() {
                     toolAryToXML();
                     document.getElementById('toolbox'+(stageNum+10) ).innerHTML = toolsXML;
                     gen_workspace('toolbox'+(stageNum+10));		 //產生工作區????
-                    workspace.addChangeListener(onchange);
+					workspace.addChangeListener(onchange);
+                    
+					setTimeout(BlocklyStorage.restoreBlocks, 0);
+		
+					BlocklyStorage.backupOnUnload();		// 工作區中的初始blocks
+					
                     
                     var idd = document.getElementsByClassName('chek');              //取得全部的核取方塊元素
                     for (i=0 ; i<toolsAry.length ; i++){
