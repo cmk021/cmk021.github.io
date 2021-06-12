@@ -14,6 +14,7 @@
 	<script src ="/blocksjs/blockly_compressed.js" > </script> 
 	<script src ="/blocksjs/blocks_compressed.js" > </script> 
 	<script src ="/blocksjs/javascript_compressed.js"></script>
+    <script src ="/blocksjs/storage.js"></script>
 
 	<script src ="/blocksjs/zh-hant.js" > </script>
 	<script src ="/jquery-3.4.1.js"></script>
@@ -441,7 +442,9 @@
         //$("#userid").text = userID;
         //$("#userimg").attr("background","/pic/1345010101.png");
     
-    
+    	setTimeout(BlocklyStorage.restoreBlocks, 0);
+		
+		BlocklyStorage.backupOnUnload();
         // 工作區中的初始blocks
         //Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'), workspace);      //工作區中的初始blocks
         //Editable(false);
