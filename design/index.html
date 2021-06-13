@@ -296,7 +296,24 @@
         }
         #bgmplay{   z-index: 91;    background-position:0px -51px;     }
 /*            display: none;}*/
-        
+        #teach {
+            background-image: url("pic/teach.png");
+			background-size:73px;
+            height: 73px;
+            width: 73px;
+            position: fixed;
+            top: 218px;
+/*            right: 19px;*/
+            left: 1205px;
+            z-index: 90;            
+        }
+        #teach:hover {
+            background-position:0px -74px;
+            cursor: pointer;
+        }
+		
+		
+		
         .selec ,.selec2{
             width: 48px;
             height: 48px;
@@ -818,7 +835,8 @@
     
     <div onclick="drawLine();" id="showgrid"></div>
     <div onclick="bgmonoff(0);" id="bgmplay"></div>    
-    <div onclick="bgmonoff(1);" id="bgmclose"></div>    
+    <div onclick="bgmonoff(1);" id="bgmclose"></div> 
+    <div onclick="" id="teach"></div>    
     
     <div id="tilebox">
         <div class="selec" onclick="selectTile(0);" title="清除地形和物品" id="tile0"></div>
@@ -1118,7 +1136,8 @@
         $('#toolLibrary').fadeIn();
         $('#maxB').val(maxblock[stageNum]);
         //$('#run_over').show();      //???蓋住執行按鈕
-        //先全部不選，再勾選記錄中己勾選的工具
+        
+        //先全部不選，再勾選記錄中己勾選的工具。 ??以下放到giveup2.click應該較好
         var idd0 = document.getElementsByClassName('chek');              //取得全部的核取方塊元素
         for(var i = 1; i < idd0.length; i++  ){
             idd0[i].checked = false;

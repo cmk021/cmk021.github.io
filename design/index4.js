@@ -259,7 +259,7 @@ function create() {
    camera0.startFollow(player[0].role, true, 0.08, 0.08);                //攝影機跟隨角色
    // console.log(0.09);
     
-  keys = this.input.keyboard.addKeys('P,W,A,S,D,R');                //設定可以用的按鍵
+  keys = this.input.keyboard.addKeys('');//P,W,A,S,D,R');                //?????設定可以用的按鍵
 
       //  console.log(typeof stage);
     for (var i = 0; i < 11; i++) {                      //先宣告空陣列！       // 11 ??
@@ -434,23 +434,23 @@ function update(time, delta) {
     
   //if(s.x>-5){s.x=-120;} else{s.x+=0.5}          //控制背景移動
     
-    if (keys.P.isDown){
-     gndLayer.fill(92 ,1 ,1 ,1,1);    
+    /*if (keys.P.isDown){
+     gndLayer.fill(92 ,1 ,1 ,1,1);  
         //console.log('aaaaa');
     }
     else{
        // map.fill(1, 1, 1, 2, 2);
-    }
+    }  */
   
-    if (keys.R.isDown){
+    /*if (keys.R.isDown){
       
         // if(s.x>116){s.x=0;} else{s.x+=0.5}   //console.log(s);
         sound_bump.play();
         camera0.shake(160,0.008);                      //指定晃動時間 和 強度
       
-    }
+    }*/
 
-    if (keys.A.isDown)
+    /*if (keys.A.isDown)
     {
        //music.play();         //從頭開始播放音檔
         //music.volume = 0;
@@ -466,20 +466,21 @@ function update(time, delta) {
         //move_right();
     }
     
-    if (keys.W.isDown)
+    if (keys.W.isDown)*/
     {
-        alpha0 -= 0.7/delta;
+       /* alpha0 -= 0.7/delta;
         player[0].role.setAlpha(alpha0);
+	   */
         //move_up();
         //player.y-=18/delta;
         //player.anims.play('up', true);
     }
   
-    if (keys.S.isDown)
+    /*if (keys.S.isDown)
     {
         console.log(delta);
                  //????
-    }
+    }*/
 
     //if(player[0].move != -1){                     //判斷是否在移動中
     move_(0,delta);                         //角色0
@@ -925,6 +926,13 @@ function something_ahead(n,option){           //前方是否有………
     }
     if (option == 'mont'){
         if ( (ground >= 137 )&&(ground <= 150) ){           //山
+            return true;
+        }else{
+            return false;
+        } 
+    }
+	if (option == 'river'){
+        if ( (ground >= 133 )&&(ground <= 135) ){           //河
             return true;
         }else{
             return false;
