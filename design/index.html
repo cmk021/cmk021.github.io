@@ -312,6 +312,16 @@
             cursor: pointer;
         }
 		
+		#firstT{
+			background-image: url("pic/firstT.png");
+			height: 250px;
+            width: 300px;
+            position: fixed;
+            top: 60px;
+/*            right: 19px;*/
+            left: 920px;
+            z-index: 90;  
+		}
 		
 		
         .selec ,.selec2{
@@ -539,9 +549,14 @@
                     $('#overlay').html('<br>讀取完成<br>請按一下滑鼠');       //alert(0);
                     $('#overlay').click(  function(){                   //這麼做是為了避免自動播放音樂會產生錯誤
                         $('#overlay').hide(); 
-                        
+						
                         timer = setInterval(function() {            //開始計時
                             timeCount++;      
+							
+							if(timeCount==35){
+								$('#firstT').fadeOut();
+							}
+							
                             document.getElementById('timerC').textContent = Math.floor(timeCount / 10);
                                 //console.log(timeCount);
                             if ((timeCount%100) == 40)
@@ -837,6 +852,7 @@
     <div onclick="bgmonoff(0);" id="bgmplay"></div>    
     <div onclick="bgmonoff(1);" id="bgmclose"></div> 
     <a href="https://youtu.be/kk6Ux052o0Y" target="new"><div id="teach"></div>    </a>
+    <div id="firstT"></div>
     
     <div id="tilebox">
         <div class="selec" onclick="selectTile(0);" title="清除地形和物品" id="tile0"></div>
