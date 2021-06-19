@@ -169,6 +169,7 @@
                                     bgmusic[bgmIndex].currentTime =0;
                                     bgmIndex = (bgmIndex + 1) % 2;
                                     bgmusic[bgmIndex].play();
+									bgmusic[bgmIndex].volume = 0.35;
                                 }
                             }
                             
@@ -206,8 +207,8 @@
             } else{
                 $('#bgmplay').show();
                 bgmusic[bgmIndex].play();
-                bgmusic[0].volume = 1;
-                bgmusic[1].volume = 1;
+                bgmusic[0].volume = 0.35;
+                bgmusic[1].volume = 0.35;
             }           
         }
     </script>
