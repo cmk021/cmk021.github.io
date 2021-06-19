@@ -280,7 +280,7 @@ function create() {
     }
     
     
-    let readRow0 = Math.floor(Number(ary4[1].substr(-2))/10)*100 + Number(ary4[1].substr(1,1))* 10+7;
+    let readRow0 = Math.floor(Number(ary4[1].substr(-2))-1)*100 + Number(ary4[1].substr(1,1))* 10+7;	//?? 0619修正
     let bbb = {
         data: Number(ary4[1].substr(2,1))+1,           //從第 x欄開始讀
         readRow: readRow0,                              //放提示的列
@@ -293,7 +293,7 @@ function create() {
             //console.log(tipsMsg[stageNum]+'abc');
     });
     
-        readRow0 = Math.floor(Number(ary4[1].substr(-2))/10)*100 + Number(ary4[1].substr(1,1))* 10+3;
+        readRow0 = Math.floor(Number(ary4[1].substr(-2))-1)*100 + Number(ary4[1].substr(1,1))* 10+3;	//?? 0619修正
         let aaa = {
             data: Number(ary4[1].substr(2,1))+1,           //從第 x欄開始讀
             readRow: readRow0,
