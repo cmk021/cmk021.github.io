@@ -214,6 +214,7 @@
                     $('#overlay').click(  function(){                   //這麼做是為了避免自動播放音樂會產生錯誤
                         $('#overlay').hide(); 
                         bgmusic.play();
+						bgmusic.volume =0.35;
                         bgmusic.loop = true;
                         showdata();
                     } )
