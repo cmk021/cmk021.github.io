@@ -54,14 +54,14 @@ Blockly.Blocks['action_goto_num'] = {
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setColour("aaa000");
- this.setTooltip("前往指定的數字");
+ this.setTooltip("前往相鄰的指定的數字，並將該數字清除");
  this.setHelpUrl("");
   }
 };
 Blockly.JavaScript['action_goto_num'] = function(block) {
   var value_numb1 = Blockly.JavaScript.valueToCode(block, 'numb1', Blockly.JavaScript.ORDER_ATOMIC);
   // TODO: Assemble JavaScript into code variable.
-  var code = 'gotoNum(0,' + value_numb1 + '); \n await delay(1000); \n';
+  var code = 'gotoNum(0,' + value_numb1 + '); \n await delay(1200); \n';
   return code;
 };
 
