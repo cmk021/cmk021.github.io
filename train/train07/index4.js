@@ -169,6 +169,7 @@ function create() {
     sound_error = this.sound.add('sounderror');
     sound_error2 = this.sound.add('sounderror2');
     sound_success = this.sound.add('soundsuccess');
+	sound_clear = this.sound.add('soundclear');
     foot_step = this.sound.add('footstep');
     //music.play();
     //music.onDecoded.add(start, this);     //可能已不支援舊語法
@@ -462,7 +463,7 @@ function update(time, delta) {
     //text.setText("Tile X: " + Math.floor(player[0].role.x/48+1) +" Y: " + Math.floor(player[0].role.y/48+1));   //+1??
     //text ='Tile X: ' + player.x;    
     
-    
+    if(textFadeOutAnim == 1){   textFadeOut(0);  }		//文字消失動畫
 //    if (this.input.manager.activePointer.isDown)
 //    {
 //        if( selectedTile >160){
@@ -1008,6 +1009,7 @@ function gotoNum(NN,numXX) {
         if (player[NN].face == 3){
             move_down(NN);       
         }
+		setTimeout( "clearNum(0)" , 600);			//清除數字
         if (nextObject==231) {return "exit";}              //掉入巨坑 
     }
 }
