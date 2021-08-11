@@ -1084,6 +1084,7 @@ function gotoNum(NN,numXX) {
         if (player[NN].face == 3){
             move_down(NN);       
         }
+		setTimeout( "clearNum(0)" , 600);			//清除數字
         if (nextObject==231) {return "exit";}              //掉入巨坑 
     }
 }
