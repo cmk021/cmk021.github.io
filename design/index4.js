@@ -262,7 +262,7 @@ function create() {
   keys = this.input.keyboard.addKeys('');//P,W,A,S,D,R');                //?????設定可以用的按鍵
 
       //  console.log(typeof stage);
-    for (var i = 0; i < 11; i++) {                      //先宣告空陣列！       // 11 ??
+    for (var i = 0; i < 12; i++) {                      //先宣告空陣列！       // 12 ??
         stageGround[i] = [];
         stageObject[i] = [];
         stageText[i] = [];
@@ -328,6 +328,12 @@ function create() {
                         gndLayer.fill(Number(data_Design[i+100]) ,i%10 ,Math.floor(i/10) ,1,1);      //更新地圖
                         objectLayer.fill(Number(data_Design[i+200]) ,i%10 ,Math.floor(i/10) ,1,1);  //更新地圖物品
                     }
+					
+					for (g=1 ; g<11 ; g++){				//！！！避免在判斷前方有xx時，超出陣列範圍或是傳回空值。
+						stageGround[11][g]=0;
+						stageGround[g][11]=0;
+					}
+					
                     stage.xx= data_Design[300];             //這三行不太需要…
                     stage.yy= data_Design[301];
                     stage.ff= data_Design[302];
