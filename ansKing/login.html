@@ -149,6 +149,8 @@
 </head>
 
 <script src ="jquery-3.6.0.js"></script>
+<!--<script src ="parseScripts.js"></script>
+<script src ="goto.js"></script> -->
    
 <script>
  /*    var userName ='USER';           //預設名稱
@@ -202,12 +204,19 @@
 			}
         } );
     }
-    
+		//姓名選單
+	var nameList = ["喬峰", "楊過", "小龍女", "黃蓉", "令狐沖", "張三豐", "郭襄", "東方不敗", "藍鳳凰", "趙敏",
+		"路飛", "娜美", "妮可羅賓", "索隆", "喬巴", "香吉士", "騙人布", "艾斯", "女帝", "白星",
+		"妮可基嫚", "娜塔莉波曼", "瑪格羅比", "湯姆克魯斯", "阿諾", "艾瑪華森", "基努里維", "劉德華", "張曼玉", "巨石強森",
+		"艾倫", "米卡莎", "韓吉", "沙夏", "里維", "阿爾敏", "亞妮", "萊納", "艾爾文", "皮克",
+		"金城武", "林志玲", "林青霞", "徐若瑄", "周潤發", "梁朝偉", "王祖賢", "甄子丹", "李連杰", "章子怡",
+		"蜘蛛人", "鋼鐵人", "黑寡婦", "美國隊長", "鷹眼", "緋紅女巫", "浩克", "雷神索爾", "神力女超人", "蝙蝠俠"];
     function log_in(){                           //按下 登入
         //var getdata;                            //此行多餘…
-        var userID = document.getElementById('userid').value ;
+        var userID = document.getElementById('userid').value ;		//email
         
-        confirm1.play();
+        confirm1.play();			//音效
+		var getdata=[];			//存放傳回來的資料。包含帳號及登入次數
         
         if (userID.length <6){
             alert("抱歉！帳號至少要 6個字！\n請更改你的Email");
@@ -225,7 +234,6 @@
             $('#overlay').html('<br>登入帳號中<br>請稍候……<div id="gifdiv"><img src="pic/user16.gif" /></div>');
             $('#overlay').show();
             $.get('https://script.google.com/macros/s/AKfycbwBZLlryS5MIfj__92xwlLYsjTp0GLH4ck9FHaFEzWWo6eNafA/exec', a10, function(reData){
-                    var getdata = reData.split(",");	//第2元素會是 登入次數-1
                     
                     if(reData == 'notFound'){
                         $('#overlay').html('抱歉！<br>您所輸入的資料有誤！<br>網頁將重新整理…<br>請重新登入，或註冊一個新帳號');       //alert(0);
@@ -233,47 +241,84 @@
 						return;
                     }
 					
-					if(getdata[1] == "0"){
-						do{
-							var name = prompt("歡迎初次登入本網站。\r請輸入您的大名，最多五個字。", "路人甲");
-							name = name.replace(/,/g,"");
-							name = name.replace(/&/g,"");
-							name = name.replace(/@/g,"");			//替換掉所有的 @
-							name = name.substr(0,5);
-						}while( false == (confirm("您的大名是 "+name+ "\r\r按下確定以後就不能再更改了！")) )
-						
-						var aee = {
-							writeRow: Number(getdata[0].substr(1,2))*5+6,
-							writeRowRg: Number(getdata[0].substr(1,2))+11,				//計算寫入暱稱到註冊表的第幾列
-							name: name,
-							sheetUrl: '',
-							//sheetTag: 'ACC',
-							mode: 11   //初次登入取名字
-						};
-						console.log(aee);
-						$('#overlay').html('<br>正在上傳您的大名……<br>');
-						$.get('https://script.google.com/macros/s/AKfycbygCTPucdv0WS2cwjxfbgDcbr8_fwK3pxamzRZHoHnl2NY2Y-ND/exec', aee, function(data11){
-							console.log(data11);
-						});
-						
-						//寫入網丙註冊表
-						
-					}
-					
-					
-                    $('#overlay').html('<br>登入成功！<br>將自動進入遊戲選單<br>祝您遊戲愉快！');
+                    getdata = reData.split(",");	//第2個元素會是 登入次數
+					console.log(getdata);
+					//$('#overlay').html('<br>測試……<br>');		//會顯示…
 					document.cookie = 'usermail='+userID+'; max-age=2592000; path=/';			//寫入cookie
-					console.log('寫入cookie');
+					console.log('寫入cookie');					
 					
-                    setTimeout( function(){
-                            location.href = "menu.html?" + getdata[0];// + userName + "?" + reData;
-                    } , 3000 );
-                    
-                }
-            );            
+					var nameUsed = true;
+					var name = "";  	
+					
+					
+					if(getdata[1] == "0"){			//代表第一次登入
+					
+							do{		//名字若重複，就重來
+								do{
+									do{													//隨機給一個名字
+										name = prompt("歡迎初次登入本網站。\r請輸入您的大名，最多五個字。", nameList[RandomInt(0,59)]);				
+									}while(name==null)				//null代表按下 取消
+									name = name.replace(/,/g,"");
+									name = name.replace(/&/g,"");
+									name = name.replace(/@/g,"");			//替換掉所有的 @
+									name = name.replace(/$/g,"");			//替換掉所有的 $
+									name = name.substr(0,5);
+											
+								}while( false == confirm("您的大名是 "+name+ "\r\r按下確定以後就不能再更改了！") )
+								
+								var flag = getdata.some(function (value, index, array) {
+										return (value == name);   // ? true : false;   true 表示暱稱已被使用
+									});
+								if (flag){
+									alert("抱歉！ "+name+" 已被使用！\n請重新輸入您的大名");
+								}else{
+									break;
+								}
+							}while(true)
+							
+							var aee = {
+								writeRow: Number(getdata[0].substr(1,2))*5+6,				//計算寫入ID到user的user表第幾列
+								writeRowRg: Number(getdata[0].substr(1,2))+11,				//計算寫入暱稱到註冊表的第幾列
+								name: name,
+								sheetUrl: '',
+								//sheetTag: 'ACC',
+								mode: 11   //初次登入取名字
+							};
+							//document.getElementById('overlay').innerHTML = '<br>正在上傳您的大名……<br>';	//???沒出現
+							console.log(aee);
+							$('#overlay').html('<br>正在上傳您的大名……<br>');		//???沒出現
+							//alert("正在上傳您的大名…");
+							//$('#overlay').show();
+							//寫入網丙註冊表
+							$.get('https://script.google.com/macros/s/AKfycbygCTPucdv0WS2cwjxfbgDcbr8_fwK3pxamzRZHoHnl2NY2Y-ND/exec', aee, function(data011){
+								console.log(data011);
+								//alert("測試…");			//沒出現????
+								
+								if(data011 == "used"){
+									alert("抱歉！ "+name+" 已被使用！\n請重新登入....."); 		//??這行多餘
+									setTimeout( function(){ location.reload(); } , 2500 );
+								}else{
+									nameUsed = false; 
+									alert("您的大名已上傳成功！");
+									
+									$('#overlay').html('<br>登入成功！<br>將自動進入遊戲選單<br>祝您遊戲愉快！');
+					
+									setTimeout( function(){
+											location.href = "menu.html?" + getdata[0];// + userName + "?" + reData;
+										} , 3000 );
+								}
+								
+							});						
+						//}while(  nameUsed == true )
+					}				
+			});
+			
             
+					
+			/*		
+            */
         }
-    }
+    }		//function log_in 結束
 </script>    
     
     
@@ -446,29 +491,38 @@ var firstK = 1;
     } );
 	
 	
-function parseCookie() {
-    var cookieObj = {};
-    var cookieAry = document.cookie.split(';');
-    var cookie;
-    
-    for (var i=0, l=cookieAry.length; i<l; ++i) {
-        cookie = jQuery.trim(cookieAry[i]);
-        cookie = cookie.split('=');
-        cookieObj[cookie[0]] = cookie[1];
-    }
-    
-    return cookieObj;
-}
-
-
-function getCookieByName(name) {
-    var value = parseCookie()[name];
-    if (value) {
-        value = decodeURIComponent(value);
-    }
-
-    return value;
-}
+	function parseCookie() {
+		var cookieObj = {};
+		var cookieAry = document.cookie.split(';');
+		var cookie;
+		
+		for (var i=0, l=cookieAry.length; i<l; ++i) {
+			cookie = jQuery.trim(cookieAry[i]);
+			cookie = cookie.split('=');
+			cookieObj[cookie[0]] = cookie[1];
+		}
+		
+		return cookieObj;
+	}
+	
+	
+	function getCookieByName(name) {
+		var value = parseCookie()[name];
+		if (value) {
+			value = decodeURIComponent(value);
+		}
+	
+		return value;
+	}
+	
+	function RandomInt(a, b) {
+	  if (a > b) {
+		var c = a;
+		a = b;
+		b = c;
+	  }
+	  return Math.floor(Math.random() * (b - a + 1) + a);
+	}
 </script>    
     
     
