@@ -596,9 +596,9 @@ function choseAns(num){				//選取答案後呼叫此函數
 		}else{
 			document.getElementById('nextTDiv').innerHTML="結束";
 			
-			var clockE = clock<(total*30)? total*30 : clock;
+			var clockE = clock<(total*20)? total*20 : clock;					//?? 30改為20
 			console.log(clockE +"＆range="+ range);									//計算分數
-			point = Math.floor( 0.1*range * (rightT - wrongT) * ( 3600 / (clockE +600) ) );    	//成績計算再研究
+			point = Math.floor( 0.1*range * (rightT - wrongT) * ( 2400 / (clockE +200) ) );    	//成績計算再研究
 			console.log(point);		//秀出成績
 			point = point<0 ? 0 : point;
 			document.getElementById('point01').innerHTML = point;		//分數
