@@ -3816,6 +3816,7 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.video.Acts.SetLooping,
 		C3.Plugins.video.Acts.SetPlaybackTime,
 		C3.Plugins.System.Exps.random,
+		C3.Plugins.video.Acts.Play,
 		C3.Plugins.Mouse.Acts.SetCursorSprite,
 		C3.Plugins.Mouse.Cnds.OnMovement,
 		C3.Plugins.System.Cnds.Compare,
@@ -3855,7 +3856,6 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Text.Acts.SetFontColor,
 		C3.Plugins.Text.Acts.SetFontFace,
 		C3.Plugins.Mouse.Cnds.OnObjectClicked,
-		C3.Plugins.video.Acts.Play,
 		C3.Plugins.NinePatch.Acts.SetSize,
 		C3.Plugins.NinePatch.Exps.Width,
 		C3.Behaviors.Tween.Acts.TweenTwoProperties
