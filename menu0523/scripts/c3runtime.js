@@ -3864,16 +3864,16 @@ self.C3_GetObjectRefTable = function () {
 self.C3_JsPropNameTable = [
 	{Browser: 0},
 	{Orbit: 0},
-	{Sprite: 0},
-	{Sprite2: 0},
-	{Sprite3: 0},
+	{Sprite1: 0},
+	{Sprite0: 0},
+	{SpriteP: 0},
 	{Mouse: 0},
 	{Fade: 0},
-	{Sprite4: 0},
+	{SpriteLi: 0},
 	{Bullet: 0},
 	{DestroyOutsideLayout: 0},
-	{Sprite5: 0},
-	{Sprite6: 0},
+	{SpriteB: 0},
+	{Sprite2: 0},
 	{Touch: 0},
 	{Array: 0},
 	{Text: 0},
@@ -3881,9 +3881,14 @@ self.C3_JsPropNameTable = [
 	{iframe: 0},
 	{TextX: 0},
 	{Text2: 0},
-	{Sprite7: 0},
+	{SpriteM: 0},
 	{Tween: 0},
 	{"9patch3": 0},
+	{Sprite3: 0},
+	{Sprite5: 0},
+	{Sprite7: 0},
+	{Sprite6: 0},
+	{Sprite4: 0},
 	{now_stage: 0},
 	{playing: 0}
 ];
@@ -3988,12 +3993,27 @@ function or(l, r)
 self.C3_ExpressionFuncs = [
 		() => 45,
 		() => 90,
+		() => 180,
+		() => 315,
+		() => 135,
+		() => 270,
+		() => 225,
 		() => 0,
 		() => "天使冒險記\n張紘榤",
 		() => 1,
 		() => "小恐龍\n廖儀婷 高英琪",
 		() => 2,
 		() => "Mario Us\n鄧瑞銘",
+		() => 3,
+		() => "華而不實的跑酷\n陳浩薰",
+		() => 4,
+		() => "....\n林明懿",
+		() => 5,
+		() => "車掉迷宮\n黃愛甯",
+		() => 6,
+		() => "狗星大戰\n林鈺堃",
+		() => 7,
+		() => "喵喵打爆章魚\n洪詠恩",
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
 			return () => f0(0, 122);
@@ -4001,14 +4021,22 @@ self.C3_ExpressionFuncs = [
 		() => 11,
 		() => "恐龍要找到恐龍蛋（共有４關）\n在遊戲中會有大恐龍、鬼、惡魔、天使、恐龍蛋、肉、仙人掌\n碰到大恐龍：即可過關　　碰到天使：直接到下一關",
 		() => 10,
-		() => "在幽暗的森林裡，出現了一位天使，靠著自己的毅力和勇氣一路\n勇往直前，途中遇到了惡魔，只好使出星星攻擊，排除一切困難\n到達新的世界探險。",
+		() => "在幽暗的森林裡，出現了一位天使，靠著自己的毅力和勇氣一路\n勇往直前，途中遇到了惡魔，只好使出星星攻擊，排除一切困難\n到達新的世界探險。（提示:：第二關達到5分。）",
 		() => 12,
 		() => "這是一款2D平面的遊戲，主角化身成為太空人，主要目的是要\n尋找傳說中的美味雞腿在這路途上，會遇到甚麼樣的難題呢？請\n開始你的旅程 !",
+		() => 13,
+		() => "有一天王子被人抓走，所以公主便展開了拯救王子的旅程，可是\n前方有許多的障礙，他必須一關一關的慢慢突破。目前還在試作\n階段，只有一關。希望可以大家可以給點意見。",
+		() => 14,
+		() => 15,
+		() => "可以選擇三種不同的路線，就可以體驗不同的難易程度。碰到\n終點旗子就過關了。要小心掉到死路會很難回到正確的路線。",
+		() => 16,
+		() => "遊戲中會有很多外星人出現，請把它們一一擊倒來獲取分數。\n鍵盤上下左右可控制移動方向，滑鼠左鍵可發射砲彈。\n擊中外星人時會出現閃電的設計別出心裁。",
+		() => 17,
+		() => "喵喵需要你的幫助，讓她能夠成功打敗章魚。喵喵有一天去河裡\n抓魚不小心碰到了章魚的家，章魚非常易怒所以她決定找喵喵\n報仇，後來就開始了喵喵與章魚的打鬥戰爭。",
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
 			return () => f0();
 		},
-		() => 3,
 		p => {
 			const n0 = p._GetNode(0);
 			return () => n0.ExpObject();
@@ -4031,8 +4059,32 @@ self.C3_ExpressionFuncs = [
 			const n0 = p._GetNode(0);
 			return () => n0.ExpObject(2);
 		},
+		() => "https://games.construct.net/38194/latest",
+		p => {
+			const n0 = p._GetNode(0);
+			return () => n0.ExpObject(3);
+		},
+		() => "https://games.construct.net/39549/latest",
+		p => {
+			const n0 = p._GetNode(0);
+			return () => n0.ExpObject(4);
+		},
+		() => "https://games.construct.net/38293/latest",
+		p => {
+			const n0 = p._GetNode(0);
+			return () => n0.ExpObject(5);
+		},
+		() => "https://games.construct.net/39544/latest",
+		p => {
+			const n0 = p._GetNode(0);
+			return () => n0.ExpObject(6);
+		},
+		() => "https://games.construct.net/38193/latest",
+		p => {
+			const n0 = p._GetNode(0);
+			return () => n0.ExpObject(7);
+		},
 		() => "go",
-		() => 270,
 		() => -717713077331967,
 		() => "Arial",
 		() => -627546261554175,
